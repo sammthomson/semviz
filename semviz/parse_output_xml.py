@@ -107,22 +107,24 @@ def parse_sentence(sentence_elt):
     }
 
 
-def parse_to_dict(semafor_xml_string):
-    """ Parses the xml output of Semafor into json """
-    dom = parseString(semafor_xml_string)
+def parse_to_dict(xml_string):
+    """ Parses the xml output of Semafor into a dict """
+    dom = parseString(xml_string)
     sentences = [parse_sentence(sentence)
                  for sentence in dom.getElementsByTagName('sentence')]
     return {"sentences": sentences}
 
 
+def parse_to_json(xml_string):
+    """ Parses the xml output of Semafor into json """
+    return dumps(parse_to_dict(xml_string), indent=4)
+
+
 def main(filename):
-    """ Parse the xml output of Semafor into json and print it """
+    """ Parses the xml output of Semafor into json and print it """
     with open(filename) as xml_file:
         xml_text = xml_file.read()
-    d = parse_to_dict(xml_text)
-    d['sentences'] = d['sentences'][1:11]
-    print dumps(d, indent=4)
-    #print dumps(parse_to_dict(xml_text), indent=4)
+    print parse_to_json(xml_text)
 
 
 if __name__ == "__main__":
