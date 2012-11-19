@@ -1,1351 +1,1625 @@
 {
-    "sentences": [
+  "sentences": [
+    {
+      "frames": [
         {
-            "frames": [
-                {
-                    "frame_elements": [
-                        {
-                            "start": 56, 
-                            "end": 64, 
-                            "name": "Substance", 
-                            "text": "Materials"
-                        }
-                    ], 
-                    "target": {
-                        "start": 56, 
-                        "end": 64, 
-                        "name": "Substance", 
-                        "text": "Materials"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 103, 
-                            "end": 133, 
-                            "name": "Activity", 
-                            "text": "of secret uranium transfer back"
-                        }
-                    ], 
-                    "target": {
-                        "start": 92, 
-                        "end": 101, 
-                        "name": "Activity_finish", 
-                        "text": "completion"
-                    }
-                }, 
-                {
-                    "frame_elements": [], 
-                    "target": {
-                        "start": 14, 
-                        "end": 18, 
-                        "name": "Assistance", 
-                        "text": "Helps"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 48, 
-                            "end": 54, 
-                            "name": "Situation", 
-                            "text": "Nuclear"
-                        }
-                    ], 
-                    "target": {
-                        "start": 38, 
-                        "end": 46, 
-                        "name": "Risky_situation", 
-                        "text": "Dangerous"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 113, 
-                            "end": 119, 
-                            "name": "Substance", 
-                            "text": "uranium"
-                        }, 
-                        {
-                            "start": 106, 
-                            "end": 111, 
-                            "name": "Descriptor", 
-                            "text": "secret"
-                        }
-                    ], 
-                    "target": {
-                        "start": 113, 
-                        "end": 119, 
-                        "name": "Substance", 
-                        "text": "uranium"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 92, 
-                            "end": 133, 
-                            "name": "Message", 
-                            "text": "completion of secret uranium transfer back"
-                        }, 
-                        {
-                            "start": 68, 
-                            "end": 80, 
-                            "name": "Speaker", 
-                            "text": "Energy agency"
-                        }
-                    ], 
-                    "target": {
-                        "start": 82, 
-                        "end": 90, 
-                        "name": "Statement", 
-                        "text": "announces"
-                    }
-                }, 
-                {
-                    "frame_elements": [], 
-                    "target": {
-                        "start": 31, 
-                        "end": 36, 
-                        "name": "Protecting", 
-                        "text": "Secure"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 48, 
-                            "end": 54, 
-                            "name": "Weapon", 
-                            "text": "Nuclear"
-                        }
-                    ], 
-                    "target": {
-                        "start": 48, 
-                        "end": 54, 
-                        "name": "Weapon", 
-                        "text": "Nuclear"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 113, 
-                            "end": 119, 
-                            "name": "Phenomenon", 
-                            "text": "uranium"
-                        }
-                    ], 
-                    "target": {
-                        "start": 106, 
-                        "end": 111, 
-                        "name": "Secrecy_status", 
-                        "text": "secret"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 113, 
-                            "end": 119, 
-                            "name": "Theme", 
-                            "text": "uranium"
-                        }, 
-                        {
-                            "start": 135, 
-                            "end": 143, 
-                            "name": "Recipient", 
-                            "text": "to Russia"
-                        }
-                    ], 
-                    "target": {
-                        "start": 121, 
-                        "end": 128, 
-                        "name": "Transfer", 
-                        "text": "transfer"
-                    }
-                }
-            ], 
-            "text": "United States Helps Uzbekistan Secure Dangerous Nuclear Materials : Energy agency announces completion of secret uranium transfer back to Russia"
+          "frame_elements": [
+            {
+              "start": 7, 
+              "end": 8, 
+              "name": "Substance", 
+              "text": "Materials"
+            }
+          ], 
+          "target": {
+            "start": 7, 
+            "end": 8, 
+            "name": "Substance", 
+            "text": "Materials"
+          }
         }, 
         {
-            "frames": [
-                {
-                    "frame_elements": [
-                        {
-                            "start": 41, 
-                            "end": 66, 
-                            "name": "Stuff", 
-                            "text": "of highly enriched uranium"
-                        }, 
-                        {
-                            "start": 31, 
-                            "end": 39, 
-                            "name": "Unit", 
-                            "text": "kilograms"
-                        }, 
-                        {
-                            "start": 28, 
-                            "end": 29, 
-                            "name": "Count", 
-                            "text": "63"
-                        }
-                    ], 
-                    "target": {
-                        "start": 31, 
-                        "end": 39, 
-                        "name": "Measure_mass", 
-                        "text": "kilograms"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 220, 
-                            "end": 226, 
-                            "name": "Weapon", 
-                            "text": "Nuclear"
-                        }
-                    ], 
-                    "target": {
-                        "start": 220, 
-                        "end": 226, 
-                        "name": "Weapon", 
-                        "text": "Nuclear"
-                    }
-                }, 
-                {
-                    "frame_elements": [], 
-                    "target": {
-                        "start": 75, 
-                        "end": 82, 
-                        "name": "Research", 
-                        "text": "research"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 8, 
-                            "end": 13, 
-                            "name": "Entity", 
-                            "text": "secret"
-                        }, 
-                        {
-                            "start": 3, 
-                            "end": 6, 
-                            "name": "Number", 
-                            "text": "Four"
-                        }
-                    ], 
-                    "target": {
-                        "start": 3, 
-                        "end": 6, 
-                        "name": "Cardinal_numbers", 
-                        "text": "Four"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 25, 
-                            "end": 107, 
-                            "name": "Theme", 
-                            "text": "of 63 kilograms of highly enriched uranium from a research laboratory in Uzbekistan"
-                        }
-                    ], 
-                    "target": {
-                        "start": 15, 
-                        "end": 23, 
-                        "name": "Transfer", 
-                        "text": "transfers"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 60, 
-                            "end": 66, 
-                            "name": "Substance", 
-                            "text": "uranium"
-                        }
-                    ], 
-                    "target": {
-                        "start": 60, 
-                        "end": 66, 
-                        "name": "Substance", 
-                        "text": "uranium"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 84, 
-                            "end": 93, 
-                            "name": "Locale", 
-                            "text": "laboratory"
-                        }, 
-                        {
-                            "start": 95, 
-                            "end": 107, 
-                            "name": "Container_possessor", 
-                            "text": "in Uzbekistan"
-                        }
-                    ], 
-                    "target": {
-                        "start": 84, 
-                        "end": 93, 
-                        "name": "Locale_by_use", 
-                        "text": "laboratory"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 211, 
-                            "end": 218, 
-                            "name": "Asset", 
-                            "text": "National"
-                        }
-                    ], 
-                    "target": {
-                        "start": 228, 
-                        "end": 235, 
-                        "name": "Being_at_risk", 
-                        "text": "Security"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 121, 
-                            "end": 127, 
-                            "name": "Origin", 
-                            "text": "Russian"
-                        }, 
-                        {
-                            "start": 142, 
-                            "end": 149, 
-                            "name": "Entity", 
-                            "text": "facility"
-                        }
-                    ], 
-                    "target": {
-                        "start": 121, 
-                        "end": 127, 
-                        "name": "Origin", 
-                        "text": "Russian"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 44, 
-                            "end": 49, 
-                            "name": "Degree", 
-                            "text": "highly"
-                        }, 
-                        {
-                            "start": 60, 
-                            "end": 66, 
-                            "name": "Material", 
-                            "text": "uranium"
-                        }
-                    ], 
-                    "target": {
-                        "start": 51, 
-                        "end": 58, 
-                        "name": "Degree_of_processing", 
-                        "text": "enriched"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 211, 
-                            "end": 218, 
-                            "name": "Locale", 
-                            "text": "National"
-                        }
-                    ], 
-                    "target": {
-                        "start": 211, 
-                        "end": 218, 
-                        "name": "Political_locales", 
-                        "text": "National"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 129, 
-                            "end": 140, 
-                            "name": "Use", 
-                            "text": "reprocessing"
-                        }, 
-                        {
-                            "start": 142, 
-                            "end": 149, 
-                            "name": "Locale", 
-                            "text": "facility"
-                        }
-                    ], 
-                    "target": {
-                        "start": 142, 
-                        "end": 149, 
-                        "name": "Locale_by_use", 
-                        "text": "facility"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 112, 
-                            "end": 149, 
-                            "name": "Activity", 
-                            "text": "a secure Russian reprocessing facility"
-                        }, 
-                        {
-                            "start": 166, 
-                            "end": 173, 
-                            "name": "Time", 
-                            "text": "April 19"
-                        }
-                    ], 
-                    "target": {
-                        "start": 156, 
-                        "end": 164, 
-                        "name": "Activity_finish", 
-                        "text": "completed"
-                    }
-                }, 
-                {
-                    "frame_elements": [], 
-                    "target": {
-                        "start": 114, 
-                        "end": 119, 
-                        "name": "Protecting", 
-                        "text": "secure"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 15, 
-                            "end": 23, 
-                            "name": "Phenomenon", 
-                            "text": "transfers"
-                        }
-                    ], 
-                    "target": {
-                        "start": 8, 
-                        "end": 13, 
-                        "name": "Secrecy_status", 
-                        "text": "secret"
-                    }
-                }, 
-                {
-                    "frame_elements": [], 
-                    "target": {
-                        "start": 129, 
-                        "end": 140, 
-                        "name": "Processing_materials", 
-                        "text": "reprocessing"
-                    }
-                }
-            ], 
-            "text": "`` Four secret transfers of 63 kilograms of highly enriched uranium from a research laboratory in Uzbekistan to a secure Russian reprocessing facility were completed April 19 by the U.S. Department of Energy 's National Nuclear Security Administration -LRB- NNSA -RRB- ."
+          "frame_elements": [
+            {
+              "start": 13, 
+              "end": 18, 
+              "name": "Activity", 
+              "text": "of secret uranium transfer back"
+            }
+          ], 
+          "target": {
+            "start": 12, 
+            "end": 13, 
+            "name": "Activity_finish", 
+            "text": "completion"
+          }
         }, 
         {
-            "frames": [
-                {
-                    "frame_elements": [
-                        {
-                            "start": 107, 
-                            "end": 117, 
-                            "name": "Category", 
-                            "text": "of material"
-                        }, 
-                        {
-                            "start": 102, 
-                            "end": 105, 
-                            "name": "Subtype", 
-                            "text": "type"
-                        }
-                    ], 
-                    "target": {
-                        "start": 102, 
-                        "end": 105, 
-                        "name": "Type", 
-                        "text": "type"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 68, 
-                            "end": 74, 
-                            "name": "Agent", 
-                            "text": "NNSA 's"
-                        }, 
-                        {
-                            "start": 84, 
-                            "end": 152, 
-                            "name": "Goal", 
-                            "text": "to make sure this type of material does n't fall into the wrong hands"
-                        }
-                    ], 
-                    "target": {
-                        "start": 76, 
-                        "end": 82, 
-                        "name": "Attempt", 
-                        "text": "efforts"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 18, 
-                            "end": 54, 
-                            "name": "Sent_item", 
-                            "text": "of highly enriched uranium spent fuel"
-                        }
-                    ], 
-                    "target": {
-                        "start": 8, 
-                        "end": 16, 
-                        "name": "Sent_items", 
-                        "text": "shipments"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 51, 
-                            "end": 54, 
-                            "name": "Resource", 
-                            "text": "fuel"
-                        }
-                    ], 
-                    "target": {
-                        "start": 45, 
-                        "end": 49, 
-                        "name": "Used_up", 
-                        "text": "spent"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 110, 
-                            "end": 117, 
-                            "name": "Material", 
-                            "text": "material"
-                        }
-                    ], 
-                    "target": {
-                        "start": 110, 
-                        "end": 117, 
-                        "name": "Ingredients", 
-                        "text": "material"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 21, 
-                            "end": 26, 
-                            "name": "Degree", 
-                            "text": "highly"
-                        }, 
-                        {
-                            "start": 37, 
-                            "end": 43, 
-                            "name": "Material", 
-                            "text": "uranium"
-                        }
-                    ], 
-                    "target": {
-                        "start": 28, 
-                        "end": 35, 
-                        "name": "Degree_of_processing", 
-                        "text": "enriched"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 0, 
-                            "end": 152, 
-                            "name": "Message", 
-                            "text": "' These shipments of highly enriched uranium spent fuel are part of NNSA 's efforts to make sure this type of material does n't fall into the wrong hands"
-                        }, 
-                        {
-                            "start": 199, 
-                            "end": 226, 
-                            "name": "Medium", 
-                            "text": "in an April 20 press release"
-                        }, 
-                        {
-                            "start": 158, 
-                            "end": 192, 
-                            "name": "Speaker", 
-                            "text": "NNSA Administrator Linton F. Brooks"
-                        }
-                    ], 
-                    "target": {
-                        "start": 194, 
-                        "end": 197, 
-                        "name": "Statement", 
-                        "text": "said"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 37, 
-                            "end": 43, 
-                            "name": "Substance", 
-                            "text": "uranium"
-                        }
-                    ], 
-                    "target": {
-                        "start": 37, 
-                        "end": 43, 
-                        "name": "Substance", 
-                        "text": "uranium"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 2, 
-                            "end": 54, 
-                            "name": "Performer", 
-                            "text": "These shipments of highly enriched uranium spent fuel"
-                        }
-                    ], 
-                    "target": {
-                        "start": 60, 
-                        "end": 63, 
-                        "name": "Performers_and_roles", 
-                        "text": "part"
-                    }
-                }
-            ], 
-            "text": "' These shipments of highly enriched uranium spent fuel are part of NNSA 's efforts to make sure this type of material does n't fall into the wrong hands , ' NNSA Administrator Linton F. Brooks said in an April 20 press release ."
+          "frame_elements": [], 
+          "target": {
+            "start": 2, 
+            "end": 3, 
+            "name": "Assistance", 
+            "text": "Helps"
+          }
         }, 
         {
-            "frames": [
-                {
-                    "frame_elements": [
-                        {
-                            "start": 155, 
-                            "end": 163, 
-                            "name": "Material", 
-                            "text": "materials"
-                        }
-                    ], 
-                    "target": {
-                        "start": 155, 
-                        "end": 163, 
-                        "name": "Ingredients", 
-                        "text": "materials"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 130, 
-                            "end": 136, 
-                            "name": "Weapon", 
-                            "text": "nuclear"
-                        }
-                    ], 
-                    "target": {
-                        "start": 130, 
-                        "end": 136, 
-                        "name": "Weapon", 
-                        "text": "nuclear"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 329, 
-                            "end": 341, 
-                            "name": "Locale", 
-                            "text": "International"
-                        }
-                    ], 
-                    "target": {
-                        "start": 329, 
-                        "end": 341, 
-                        "name": "Political_locales", 
-                        "text": "International"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 83, 
-                            "end": 98, 
-                            "name": "Agent", 
-                            "text": "nonproliferation"
-                        }
-                    ], 
-                    "target": {
-                        "start": 100, 
-                        "end": 105, 
-                        "name": "Attempt", 
-                        "text": "effort"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 357, 
-                            "end": 362, 
-                            "name": "Organization", 
-                            "text": "Agency"
-                        }
-                    ], 
-                    "target": {
-                        "start": 357, 
-                        "end": 362, 
-                        "name": "Organization", 
-                        "text": "Agency"
-                    }
-                }, 
-                {
-                    "frame_elements": [], 
-                    "target": {
-                        "start": 4, 
-                        "end": 11, 
-                        "name": "Transfer", 
-                        "text": "transfer"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 130, 
-                            "end": 153, 
-                            "name": "Theme", 
-                            "text": "nuclear and radiological"
-                        }
-                    ], 
-                    "target": {
-                        "start": 112, 
-                        "end": 118, 
-                        "name": "Getting", 
-                        "text": "secures"
-                    }
-                }, 
-                {
-                    "frame_elements": [], 
-                    "target": {
-                        "start": 169, 
-                        "end": 177, 
-                        "name": "Gizmo", 
-                        "text": "equipment"
-                    }
-                }, 
-                {
-                    "frame_elements": [], 
-                    "target": {
-                        "start": 41, 
-                        "end": 49, 
-                        "name": "Cause_change_of_position_on_a_scale", 
-                        "text": "Reduction"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 27, 
-                            "end": 32, 
-                            "name": "Locale", 
-                            "text": "Global"
-                        }
-                    ], 
-                    "target": {
-                        "start": 27, 
-                        "end": 32, 
-                        "name": "Political_locales", 
-                        "text": "Global"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 233, 
-                            "end": 289, 
-                            "name": "Agent", 
-                            "text": "by the United States , Uzbekistan , Kazakhstan and Russia"
-                        }
-                    ], 
-                    "target": {
-                        "start": 226, 
-                        "end": 231, 
-                        "name": "Attempt", 
-                        "text": "effort"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 20, 
-                            "end": 21, 
-                            "name": "Whole", 
-                            "text": "of"
-                        }, 
-                        {
-                            "start": 15, 
-                            "end": 18, 
-                            "name": "Part", 
-                            "text": "part"
-                        }
-                    ], 
-                    "target": {
-                        "start": 15, 
-                        "end": 18, 
-                        "name": "Part_whole", 
-                        "text": "part"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 190, 
-                            "end": 194, 
-                            "name": "Locale", 
-                            "text": "world"
-                        }
-                    ], 
-                    "target": {
-                        "start": 190, 
-                        "end": 194, 
-                        "name": "Political_locales", 
-                        "text": "world"
-                    }
-                }, 
-                {
-                    "frame_elements": [], 
-                    "target": {
-                        "start": 83, 
-                        "end": 98, 
-                        "name": "Proliferating_in_number", 
-                        "text": "nonproliferation"
-                    }
-                }
-            ], 
-            "text": "The transfer - part of the Global Threat Reduction Initiative -LRB- GTRI -RRB- , a nonproliferation effort that secures high-risk nuclear and radiological materials and equipment around the world - resulted from a cooperative effort by the United States , Uzbekistan , Kazakhstan and Russia , as well as coordination through the International Atomic Energy Agency -LRB- IAEA -RRB- . '' -LRB- News Blaze , 21Apr06 -RRB- -LRB- Link -RRB-"
+          "frame_elements": [
+            {
+              "start": 6, 
+              "end": 7, 
+              "name": "Situation", 
+              "text": "Nuclear"
+            }
+          ], 
+          "target": {
+            "start": 5, 
+            "end": 6, 
+            "name": "Risky_situation", 
+            "text": "Dangerous"
+          }
         }, 
         {
-            "frames": [], 
-            "text": "WMD - PREP / DEFENSE / RESPONSE - U.S."
+          "frame_elements": [
+            {
+              "start": 15, 
+              "end": 16, 
+              "name": "Substance", 
+              "text": "uranium"
+            }, 
+            {
+              "start": 14, 
+              "end": 15, 
+              "name": "Descriptor", 
+              "text": "secret"
+            }
+          ], 
+          "target": {
+            "start": 15, 
+            "end": 16, 
+            "name": "Substance", 
+            "text": "uranium"
+          }
         }, 
         {
-            "frames": [
-                {
-                    "frame_elements": [
-                        {
-                            "start": 4, 
-                            "end": 10, 
-                            "name": "Entity", 
-                            "text": "Stryker"
-                        }, 
-                        {
-                            "start": 0, 
-                            "end": 2, 
-                            "name": "Age", 
-                            "text": "New"
-                        }
-                    ], 
-                    "target": {
-                        "start": 0, 
-                        "end": 2, 
-                        "name": "Age", 
-                        "text": "New"
-                    }
-                }
-            ], 
-            "text": "New Stryker model tooled for detection"
+          "frame_elements": [
+            {
+              "start": 12, 
+              "end": 18, 
+              "name": "Message", 
+              "text": "completion of secret uranium transfer back"
+            }, 
+            {
+              "start": 9, 
+              "end": 11, 
+              "name": "Speaker", 
+              "text": "Energy agency"
+            }
+          ], 
+          "target": {
+            "start": 11, 
+            "end": 12, 
+            "name": "Statement", 
+            "text": "announces"
+          }
         }, 
         {
-            "frames": [
-                {
-                    "frame_elements": [
-                        {
-                            "start": 59, 
-                            "end": 64, 
-                            "name": "Relatives", 
-                            "text": "family"
-                        }
-                    ], 
-                    "target": {
-                        "start": 59, 
-                        "end": 64, 
-                        "name": "Kinship", 
-                        "text": "family"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 69, 
-                            "end": 76, 
-                            "name": "Vehicle", 
-                            "text": "vehicles"
-                        }
-                    ], 
-                    "target": {
-                        "start": 69, 
-                        "end": 76, 
-                        "name": "Vehicle", 
-                        "text": "vehicles"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 44, 
-                            "end": 76, 
-                            "name": "Group", 
-                            "text": "of the Stryker family of vehicles"
-                        }, 
-                        {
-                            "start": 37, 
-                            "end": 42, 
-                            "name": "Member", 
-                            "text": "member"
-                        }
-                    ], 
-                    "target": {
-                        "start": 37, 
-                        "end": 42, 
-                        "name": "Membership", 
-                        "text": "member"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 37, 
-                            "end": 42, 
-                            "name": "Entity", 
-                            "text": "member"
-                        }, 
-                        {
-                            "start": 30, 
-                            "end": 35, 
-                            "name": "Age", 
-                            "text": "newest"
-                        }
-                    ], 
-                    "target": {
-                        "start": 30, 
-                        "end": 35, 
-                        "name": "Age", 
-                        "text": "newest"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 3, 
-                            "end": 10, 
-                            "name": "Person", 
-                            "text": "Soldiers"
-                        }
-                    ], 
-                    "target": {
-                        "start": 3, 
-                        "end": 10, 
-                        "name": "People_by_vocation", 
-                        "text": "Soldiers"
-                    }
-                }
-            ], 
-            "text": "`` Soldiers have welcomed the newest member of the Stryker family of vehicles ."
+          "frame_elements": [], 
+          "target": {
+            "start": 4, 
+            "end": 5, 
+            "name": "Protecting", 
+            "text": "Secure"
+          }
         }, 
         {
-            "frames": [
-                {
-                    "frame_elements": [
-                        {
-                            "start": 84, 
-                            "end": 87, 
-                            "name": "Entity", 
-                            "text": "that"
-                        }, 
-                        {
-                            "start": 151, 
-                            "end": 182, 
-                            "name": "Event", 
-                            "text": "keeping the soldiers safe inside"
-                        }
-                    ], 
-                    "target": {
-                        "start": 89, 
-                        "end": 91, 
-                        "name": "Capability", 
-                        "text": "can"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 75, 
-                            "end": 82, 
-                            "name": "Vehicle", 
-                            "text": "vehicles"
-                        }
-                    ], 
-                    "target": {
-                        "start": 75, 
-                        "end": 82, 
-                        "name": "Vehicle", 
-                        "text": "vehicles"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 159, 
-                            "end": 182, 
-                            "name": "Activity", 
-                            "text": "the soldiers safe inside"
-                        }
-                    ], 
-                    "target": {
-                        "start": 151, 
-                        "end": 157, 
-                        "name": "Activity_ongoing", 
-                        "text": "keeping"
-                    }
-                }, 
-                {
-                    "frame_elements": [], 
-                    "target": {
-                        "start": 4, 
-                        "end": 6, 
-                        "name": "Ordinal_numbers", 
-                        "text": "2nd"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 100, 
-                            "end": 143, 
-                            "name": "Phenomenon", 
-                            "text": "radiation or biological and chemical hazards"
-                        }
-                    ], 
-                    "target": {
-                        "start": 93, 
-                        "end": 98, 
-                        "name": "Perception_experience", 
-                        "text": "detect"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 163, 
-                            "end": 170, 
-                            "name": "Person", 
-                            "text": "soldiers"
-                        }
-                    ], 
-                    "target": {
-                        "start": 163, 
-                        "end": 170, 
-                        "name": "People_by_vocation", 
-                        "text": "soldiers"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 69, 
-                            "end": 182, 
-                            "name": "Theme", 
-                            "text": "three vehicles that can detect radiation or biological and chemical hazards while keeping the soldiers safe inside"
-                        }
-                    ], 
-                    "target": {
-                        "start": 60, 
-                        "end": 67, 
-                        "name": "Receiving", 
-                        "text": "received"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 75, 
-                            "end": 82, 
-                            "name": "Entity", 
-                            "text": "vehicles"
-                        }, 
-                        {
-                            "start": 69, 
-                            "end": 73, 
-                            "name": "Number", 
-                            "text": "three"
-                        }
-                    ], 
-                    "target": {
-                        "start": 69, 
-                        "end": 73, 
-                        "name": "Cardinal_numbers", 
-                        "text": "three"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 34, 
-                            "end": 49, 
-                            "name": "Ground", 
-                            "text": "Fort Lewis -RSB-"
-                        }, 
-                        {
-                            "start": 0, 
-                            "end": 29, 
-                            "name": "Figure", 
-                            "text": "The 2nd Cavalry Regiment -LSB-"
-                        }
-                    ], 
-                    "target": {
-                        "start": 31, 
-                        "end": 32, 
-                        "name": "Locative_relation", 
-                        "text": "at"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 159, 
-                            "end": 170, 
-                            "name": "Asset", 
-                            "text": "the soldiers"
-                        }
-                    ], 
-                    "target": {
-                        "start": 172, 
-                        "end": 175, 
-                        "name": "Being_at_risk", 
-                        "text": "safe"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 177, 
-                            "end": 182, 
-                            "name": "Part", 
-                            "text": "inside"
-                        }
-                    ], 
-                    "target": {
-                        "start": 177, 
-                        "end": 182, 
-                        "name": "Part_inner_outer", 
-                        "text": "inside"
-                    }
-                }
-            ], 
-            "text": "The 2nd Cavalry Regiment -LSB- at Fort Lewis -RSB- recently received three vehicles that can detect radiation or biological and chemical hazards while keeping the soldiers safe inside ."
+          "frame_elements": [
+            {
+              "start": 6, 
+              "end": 7, 
+              "name": "Weapon", 
+              "text": "Nuclear"
+            }
+          ], 
+          "target": {
+            "start": 6, 
+            "end": 7, 
+            "name": "Weapon", 
+            "text": "Nuclear"
+          }
         }, 
         {
-            "frames": [
-                {
-                    "frame_elements": [
-                        {
-                            "start": 32, 
-                            "end": 38, 
-                            "name": "Type", 
-                            "text": "chassis"
-                        }
-                    ], 
-                    "target": {
-                        "start": 27, 
-                        "end": 30, 
-                        "name": "Identicality", 
-                        "text": "same"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 54, 
-                            "end": 104, 
-                            "name": "Entity", 
-                            "text": "nine other variants that fulfill different missions"
-                        }
-                    ], 
-                    "target": {
-                        "start": 44, 
-                        "end": 52, 
-                        "name": "Existence", 
-                        "text": "there are"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 8, 
-                            "end": 15, 
-                            "name": "Vehicle", 
-                            "text": "vehicles"
-                        }
-                    ], 
-                    "target": {
-                        "start": 8, 
-                        "end": 15, 
-                        "name": "Vehicle", 
-                        "text": "vehicles"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 97, 
-                            "end": 104, 
-                            "name": "Entities", 
-                            "text": "missions"
-                        }
-                    ], 
-                    "target": {
-                        "start": 87, 
-                        "end": 95, 
-                        "name": "Similarity", 
-                        "text": "different"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 65, 
-                            "end": 72, 
-                            "name": "Class", 
-                            "text": "variants"
-                        }, 
-                        {
-                            "start": 54, 
-                            "end": 57, 
-                            "name": "Increment", 
-                            "text": "nine"
-                        }
-                    ], 
-                    "target": {
-                        "start": 59, 
-                        "end": 63, 
-                        "name": "Increment", 
-                        "text": "other"
-                    }
-                }, 
-                {
-                    "frame_elements": [], 
-                    "target": {
-                        "start": 65, 
-                        "end": 72, 
-                        "name": "Similarity", 
-                        "text": "variants"
-                    }
-                }
-            ], 
-            "text": "Stryker vehicles share the same chassis but there are nine other variants that fulfill different missions ."
+          "frame_elements": [
+            {
+              "start": 15, 
+              "end": 16, 
+              "name": "Phenomenon", 
+              "text": "uranium"
+            }
+          ], 
+          "target": {
+            "start": 14, 
+            "end": 15, 
+            "name": "Secrecy_status", 
+            "text": "secret"
+          }
         }, 
         {
-            "frames": [
-                {
-                    "frame_elements": [
-                        {
-                            "start": 4, 
-                            "end": 10, 
-                            "name": "Weapon", 
-                            "text": "nuclear"
-                        }
-                    ], 
-                    "target": {
-                        "start": 4, 
-                        "end": 10, 
-                        "name": "Weapon", 
-                        "text": "nuclear"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 14, 
-                            "end": 23, 
-                            "name": "Weapon", 
-                            "text": "biological"
-                        }
-                    ], 
-                    "target": {
-                        "start": 14, 
-                        "end": 23, 
-                        "name": "Weapon", 
-                        "text": "biological"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 29, 
-                            "end": 36, 
-                            "name": "Substance", 
-                            "text": "chemical"
-                        }
-                    ], 
-                    "target": {
-                        "start": 29, 
-                        "end": 36, 
-                        "name": "Substance", 
-                        "text": "chemical"
-                    }
-                }, 
-                {
-                    "frame_elements": [
-                        {
-                            "start": 38, 
-                            "end": 51, 
-                            "name": "Use", 
-                            "text": "reconnaissance"
-                        }, 
-                        {
-                            "start": 53, 
-                            "end": 59, 
-                            "name": "Vehicle", 
-                            "text": "vehicle"
-                        }
-                    ], 
-                    "target": {
-                        "start": 53, 
-                        "end": 59, 
-                        "name": "Vehicle", 
-                        "text": "vehicle"
-                    }
-                }, 
-                {
-                    "frame_elements": [], 
-                    "target": {
-                        "start": 74, 
-                        "end": 80, 
-                        "name": "Similarity", 
-                        "text": "variant"
-                    }
-                }
-            ], 
-            "text": "The nuclear , biological and chemical reconnaissance vehicle is the ninth variant ."
+          "frame_elements": [
+            {
+              "start": 15, 
+              "end": 16, 
+              "name": "Theme", 
+              "text": "uranium"
+            }, 
+            {
+              "start": 18, 
+              "end": 20, 
+              "name": "Recipient", 
+              "text": "to Russia"
+            }
+          ], 
+          "target": {
+            "start": 16, 
+            "end": 17, 
+            "name": "Transfer", 
+            "text": "transfer"
+          }
         }
-    ]
+      ], 
+      "text": [
+        "United", 
+        "States", 
+        "Helps", 
+        "Uzbekistan", 
+        "Secure", 
+        "Dangerous", 
+        "Nuclear", 
+        "Materials", 
+        ":", 
+        "Energy", 
+        "agency", 
+        "announces", 
+        "completion", 
+        "of", 
+        "secret", 
+        "uranium", 
+        "transfer", 
+        "back", 
+        "to", 
+        "Russia"
+      ]
+    }, 
+    {
+      "frames": [
+        {
+          "frame_elements": [
+            {
+              "start": 7, 
+              "end": 11, 
+              "name": "Stuff", 
+              "text": "of highly enriched uranium"
+            }, 
+            {
+              "start": 6, 
+              "end": 7, 
+              "name": "Unit", 
+              "text": "kilograms"
+            }, 
+            {
+              "start": 5, 
+              "end": 6, 
+              "name": "Count", 
+              "text": "63"
+            }
+          ], 
+          "target": {
+            "start": 6, 
+            "end": 7, 
+            "name": "Measure_mass", 
+            "text": "kilograms"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 35, 
+              "end": 36, 
+              "name": "Weapon", 
+              "text": "Nuclear"
+            }
+          ], 
+          "target": {
+            "start": 35, 
+            "end": 36, 
+            "name": "Weapon", 
+            "text": "Nuclear"
+          }
+        }, 
+        {
+          "frame_elements": [], 
+          "target": {
+            "start": 13, 
+            "end": 14, 
+            "name": "Research", 
+            "text": "research"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 2, 
+              "end": 3, 
+              "name": "Entity", 
+              "text": "secret"
+            }, 
+            {
+              "start": 1, 
+              "end": 2, 
+              "name": "Number", 
+              "text": "Four"
+            }
+          ], 
+          "target": {
+            "start": 1, 
+            "end": 2, 
+            "name": "Cardinal_numbers", 
+            "text": "Four"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 4, 
+              "end": 17, 
+              "name": "Theme", 
+              "text": "of 63 kilograms of highly enriched uranium from a research laboratory in Uzbekistan"
+            }
+          ], 
+          "target": {
+            "start": 3, 
+            "end": 4, 
+            "name": "Transfer", 
+            "text": "transfers"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 10, 
+              "end": 11, 
+              "name": "Substance", 
+              "text": "uranium"
+            }
+          ], 
+          "target": {
+            "start": 10, 
+            "end": 11, 
+            "name": "Substance", 
+            "text": "uranium"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 14, 
+              "end": 15, 
+              "name": "Locale", 
+              "text": "laboratory"
+            }, 
+            {
+              "start": 15, 
+              "end": 17, 
+              "name": "Container_possessor", 
+              "text": "in Uzbekistan"
+            }
+          ], 
+          "target": {
+            "start": 14, 
+            "end": 15, 
+            "name": "Locale_by_use", 
+            "text": "laboratory"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 34, 
+              "end": 35, 
+              "name": "Asset", 
+              "text": "National"
+            }
+          ], 
+          "target": {
+            "start": 36, 
+            "end": 37, 
+            "name": "Being_at_risk", 
+            "text": "Security"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 20, 
+              "end": 21, 
+              "name": "Origin", 
+              "text": "Russian"
+            }, 
+            {
+              "start": 22, 
+              "end": 23, 
+              "name": "Entity", 
+              "text": "facility"
+            }
+          ], 
+          "target": {
+            "start": 20, 
+            "end": 21, 
+            "name": "Origin", 
+            "text": "Russian"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 8, 
+              "end": 9, 
+              "name": "Degree", 
+              "text": "highly"
+            }, 
+            {
+              "start": 10, 
+              "end": 11, 
+              "name": "Material", 
+              "text": "uranium"
+            }
+          ], 
+          "target": {
+            "start": 9, 
+            "end": 10, 
+            "name": "Degree_of_processing", 
+            "text": "enriched"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 34, 
+              "end": 35, 
+              "name": "Locale", 
+              "text": "National"
+            }
+          ], 
+          "target": {
+            "start": 34, 
+            "end": 35, 
+            "name": "Political_locales", 
+            "text": "National"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 21, 
+              "end": 22, 
+              "name": "Use", 
+              "text": "reprocessing"
+            }, 
+            {
+              "start": 22, 
+              "end": 23, 
+              "name": "Locale", 
+              "text": "facility"
+            }
+          ], 
+          "target": {
+            "start": 22, 
+            "end": 23, 
+            "name": "Locale_by_use", 
+            "text": "facility"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 18, 
+              "end": 23, 
+              "name": "Activity", 
+              "text": "a secure Russian reprocessing facility"
+            }, 
+            {
+              "start": 25, 
+              "end": 27, 
+              "name": "Time", 
+              "text": "April 19"
+            }
+          ], 
+          "target": {
+            "start": 24, 
+            "end": 25, 
+            "name": "Activity_finish", 
+            "text": "completed"
+          }
+        }, 
+        {
+          "frame_elements": [], 
+          "target": {
+            "start": 19, 
+            "end": 20, 
+            "name": "Protecting", 
+            "text": "secure"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 3, 
+              "end": 4, 
+              "name": "Phenomenon", 
+              "text": "transfers"
+            }
+          ], 
+          "target": {
+            "start": 2, 
+            "end": 3, 
+            "name": "Secrecy_status", 
+            "text": "secret"
+          }
+        }, 
+        {
+          "frame_elements": [], 
+          "target": {
+            "start": 21, 
+            "end": 22, 
+            "name": "Processing_materials", 
+            "text": "reprocessing"
+          }
+        }
+      ], 
+      "text": [
+        "``", 
+        "Four", 
+        "secret", 
+        "transfers", 
+        "of", 
+        "63", 
+        "kilograms", 
+        "of", 
+        "highly", 
+        "enriched", 
+        "uranium", 
+        "from", 
+        "a", 
+        "research", 
+        "laboratory", 
+        "in", 
+        "Uzbekistan", 
+        "to", 
+        "a", 
+        "secure", 
+        "Russian", 
+        "reprocessing", 
+        "facility", 
+        "were", 
+        "completed", 
+        "April", 
+        "19", 
+        "by", 
+        "the", 
+        "U.S.", 
+        "Department", 
+        "of", 
+        "Energy", 
+        "'s", 
+        "National", 
+        "Nuclear", 
+        "Security", 
+        "Administration", 
+        "-LRB-", 
+        "NNSA", 
+        "-RRB-", 
+        "."
+      ]
+    }, 
+    {
+      "frames": [
+        {
+          "frame_elements": [
+            {
+              "start": 20, 
+              "end": 22, 
+              "name": "Category", 
+              "text": "of material"
+            }, 
+            {
+              "start": 19, 
+              "end": 20, 
+              "name": "Subtype", 
+              "text": "type"
+            }
+          ], 
+          "target": {
+            "start": 19, 
+            "end": 20, 
+            "name": "Type", 
+            "text": "type"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 12, 
+              "end": 14, 
+              "name": "Agent", 
+              "text": "NNSA 's"
+            }, 
+            {
+              "start": 15, 
+              "end": 29, 
+              "name": "Goal", 
+              "text": "to make sure this type of material does n't fall into the wrong hands"
+            }
+          ], 
+          "target": {
+            "start": 14, 
+            "end": 15, 
+            "name": "Attempt", 
+            "text": "efforts"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 3, 
+              "end": 9, 
+              "name": "Sent_item", 
+              "text": "of highly enriched uranium spent fuel"
+            }
+          ], 
+          "target": {
+            "start": 2, 
+            "end": 3, 
+            "name": "Sent_items", 
+            "text": "shipments"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 8, 
+              "end": 9, 
+              "name": "Resource", 
+              "text": "fuel"
+            }
+          ], 
+          "target": {
+            "start": 7, 
+            "end": 8, 
+            "name": "Used_up", 
+            "text": "spent"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 21, 
+              "end": 22, 
+              "name": "Material", 
+              "text": "material"
+            }
+          ], 
+          "target": {
+            "start": 21, 
+            "end": 22, 
+            "name": "Ingredients", 
+            "text": "material"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 4, 
+              "end": 5, 
+              "name": "Degree", 
+              "text": "highly"
+            }, 
+            {
+              "start": 6, 
+              "end": 7, 
+              "name": "Material", 
+              "text": "uranium"
+            }
+          ], 
+          "target": {
+            "start": 5, 
+            "end": 6, 
+            "name": "Degree_of_processing", 
+            "text": "enriched"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 0, 
+              "end": 29, 
+              "name": "Message", 
+              "text": "' These shipments of highly enriched uranium spent fuel are part of NNSA 's efforts to make sure this type of material does n't fall into the wrong hands"
+            }, 
+            {
+              "start": 37, 
+              "end": 43, 
+              "name": "Medium", 
+              "text": "in an April 20 press release"
+            }, 
+            {
+              "start": 31, 
+              "end": 36, 
+              "name": "Speaker", 
+              "text": "NNSA Administrator Linton F. Brooks"
+            }
+          ], 
+          "target": {
+            "start": 36, 
+            "end": 37, 
+            "name": "Statement", 
+            "text": "said"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 6, 
+              "end": 7, 
+              "name": "Substance", 
+              "text": "uranium"
+            }
+          ], 
+          "target": {
+            "start": 6, 
+            "end": 7, 
+            "name": "Substance", 
+            "text": "uranium"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 1, 
+              "end": 9, 
+              "name": "Performer", 
+              "text": "These shipments of highly enriched uranium spent fuel"
+            }
+          ], 
+          "target": {
+            "start": 10, 
+            "end": 11, 
+            "name": "Performers_and_roles", 
+            "text": "part"
+          }
+        }
+      ], 
+      "text": [
+        "'", 
+        "These", 
+        "shipments", 
+        "of", 
+        "highly", 
+        "enriched", 
+        "uranium", 
+        "spent", 
+        "fuel", 
+        "are", 
+        "part", 
+        "of", 
+        "NNSA", 
+        "'s", 
+        "efforts", 
+        "to", 
+        "make", 
+        "sure", 
+        "this", 
+        "type", 
+        "of", 
+        "material", 
+        "does", 
+        "n't", 
+        "fall", 
+        "into", 
+        "the", 
+        "wrong", 
+        "hands", 
+        ",", 
+        "'", 
+        "NNSA", 
+        "Administrator", 
+        "Linton", 
+        "F.", 
+        "Brooks", 
+        "said", 
+        "in", 
+        "an", 
+        "April", 
+        "20", 
+        "press", 
+        "release", 
+        "."
+      ]
+    }, 
+    {
+      "frames": [
+        {
+          "frame_elements": [
+            {
+              "start": 23, 
+              "end": 24, 
+              "name": "Material", 
+              "text": "materials"
+            }
+          ], 
+          "target": {
+            "start": 23, 
+            "end": 24, 
+            "name": "Ingredients", 
+            "text": "materials"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 20, 
+              "end": 21, 
+              "name": "Weapon", 
+              "text": "nuclear"
+            }
+          ], 
+          "target": {
+            "start": 20, 
+            "end": 21, 
+            "name": "Weapon", 
+            "text": "nuclear"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 52, 
+              "end": 53, 
+              "name": "Locale", 
+              "text": "International"
+            }
+          ], 
+          "target": {
+            "start": 52, 
+            "end": 53, 
+            "name": "Political_locales", 
+            "text": "International"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 15, 
+              "end": 16, 
+              "name": "Agent", 
+              "text": "nonproliferation"
+            }
+          ], 
+          "target": {
+            "start": 16, 
+            "end": 17, 
+            "name": "Attempt", 
+            "text": "effort"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 55, 
+              "end": 56, 
+              "name": "Organization", 
+              "text": "Agency"
+            }
+          ], 
+          "target": {
+            "start": 55, 
+            "end": 56, 
+            "name": "Organization", 
+            "text": "Agency"
+          }
+        }, 
+        {
+          "frame_elements": [], 
+          "target": {
+            "start": 1, 
+            "end": 2, 
+            "name": "Transfer", 
+            "text": "transfer"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 20, 
+              "end": 23, 
+              "name": "Theme", 
+              "text": "nuclear and radiological"
+            }
+          ], 
+          "target": {
+            "start": 18, 
+            "end": 19, 
+            "name": "Getting", 
+            "text": "secures"
+          }
+        }, 
+        {
+          "frame_elements": [], 
+          "target": {
+            "start": 25, 
+            "end": 26, 
+            "name": "Gizmo", 
+            "text": "equipment"
+          }
+        }, 
+        {
+          "frame_elements": [], 
+          "target": {
+            "start": 8, 
+            "end": 9, 
+            "name": "Cause_change_of_position_on_a_scale", 
+            "text": "Reduction"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 6, 
+              "end": 7, 
+              "name": "Locale", 
+              "text": "Global"
+            }
+          ], 
+          "target": {
+            "start": 6, 
+            "end": 7, 
+            "name": "Political_locales", 
+            "text": "Global"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 35, 
+              "end": 45, 
+              "name": "Agent", 
+              "text": "by the United States , Uzbekistan , Kazakhstan and Russia"
+            }
+          ], 
+          "target": {
+            "start": 34, 
+            "end": 35, 
+            "name": "Attempt", 
+            "text": "effort"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 4, 
+              "end": 5, 
+              "name": "Whole", 
+              "text": "of"
+            }, 
+            {
+              "start": 3, 
+              "end": 4, 
+              "name": "Part", 
+              "text": "part"
+            }
+          ], 
+          "target": {
+            "start": 3, 
+            "end": 4, 
+            "name": "Part_whole", 
+            "text": "part"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 28, 
+              "end": 29, 
+              "name": "Locale", 
+              "text": "world"
+            }
+          ], 
+          "target": {
+            "start": 28, 
+            "end": 29, 
+            "name": "Political_locales", 
+            "text": "world"
+          }
+        }, 
+        {
+          "frame_elements": [], 
+          "target": {
+            "start": 15, 
+            "end": 16, 
+            "name": "Proliferating_in_number", 
+            "text": "nonproliferation"
+          }
+        }
+      ], 
+      "text": [
+        "The", 
+        "transfer", 
+        "-", 
+        "part", 
+        "of", 
+        "the", 
+        "Global", 
+        "Threat", 
+        "Reduction", 
+        "Initiative", 
+        "-LRB-", 
+        "GTRI", 
+        "-RRB-", 
+        ",", 
+        "a", 
+        "nonproliferation", 
+        "effort", 
+        "that", 
+        "secures", 
+        "high-risk", 
+        "nuclear", 
+        "and", 
+        "radiological", 
+        "materials", 
+        "and", 
+        "equipment", 
+        "around", 
+        "the", 
+        "world", 
+        "-", 
+        "resulted", 
+        "from", 
+        "a", 
+        "cooperative", 
+        "effort", 
+        "by", 
+        "the", 
+        "United", 
+        "States", 
+        ",", 
+        "Uzbekistan", 
+        ",", 
+        "Kazakhstan", 
+        "and", 
+        "Russia", 
+        ",", 
+        "as", 
+        "well", 
+        "as", 
+        "coordination", 
+        "through", 
+        "the", 
+        "International", 
+        "Atomic", 
+        "Energy", 
+        "Agency", 
+        "-LRB-", 
+        "IAEA", 
+        "-RRB-", 
+        ".", 
+        "''", 
+        "-LRB-", 
+        "News", 
+        "Blaze", 
+        ",", 
+        "21Apr06", 
+        "-RRB-", 
+        "-LRB-", 
+        "Link", 
+        "-RRB-"
+      ]
+    }, 
+    {
+      "frames": [], 
+      "text": [
+        "WMD", 
+        "-", 
+        "PREP", 
+        "/", 
+        "DEFENSE", 
+        "/", 
+        "RESPONSE", 
+        "-", 
+        "U.S."
+      ]
+    }, 
+    {
+      "frames": [
+        {
+          "frame_elements": [
+            {
+              "start": 1, 
+              "end": 2, 
+              "name": "Entity", 
+              "text": "Stryker"
+            }, 
+            {
+              "start": 0, 
+              "end": 1, 
+              "name": "Age", 
+              "text": "New"
+            }
+          ], 
+          "target": {
+            "start": 0, 
+            "end": 1, 
+            "name": "Age", 
+            "text": "New"
+          }
+        }
+      ], 
+      "text": [
+        "New", 
+        "Stryker", 
+        "model", 
+        "tooled", 
+        "for", 
+        "detection"
+      ]
+    }, 
+    {
+      "frames": [
+        {
+          "frame_elements": [
+            {
+              "start": 10, 
+              "end": 11, 
+              "name": "Relatives", 
+              "text": "family"
+            }
+          ], 
+          "target": {
+            "start": 10, 
+            "end": 11, 
+            "name": "Kinship", 
+            "text": "family"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 12, 
+              "end": 13, 
+              "name": "Vehicle", 
+              "text": "vehicles"
+            }
+          ], 
+          "target": {
+            "start": 12, 
+            "end": 13, 
+            "name": "Vehicle", 
+            "text": "vehicles"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 7, 
+              "end": 13, 
+              "name": "Group", 
+              "text": "of the Stryker family of vehicles"
+            }, 
+            {
+              "start": 6, 
+              "end": 7, 
+              "name": "Member", 
+              "text": "member"
+            }
+          ], 
+          "target": {
+            "start": 6, 
+            "end": 7, 
+            "name": "Membership", 
+            "text": "member"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 6, 
+              "end": 7, 
+              "name": "Entity", 
+              "text": "member"
+            }, 
+            {
+              "start": 5, 
+              "end": 6, 
+              "name": "Age", 
+              "text": "newest"
+            }
+          ], 
+          "target": {
+            "start": 5, 
+            "end": 6, 
+            "name": "Age", 
+            "text": "newest"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 1, 
+              "end": 2, 
+              "name": "Person", 
+              "text": "Soldiers"
+            }
+          ], 
+          "target": {
+            "start": 1, 
+            "end": 2, 
+            "name": "People_by_vocation", 
+            "text": "Soldiers"
+          }
+        }
+      ], 
+      "text": [
+        "``", 
+        "Soldiers", 
+        "have", 
+        "welcomed", 
+        "the", 
+        "newest", 
+        "member", 
+        "of", 
+        "the", 
+        "Stryker", 
+        "family", 
+        "of", 
+        "vehicles", 
+        "."
+      ]
+    }, 
+    {
+      "frames": [
+        {
+          "frame_elements": [
+            {
+              "start": 13, 
+              "end": 14, 
+              "name": "Entity", 
+              "text": "that"
+            }, 
+            {
+              "start": 23, 
+              "end": 28, 
+              "name": "Event", 
+              "text": "keeping the soldiers safe inside"
+            }
+          ], 
+          "target": {
+            "start": 14, 
+            "end": 15, 
+            "name": "Capability", 
+            "text": "can"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 12, 
+              "end": 13, 
+              "name": "Vehicle", 
+              "text": "vehicles"
+            }
+          ], 
+          "target": {
+            "start": 12, 
+            "end": 13, 
+            "name": "Vehicle", 
+            "text": "vehicles"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 24, 
+              "end": 28, 
+              "name": "Activity", 
+              "text": "the soldiers safe inside"
+            }
+          ], 
+          "target": {
+            "start": 23, 
+            "end": 24, 
+            "name": "Activity_ongoing", 
+            "text": "keeping"
+          }
+        }, 
+        {
+          "frame_elements": [], 
+          "target": {
+            "start": 1, 
+            "end": 2, 
+            "name": "Ordinal_numbers", 
+            "text": "2nd"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 16, 
+              "end": 22, 
+              "name": "Phenomenon", 
+              "text": "radiation or biological and chemical hazards"
+            }
+          ], 
+          "target": {
+            "start": 15, 
+            "end": 16, 
+            "name": "Perception_experience", 
+            "text": "detect"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 25, 
+              "end": 26, 
+              "name": "Person", 
+              "text": "soldiers"
+            }
+          ], 
+          "target": {
+            "start": 25, 
+            "end": 26, 
+            "name": "People_by_vocation", 
+            "text": "soldiers"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 11, 
+              "end": 28, 
+              "name": "Theme", 
+              "text": "three vehicles that can detect radiation or biological and chemical hazards while keeping the soldiers safe inside"
+            }
+          ], 
+          "target": {
+            "start": 10, 
+            "end": 11, 
+            "name": "Receiving", 
+            "text": "received"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 12, 
+              "end": 13, 
+              "name": "Entity", 
+              "text": "vehicles"
+            }, 
+            {
+              "start": 11, 
+              "end": 12, 
+              "name": "Number", 
+              "text": "three"
+            }
+          ], 
+          "target": {
+            "start": 11, 
+            "end": 12, 
+            "name": "Cardinal_numbers", 
+            "text": "three"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 6, 
+              "end": 9, 
+              "name": "Ground", 
+              "text": "Fort Lewis -RSB-"
+            }, 
+            {
+              "start": 0, 
+              "end": 5, 
+              "name": "Figure", 
+              "text": "The 2nd Cavalry Regiment -LSB-"
+            }
+          ], 
+          "target": {
+            "start": 5, 
+            "end": 6, 
+            "name": "Locative_relation", 
+            "text": "at"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 24, 
+              "end": 26, 
+              "name": "Asset", 
+              "text": "the soldiers"
+            }
+          ], 
+          "target": {
+            "start": 26, 
+            "end": 27, 
+            "name": "Being_at_risk", 
+            "text": "safe"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 27, 
+              "end": 28, 
+              "name": "Part", 
+              "text": "inside"
+            }
+          ], 
+          "target": {
+            "start": 27, 
+            "end": 28, 
+            "name": "Part_inner_outer", 
+            "text": "inside"
+          }
+        }
+      ], 
+      "text": [
+        "The", 
+        "2nd", 
+        "Cavalry", 
+        "Regiment", 
+        "-LSB-", 
+        "at", 
+        "Fort", 
+        "Lewis", 
+        "-RSB-", 
+        "recently", 
+        "received", 
+        "three", 
+        "vehicles", 
+        "that", 
+        "can", 
+        "detect", 
+        "radiation", 
+        "or", 
+        "biological", 
+        "and", 
+        "chemical", 
+        "hazards", 
+        "while", 
+        "keeping", 
+        "the", 
+        "soldiers", 
+        "safe", 
+        "inside", 
+        "."
+      ]
+    }, 
+    {
+      "frames": [
+        {
+          "frame_elements": [
+            {
+              "start": 5, 
+              "end": 6, 
+              "name": "Type", 
+              "text": "chassis"
+            }
+          ], 
+          "target": {
+            "start": 4, 
+            "end": 5, 
+            "name": "Identicality", 
+            "text": "same"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 9, 
+              "end": 16, 
+              "name": "Entity", 
+              "text": "nine other variants that fulfill different missions"
+            }
+          ], 
+          "target": {
+            "start": 7, 
+            "end": 9, 
+            "name": "Existence", 
+            "text": "there are"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 1, 
+              "end": 2, 
+              "name": "Vehicle", 
+              "text": "vehicles"
+            }
+          ], 
+          "target": {
+            "start": 1, 
+            "end": 2, 
+            "name": "Vehicle", 
+            "text": "vehicles"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 15, 
+              "end": 16, 
+              "name": "Entities", 
+              "text": "missions"
+            }
+          ], 
+          "target": {
+            "start": 14, 
+            "end": 15, 
+            "name": "Similarity", 
+            "text": "different"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 11, 
+              "end": 12, 
+              "name": "Class", 
+              "text": "variants"
+            }, 
+            {
+              "start": 9, 
+              "end": 10, 
+              "name": "Increment", 
+              "text": "nine"
+            }
+          ], 
+          "target": {
+            "start": 10, 
+            "end": 11, 
+            "name": "Increment", 
+            "text": "other"
+          }
+        }, 
+        {
+          "frame_elements": [], 
+          "target": {
+            "start": 11, 
+            "end": 12, 
+            "name": "Similarity", 
+            "text": "variants"
+          }
+        }
+      ], 
+      "text": [
+        "Stryker", 
+        "vehicles", 
+        "share", 
+        "the", 
+        "same", 
+        "chassis", 
+        "but", 
+        "there", 
+        "are", 
+        "nine", 
+        "other", 
+        "variants", 
+        "that", 
+        "fulfill", 
+        "different", 
+        "missions", 
+        "."
+      ]
+    }, 
+    {
+      "frames": [
+        {
+          "frame_elements": [
+            {
+              "start": 1, 
+              "end": 2, 
+              "name": "Weapon", 
+              "text": "nuclear"
+            }
+          ], 
+          "target": {
+            "start": 1, 
+            "end": 2, 
+            "name": "Weapon", 
+            "text": "nuclear"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 3, 
+              "end": 4, 
+              "name": "Weapon", 
+              "text": "biological"
+            }
+          ], 
+          "target": {
+            "start": 3, 
+            "end": 4, 
+            "name": "Weapon", 
+            "text": "biological"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 5, 
+              "end": 6, 
+              "name": "Substance", 
+              "text": "chemical"
+            }
+          ], 
+          "target": {
+            "start": 5, 
+            "end": 6, 
+            "name": "Substance", 
+            "text": "chemical"
+          }
+        }, 
+        {
+          "frame_elements": [
+            {
+              "start": 6, 
+              "end": 7, 
+              "name": "Use", 
+              "text": "reconnaissance"
+            }, 
+            {
+              "start": 7, 
+              "end": 8, 
+              "name": "Vehicle", 
+              "text": "vehicle"
+            }
+          ], 
+          "target": {
+            "start": 7, 
+            "end": 8, 
+            "name": "Vehicle", 
+            "text": "vehicle"
+          }
+        }, 
+        {
+          "frame_elements": [], 
+          "target": {
+            "start": 11, 
+            "end": 12, 
+            "name": "Similarity", 
+            "text": "variant"
+          }
+        }
+      ], 
+      "text": [
+        "The", 
+        "nuclear", 
+        ",", 
+        "biological", 
+        "and", 
+        "chemical", 
+        "reconnaissance", 
+        "vehicle", 
+        "is", 
+        "the", 
+        "ninth", 
+        "variant", 
+        "."
+      ]
+    }
+  ]
 }

@@ -1,0 +1,23 @@
+body {
+  font-family: tahoma, helvetica, arial, sans-serif;
+  font-size: 11pt; }
+
+table {
+  border-collapse: collapse; }
+  table td, table th {
+    border-width: 1px;
+    border-style: solid;
+    padding: 5px; }
+  table td {
+    border-color: #EEE; }
+  table th {
+    border-color: #CCC; }
+
+.frame_element {
+  background-color: #CCC; }
+
+.target {
+  background-color: #444;
+  color: white; }
+  .target a {
+    color: white; }

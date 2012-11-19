@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+  <h1>Semafor Demo</h1>
+
+  <form method="GET" onSubmit="semViz.submitSentence(); return false;">
+    Type a sentence and press "Submit."
+    </br>
+    {{ form.sentence(rows=6, columns=200) }}
+    </br>
+    <input type="submit" value="Submit">
+  </form>
+  </br>
+  <div id="parse_table"></div>
+
+{% endblock %}

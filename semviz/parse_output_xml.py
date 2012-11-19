@@ -9,7 +9,11 @@ The json format is:
 {
     "sentences": [
         {
-            "text": sentence_1_text,
+            "text": [
+                sentence_1_token_1,
+                sentence_1_token_2,
+                ...
+            ],
             "frames": [
                 {
                     "target": {
@@ -56,6 +60,13 @@ import sys
 from xml.dom.minidom import parseString
 
 
+def convert_char_offset_to_word_offset(text, start, end):
+    """ Converts the given character offsets to word offsets """
+    start_word = text[:start].count(' ')
+    end_word = start_word + text[start:end].count(' ') + 1
+    return start_word, end_word
+
+
 def parse_label(label, text):
     """ Parse a Target or FE label """
     # the name of the Frame or Frame Element
@@ -66,12 +77,15 @@ def parse_label(label, text):
     end = int(label.getAttribute('end'))
     # the text of the span, included to increase readability
     span_text = text[start:end+1]
+    # convert char offsets to word offsets
+    start_word, end_word = convert_char_offset_to_word_offset(text, start, end)
     return {
         "name": name,
-        "start": start,
-        "end": end,
+        "start": start_word,
+        "end": end_word,
         "text": span_text
     }
+
 
 def parse_annotation_set(annotation_set_elt, text):
     """ Parses annotation of one frame for one sentence """
@@ -102,7 +116,7 @@ def parse_sentence(sentence_elt):
     frames = [parse_annotation_set(annotation_set, text)
               for annotation_set in annotation_sets]
     return {
-        "text": text,
+        "text": text.split(),
         "frames": frames
     }
 
@@ -117,7 +131,7 @@ def parse_to_dict(xml_string):
 
 def parse_to_json(xml_string):
     """ Parses the xml output of Semafor into json """
-    return dumps(parse_to_dict(xml_string), indent=4)
+    return dumps(parse_to_dict(xml_string), indent=2)
 
 
 def main(filename):
