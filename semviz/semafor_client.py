@@ -6,14 +6,16 @@ import socket
 from settings import SEMAFOR_HOST, SEMAFOR_PORT
 
 DEFAULT_BUFFER_SIZE = 8192
+DEFAULT_TIMEOUT = 3.0
 
 
 class SocketClient(object):
     """ A client for interacting with a running TCP socket server. """
-    def __init__(self, host, port, buffer_size=DEFAULT_BUFFER_SIZE):
+    def __init__(self, host, port, buffer_size=DEFAULT_BUFFER_SIZE, timeout=DEFAULT_TIMEOUT):
         self.host = host
         self.port = port
         self.buffer_size = buffer_size
+        self.timeout = timeout
 
     def make_request(self, request):
         """
@@ -21,6 +23,7 @@ class SocketClient(object):
         (end of response is indicated by an empty string)
         """
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client.settimeout(self.timeout)
         client.connect((self.host, self.port))
         client.sendall(request)
         client.shutdown(socket.SHUT_WR)
