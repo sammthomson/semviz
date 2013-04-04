@@ -1,6 +1,7 @@
 """
 Author: Sam Thomson (sthomson@cs.cmu.edu)
 """
+import codecs
 from contextlib import contextmanager
 import os
 import shutil
@@ -26,10 +27,10 @@ class MaltClient(object):
         with deleting(mkdtemp(suffix='XXXXXX', prefix='semafor.')) as temp_dir:
             input_filename = os.path.join(temp_dir, "sentence")
             output_filename = os.path.join(temp_dir, "conll")
-            with open(input_filename, 'w') as input_file:
+            with codecs.open(input_filename, 'w', encoding="utf8") as input_file:
                 input_file.write(u'\n'.join(sentences))
             os.system("cd %s && ./bin/runMalt.sh %s %s" %
                       (SEMAFOR_HOME, input_filename, temp_dir))
-            with open(output_filename) as output_file:
+            with codecs.open(output_filename, encoding="utf8") as output_file:
                 output = output_file.read()
             return output

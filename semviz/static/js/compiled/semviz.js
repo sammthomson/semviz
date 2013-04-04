@@ -19,7 +19,7 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
 
   FRAMENET_FRAME_URL_TEMPLATE = 'https://framenet2.icsi.berkeley.edu/fnReports/data/frame/{{name}}.xml';
 
-  PARSE_URL = "/api/v1/parse";
+  PARSE_URL = document.location.protocol + "//" + document.location.host + document.location.pathname + "/api/v1/parse";
 
   INPUT_BOX_SELECTOR = "textarea[name=sentence]";
 

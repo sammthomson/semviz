@@ -42,7 +42,7 @@ FRAME_TABLE_TEMPLATE = """
 # link to the docs for a frame
 FRAMENET_FRAME_URL_TEMPLATE = 'https://framenet2.icsi.berkeley.edu/fnReports/data/frame/{{name}}.xml'
 # url of api endpoint to parse a sentence
-PARSE_URL = "/api/v1/parse"
+PARSE_URL = document.location.protocol + "//" + document.location.host + document.location.pathname + "/api/v1/parse"
 # the input textarea inwhich the user types the sentence to parse
 INPUT_BOX_SELECTOR = "textarea[name=sentence]"
 # the div in which to put the rendered html table representing the parse

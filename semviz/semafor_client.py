@@ -6,7 +6,7 @@ import socket
 from settings import SEMAFOR_HOST, SEMAFOR_PORT
 
 DEFAULT_BUFFER_SIZE = 8192
-DEFAULT_TIMEOUT = 3.0
+DEFAULT_TIMEOUT = 10.0
 
 
 class SocketClient(object):

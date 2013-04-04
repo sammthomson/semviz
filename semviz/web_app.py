@@ -24,7 +24,7 @@ class SentenceInputForm(Form):
 @app.route("/api/v1/parse")
 def parse():
     text = request.args.get('sentence', '')
-    response =  client.get_parses(text.split(u'\n'))
+    response = client.get_parses(text.split(u'\n'))
     return jsonify({"sentences": response})
 
 
