@@ -47,6 +47,8 @@ PARSE_URL = "/api/v1/parse"
 INPUT_BOX_SELECTOR = "textarea[name=sentence]"
 # the div in which to put the rendered html table representing the parse
 FRAME_DISPLAY_SELECTOR = '#parse_table'
+SPINNER_SELECTOR = "#spinner"
+
 
 # Different types of cells in the table
 class Cell
@@ -151,10 +153,17 @@ class SemViz
 	###
 	submitSentence: ->
 		sentence = $(@inputArea).val()
+		spinner = $(SPINNER_SELECTOR)
+		spinner.show()
 		$.ajax(
 			url: @parseUrl,
 			data: {sentence: sentence},
-			success: (data) => $(@displayDiv).html(@render(data.sentences[0]))
+			success: (data) =>
+				spinner.hide()
+				$(@displayDiv).html(@render(data.sentences[0]))
+			error: (data) =>
+				spinner.hide()
+				$(@displayDiv).text("Error")
 		)
 
 

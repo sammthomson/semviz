@@ -11,7 +11,7 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
 
 
 (function() {
-  var AnnotationCell, BLANK, Cell, FRAMENET_FRAME_URL_TEMPLATE, FRAME_DISPLAY_SELECTOR, FRAME_TABLE_TEMPLATE, FrameElementCell, Header, INPUT_BOX_SELECTOR, PARSE_URL, SemViz, TargetCell, globalObject,
+  var AnnotationCell, BLANK, Cell, FRAMENET_FRAME_URL_TEMPLATE, FRAME_DISPLAY_SELECTOR, FRAME_TABLE_TEMPLATE, FrameElementCell, Header, INPUT_BOX_SELECTOR, PARSE_URL, SPINNER_SELECTOR, SemViz, TargetCell, globalObject,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -24,6 +24,8 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
   INPUT_BOX_SELECTOR = "textarea[name=sentence]";
 
   FRAME_DISPLAY_SELECTOR = '#parse_table';
+
+  SPINNER_SELECTOR = "#spinner";
 
   Cell = (function() {
 
@@ -239,31 +241,25 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
 
 
     SemViz.prototype.submitSentence = function() {
-      var sentence,
+      var sentence, spinner,
         _this = this;
       sentence = $(this.inputArea).val();
+      spinner = $(SPINNER_SELECTOR);
+      spinner.show();
       return $.ajax({
         url: this.parseUrl,
         data: {
           sentence: sentence
         },
         success: function(data) {
+          spinner.hide();
           return $(_this.displayDiv).html(_this.render(data.sentences[0]));
+        },
+        error: function(data) {
+          spinner.hide();
+          return $(_this.displayDiv).text("Error");
         }
       });
-      /*
-        pickColors = (numFrames, numFEs) ->
-          frameColors = $.xcolor.analogous('#da0', numFrames + 1, numFrames)
-          frameColors.shift()
-          frameElementColors = []
-          frameColors.forEach(function(color) {
-          colors = $.xcolor.analogous(color, numFEs + 1, numFrames * numFEs)
-            colors.shift()
-            frameElementColors.append(colors)
-          })
-          frameColors
-      */
-
     };
 
     return SemViz;
