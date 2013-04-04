@@ -7,52 +7,79 @@ increase readability.
 The json format is:
 
 {
-    "sentences": [
+  "sentences": [
+    {
+      "frames": [
         {
-            "text": [
-                sentence_1_token_1,
-                sentence_1_token_2,
-                ...
-            ],
-            "frames": [
+          "target": {
+            "start": 2,
+            "end": 4,
+            "name": "Temporal_collocation",
+            "text": "no longer"
+          },
+          "annotationSets": [
+            {
+              "frameElements": [],
+              "score": 38.67659171230181,
+              "rank": 0
+            }
+          ]
+        },
+        {
+          "target": {
+            "start": 1,
+            "end": 2,
+            "name": "Building_subparts",
+            "text": "kitchen"
+          },
+          "annotationSets": [
+            {
+              "frameElements": [
                 {
-                    "target": {
-                        'name': target_1_name,
-                        'start': target_1_start_char,
-                        'end': target_1_end_char,
-                        'text': target_1_text
-                    },
-                    "frame_elements": [
-                        {
-                            'name': frame_element_1_1_name,
-                            'start': frame_element_1_1_start_char,
-                            'end': frame_element_1_1_end_char,
-                            'text': frame_element_1_1_text
-                        },
-                        {
-                            'name': frame_element_1_2_name,
-                            'start': frame_element_1_2_start_char,
-                            'end': frame_element_1_2_end_char,
-                            'text': frame_element_1_2_text
-                        },
-                        ...
-                    ]
+                  "start": 1,
+                  "end": 2,
+                  "name": "Building_part",
+                  "text": "kitchen"
                 },
                 {
-                    "target": {
-                        'name': target_2_name,
-                        ...
-                    },
-                    ...
+                  "start": 0,
+                  "end": 1,
+                  "name": "Whole",
+                  "text": "My"
                 }
-                ...
-            ]
+              ],
+              "score": 18.21350901550272,
+              "rank": 0
+            }
+          ]
+        },
+        {
+          "target": {
+            "start": 4,
+            "end": 5,
+            "name": "Sensation",
+            "text": "smells"
+          },
+          "annotationSets": [
+            {
+              "frameElements": [],
+              "score": 36.702918021406155,
+              "rank": 0
+            }
+          ]
         }
-        ...
-    ]
+      ],
+      "tokens": [
+        "My",
+        "kitchen",
+        "no",
+        "longer",
+        "smells",
+        "."
+      ]
+    }
+  ]
 }
-
-
 Author: Sam Thomson (sthomson@cs.cmu.edu)
 """
 from json import dumps
@@ -97,13 +124,13 @@ def parse_annotation_set(annotation_set_elt, text):
     target_label = target_layer.getElementsByTagName('label')[0]
     target = parse_label(target_label, text)
     target['name'] = name
-    # extraxt the frame elements
+    # extract the frame elements
     frame_element_layer = [l for l in layers
                            if l.getAttribute('name') == "FE"][0]
     frame_element_labels = frame_element_layer.getElementsByTagName('label')
     return {
         "target": target,
-        "frame_elements": [parse_label(fe, text) for fe in frame_element_labels]
+        "frameElements": [parse_label(fe, text) for fe in frame_element_labels]
     }
 
 def parse_sentence(sentence_elt):
@@ -116,22 +143,22 @@ def parse_sentence(sentence_elt):
     frames = [parse_annotation_set(annotation_set, text)
               for annotation_set in annotation_sets]
     return {
-        "text": text.split(),
+        "tokens": text.split(),
         "frames": frames
     }
 
 
-def parse_to_dict(xml_string):
+def parse_to_dicts(xml_string):
     """ Parses the xml output of Semafor into a dict """
     dom = parseString(xml_string)
-    sentences = [parse_sentence(sentence)
-                 for sentence in dom.getElementsByTagName('sentence')]
-    return {"sentences": sentences}
+    return [parse_sentence(sentence)
+            for sentence in dom.getElementsByTagName('sentence')]
 
 
 def parse_to_json(xml_string):
     """ Parses the xml output of Semafor into json """
-    return dumps(parse_to_dict(xml_string), indent=2)
+    sentences = parse_to_dicts(xml_string)
+    return u'\n'.join(dumps(sentence) for sentence in sentences)
 
 
 def main(filename):

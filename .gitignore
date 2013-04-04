@@ -33,3 +33,10 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# IDEA
+.idea/
+*.iml
+
+# sass
+.sass-cache

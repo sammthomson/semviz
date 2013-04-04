@@ -103,7 +103,7 @@ class SemViz
 	Their column is based on their frame.
 	###
 	sortIntoTable: (sentence) ->
-		numTokens = sentence.text.length
+		numTokens = sentence.tokens.length
 		numFrames = sentence.frames.length
 		# initialize a 2d array with filler cells
 		table = ((BLANK for x in [0...numFrames]) for y in [0...numTokens])
@@ -113,7 +113,7 @@ class SemViz
 		# table, clearing room if necessary
 		# NB: this could be problematic if some overlap
 		for frame, frameId in sentence.frames
-			for fe in frame.frame_elements
+			for fe in frame.annotationSets[0].frameElements
 				table[fe.start][frameId] = new FrameElementCell(fe, frameId)
 				@makeRoom(table, fe, frameId)
 			target = frame.target
@@ -135,7 +135,7 @@ class SemViz
 			new TargetCell(frame.target, i) for frame, i in sentence.frames
 		)
 		tokenHeaders = (
-			new Header(token, i) for token, i in sentence.text
+			new Header(token, i) for token, i in sentence.tokens
 		)
 
 		rows = ({token: tokenHeaders[i], frames: row} for row, i in table)

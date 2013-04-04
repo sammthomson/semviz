@@ -4,13 +4,10 @@
     {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
-    <script src="{{ url_for('static', filename='js/jquery.xcolor.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/mustache.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery-Mustache.js') }}"></script>
-    {# <script src="{{ url_for('static', filename='js/semviz.js') }}"></script> #}
+    <script src="{{ url_for('static', filename='js/lib/jquery-1.7.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lib/mustache.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lib/jquery-Mustache.js') }}"></script>
     <script src="{{ url_for('static', filename='js/compiled/semviz.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/test_semviz.js') }}"></script>
 
     <title>semviz {% block title %}{% endblock %}</title>
     {% endblock %}

@@ -138,7 +138,7 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
 
     SemViz.prototype.sortIntoTable = function(sentence) {
       var fe, frame, frameId, numFrames, numTokens, table, target, x, y, _i, _j, _len, _len1, _ref, _ref1, _ref2;
-      numTokens = sentence.text.length;
+      numTokens = sentence.tokens.length;
       numFrames = sentence.frames.length;
       table = (function() {
         var _i, _results;
@@ -159,7 +159,7 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
       _ref1 = sentence.frames;
       for (frameId = _i = 0, _len = _ref1.length; _i < _len; frameId = ++_i) {
         frame = _ref1[frameId];
-        _ref2 = frame.frame_elements;
+        _ref2 = frame.annotationSets[0].frameElements;
         for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
           fe = _ref2[_j];
           table[fe.start][frameId] = new FrameElementCell(fe, frameId);
@@ -206,7 +206,7 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
       })();
       tokenHeaders = (function() {
         var _j, _len1, _ref, _results;
-        _ref = sentence.text;
+        _ref = sentence.tokens;
         _results = [];
         for (i = _j = 0, _len1 = _ref.length; _j < _len1; i = ++_j) {
           token = _ref[i];
@@ -251,6 +251,19 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
           return $(_this.displayDiv).html(_this.render(data.sentences[0]));
         }
       });
+      /*
+        pickColors = (numFrames, numFEs) ->
+          frameColors = $.xcolor.analogous('#da0', numFrames + 1, numFrames)
+          frameColors.shift()
+          frameElementColors = []
+          frameColors.forEach(function(color) {
+          colors = $.xcolor.analogous(color, numFEs + 1, numFrames * numFEs)
+            colors.shift()
+            frameElementColors.append(colors)
+          })
+          frameColors
+      */
+
     };
 
     return SemViz;
