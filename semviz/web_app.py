@@ -4,17 +4,21 @@ web views for semviz
 
 Author: Sam Thomson (sthomson@cs.cmu.edu)
 """
+import os
+import sys
+
 from flask import Flask, render_template, request, jsonify
 from flask.ext.wtf import Form, TextAreaField, Required
 
-from semafor_client import SemaforClient
-from malt_client import MaltClient
+sys.path.append(os.getcwd())  # I thought this happened by default?
+
+from semviz.services import MaltClient, MstClient, PosTagger, SemaforClient
 
 
 app = Flask(__name__)
 
-dep_parser = MaltClient()
-client = SemaforClient(dep_parser)
+#SEMAFOR_CLIENT = SemaforClient.create(MstClient.create(PosTagger()))
+SEMAFOR_CLIENT = SemaforClient.create(MaltClient())
 
 
 class SentenceInputForm(Form):
@@ -24,7 +28,7 @@ class SentenceInputForm(Form):
 @app.route("/api/v1/parse")
 def parse():
     text = request.args.get('sentence', '')
-    response = client.get_parses(text.split(u'\n'))
+    response = SEMAFOR_CLIENT.get_parses(text.split(u'\n'))
     return jsonify({"sentences": response})
 
 
