@@ -12,3 +12,7 @@ SEMAFOR_HOME = "/Users/sam/code/semafor/semafor"
 # MST Parser server settings
 MST_HOST = "localhost"
 MST_PORT = 12345
+
+# TurboParser settings
+#TURBO_PARSER_HOME = '/home/lingpenk/tbparser/TurboParser-thirdorder'
+TURBO_PARSER_HOME = '/Users/sam/code/TurboParser-thirdorder'

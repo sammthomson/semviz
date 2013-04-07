@@ -12,13 +12,14 @@ from flask.ext.wtf import Form, TextAreaField, Required
 
 sys.path.append(os.getcwd())  # I thought this happened by default?
 
-from semviz.services import MaltClient, MstClient, PosTagger, SemaforClient
+from semviz.services import MaltClient, MstClient, PosTagger, SemaforClient, TurboClient
 
 
 app = Flask(__name__)
 
 #SEMAFOR_CLIENT = SemaforClient.create(MstClient.create(PosTagger()))
-SEMAFOR_CLIENT = SemaforClient.create(MaltClient())
+#SEMAFOR_CLIENT = SemaforClient.create(MaltClient())
+SEMAFOR_CLIENT = SemaforClient.create(TurboClient(PosTagger()))
 
 
 class SentenceInputForm(Form):
