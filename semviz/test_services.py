@@ -45,8 +45,9 @@ CONLL = u"""1	My	My	PRP$	PRP$	-	2	NMOD	-	-
 
 
 class TestMstClient(TestCase):
+    maxDiff = None
+
     def test_get_parses(self):
-        self.maxDiff = None
         # set up a mocked MST server
         pos_tagger = Mock(spec=PosTagger)
         pos_tagger.tag_sentences = Mock(return_value=POS_TAGGED)
