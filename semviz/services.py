@@ -6,8 +6,10 @@ import json
 import os
 import socket
 from subprocess import Popen, PIPE
-from tempfile import mkdtemp
 import sys
+from tempfile import mkdtemp
+from threading import Lock
+
 from semviz.conll_to_json import encode_conll
 from semviz.pos_to_conll import pos_to_conll
 from semviz.settings import SEMAFOR_HOST, SEMAFOR_PORT, MST_HOST, MST_PORT, SEMAFOR_HOME, TURBO_PARSER_HOME
@@ -185,6 +187,7 @@ class TurboClient(object):
     A client for retrieving dependency parses from a TurboParser server
     """
     def __init__(self, pos_tagger):
+        self._lock = Lock()
         self._pos_tagger = pos_tagger
         # start up TurboParser
         self._turbo_parser = Popen(['%s/TurboParser' % TURBO_PARSER_HOME,
@@ -210,12 +213,14 @@ class TurboClient(object):
         """
         Gets one dependency parse as conll from a pos tagged conll sentence.
         """
-        self._turbo_parser.stdin.write((conll + u'\n').encode('utf8'))
-        # sentences are delineated by blank lines
-        results = []
-        line = self._turbo_parser.stdout.readline()
-        while line.strip():
-            results.append(line)
+        # one thread at a time, so stdin/out don't get mangled
+        with self._lock:
+            self._turbo_parser.stdin.write((conll + u'\n').encode('utf8'))
+            results = []
             line = self._turbo_parser.stdout.readline()
-        # Turbo only returns the first 8 columns, so add back cols 9-10
-        return u'\n'.join((line.strip()).decode('utf8') + u"\t_\t_" for line in results)
+            # sentences are delineated by blank lines
+            while line.strip():
+                results.append(line)
+                line = self._turbo_parser.stdout.readline()
+            # Turbo only returns the first 8 columns, so add back cols 9-10
+            return u'\n'.join((line.strip()).decode('utf8') + u"\t_\t_" for line in results)
