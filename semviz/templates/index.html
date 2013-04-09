@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-  <h1>Semafor Demo</h1>
+  <h1>Semafor/TurboParser Demo</h1>
 
   <form method="GET" onSubmit="semViz.submitSentence(); return false;">
     Type an English sentence and press "Submit."
@@ -15,6 +15,44 @@
       <img src="{{ url_for('static', filename='img/spinner.gif') }}">
   </div>
   </br>
-  <div id="parse_table"></div>
+  <div id="dependency_parse" style="display: none">
+      <h3>Dependency Parse</h3>
+      <div id="brat_parse"></div>
+  </div>
+  </br>
+  <div id="frame_semantic_parse" style="display: none">
+      <h3>Frame-semantic Parse</h3>
+      <div id="parse_table"></div>
+  </div>
+{% endblock %}
 
+{% block footer %}
+</br>
+<a href="http://www.ark.cs.cmu.edu/TurboParser/">TurboParser</a>
+</br>
+<a href="http://www.ark.cs.cmu.edu/SEMAFOR/">SEMAFOR</a>
+{% endblock %}
+
+
+{% block extra_scripts %}
+<script type="text/javascript">
+    // Initialize brat
+    var bratLocation = "{{ url_for('static', filename='brat') }}";
+
+    head.js(
+            // External libraries
+            bratLocation + '/lib/jquery.svg.min.js',
+            bratLocation + '/lib/jquery.svgdom.min.js',
+
+            // brat helper modules
+            bratLocation + '/js/configuration.js',
+            bratLocation + '/js/util.js',
+            bratLocation + '/lib/webfont.js',
+
+            // brat modules
+            bratLocation + '/js/dispatcher.js',
+            bratLocation + '/js/url_monitor.js',
+            bratLocation + '/js/visualizer.js'
+    );
+</script>
 {% endblock %}

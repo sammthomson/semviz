@@ -11,7 +11,7 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
 
 
 (function() {
-  var AnnotationCell, BLANK, Cell, FRAMENET_FRAME_URL_TEMPLATE, FRAME_DISPLAY_SELECTOR, FRAME_TABLE_TEMPLATE, FrameElementCell, Header, INPUT_BOX_SELECTOR, PARSE_URL, SPINNER_SELECTOR, SemViz, TargetCell, globalObject,
+  var AnnotationCell, BLANK, Cell, DEPENDENCY_CONTAINER_SELECTOR, DEPENDENCY_DISPLAY_ID, FRAMENET_FRAME_URL_TEMPLATE, FRAME_CONTAINER_SELECTOR, FRAME_DISPLAY_SELECTOR, FRAME_TABLE_TEMPLATE, FrameElementCell, Header, INPUT_BOX_SELECTOR, PARSE_URL, SPINNER_SELECTOR, SemViz, TargetCell, globalObject,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -22,6 +22,12 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
   PARSE_URL = document.location.protocol + "//" + document.location.host + document.location.pathname + "/api/v1/parse";
 
   INPUT_BOX_SELECTOR = "textarea[name=sentence]";
+
+  DEPENDENCY_CONTAINER_SELECTOR = '#dependency_parse';
+
+  DEPENDENCY_DISPLAY_ID = 'brat_parse';
+
+  FRAME_CONTAINER_SELECTOR = '#frame_semantic_parse';
 
   FRAME_DISPLAY_SELECTOR = '#parse_table';
 
@@ -107,10 +113,9 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
 
   SemViz = (function() {
 
-    function SemViz(parseUrl, inputArea, displayDiv) {
+    function SemViz(parseUrl, inputArea) {
       this.parseUrl = parseUrl != null ? parseUrl : PARSE_URL;
       this.inputArea = inputArea != null ? inputArea : INPUT_BOX_SELECTOR;
-      this.displayDiv = displayDiv != null ? displayDiv : FRAME_DISPLAY_SELECTOR;
     }
 
     /*
@@ -235,6 +240,17 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
     };
 
     /*
+      Renders the given dependency-parsed sentence using brat
+    */
+
+
+    SemViz.prototype.renderDependencyParse = function(sentence) {
+      $("#" + DEPENDENCY_DISPLAY_ID).remove();
+      $(DEPENDENCY_CONTAINER_SELECTOR).append('<div id="' + DEPENDENCY_DISPLAY_ID + '">');
+      return Util.embed(DEPENDENCY_DISPLAY_ID, {}, sentence, []);
+    };
+
+    /*
     	 Submits the content of the input textarea to the parse API endpoint,
     	 and then renders and displays the response.
     */
@@ -246,6 +262,8 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
       sentence = $(this.inputArea).val();
       spinner = $(SPINNER_SELECTOR);
       spinner.show();
+      $(FRAME_CONTAINER_SELECTOR).hide();
+      $(DEPENDENCY_CONTAINER_SELECTOR).hide();
       return $.ajax({
         url: this.parseUrl,
         data: {
@@ -253,11 +271,18 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
         },
         success: function(data) {
           spinner.hide();
-          return $(_this.displayDiv).html(_this.render(data.sentences[0]));
+          sentence = data.sentences[0];
+          $(FRAME_DISPLAY_SELECTOR).html(_this.render(sentence));
+          _this.renderDependencyParse(sentence);
+          $(FRAME_CONTAINER_SELECTOR).show();
+          return $(DEPENDENCY_CONTAINER_SELECTOR).show();
         },
         error: function(data) {
           spinner.hide();
-          return $(_this.displayDiv).text("Error");
+          $(FRAME_DISPLAY_SELECTOR).text("Error");
+          $(DEPENDENCY_CONTAINER_SELECTOR).text("Error");
+          $(FRAME_CONTAINER_SELECTOR).show();
+          return $(DEPENDENCY_CONTAINER_SELECTOR).show();
         }
       });
     };

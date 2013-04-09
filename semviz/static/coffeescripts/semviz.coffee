@@ -45,7 +45,11 @@ FRAMENET_FRAME_URL_TEMPLATE = 'https://framenet2.icsi.berkeley.edu/fnReports/dat
 PARSE_URL = document.location.protocol + "//" + document.location.host + document.location.pathname + "/api/v1/parse"
 # the input textarea inwhich the user types the sentence to parse
 INPUT_BOX_SELECTOR = "textarea[name=sentence]"
-# the div in which to put the rendered html table representing the parse
+# the div in which to put the rendered html table representing the frame-semantic parse
+DEPENDENCY_CONTAINER_SELECTOR = '#dependency_parse'
+DEPENDENCY_DISPLAY_ID = 'brat_parse'
+# the div in which to put the rendered html table representing the frame-semantic parse
+FRAME_CONTAINER_SELECTOR = '#frame_semantic_parse'
 FRAME_DISPLAY_SELECTOR = '#parse_table'
 SPINNER_SELECTOR = "#spinner"
 
@@ -84,8 +88,7 @@ Main functionality of the Semafor visualization demo
 class SemViz
 	constructor: (
 		@parseUrl = PARSE_URL,
-		@inputArea = INPUT_BOX_SELECTOR,
-		@displayDiv = FRAME_DISPLAY_SELECTOR
+		@inputArea = INPUT_BOX_SELECTOR
 	) ->
 
 	###
@@ -148,6 +151,16 @@ class SemViz
 		)
 
 	###
+  Renders the given dependency-parsed sentence using brat
+  ###
+	renderDependencyParse: (sentence) ->
+		# for some reason brat doesn't work twice on the same div
+		$("#"+DEPENDENCY_DISPLAY_ID).remove();
+		$(DEPENDENCY_CONTAINER_SELECTOR).append('<div id="'+DEPENDENCY_DISPLAY_ID+'">')
+		# render (unstyled) to div using brat
+		Util.embed(DEPENDENCY_DISPLAY_ID, {}, sentence, [])
+
+	###
 	 Submits the content of the input textarea to the parse API endpoint,
 	 and then renders and displays the response.
 	###
@@ -155,15 +168,24 @@ class SemViz
 		sentence = $(@inputArea).val()
 		spinner = $(SPINNER_SELECTOR)
 		spinner.show()
+		$(FRAME_CONTAINER_SELECTOR).hide()
+		$(DEPENDENCY_CONTAINER_SELECTOR).hide()
 		$.ajax(
 			url: @parseUrl,
 			data: {sentence: sentence},
 			success: (data) =>
 				spinner.hide()
-				$(@displayDiv).html(@render(data.sentences[0]))
+				sentence = data.sentences[0]  # TODO: multiple sentences
+				$(FRAME_DISPLAY_SELECTOR).html(@render(sentence))
+				@renderDependencyParse(sentence)
+				$(FRAME_CONTAINER_SELECTOR).show()
+				$(DEPENDENCY_CONTAINER_SELECTOR).show()
 			error: (data) =>
 				spinner.hide()
-				$(@displayDiv).text("Error")
+				$(FRAME_DISPLAY_SELECTOR).text("Error")
+				$(DEPENDENCY_CONTAINER_SELECTOR).text("Error")
+				$(FRAME_CONTAINER_SELECTOR).show()
+				$(DEPENDENCY_CONTAINER_SELECTOR).show()
 		)
 
 
