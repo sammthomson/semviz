@@ -187,6 +187,11 @@ class TurboClient(object):
     A client for retrieving dependency parses from a TurboParser server
     """
     def __init__(self, pos_tagger):
+        # turbo requires its libraries to be on the LD_LIBRARY_PATH
+        ld_library_path = os.environ.get('LD_LIBRARY_PATH', '')
+        turbo_lib_path = os.path.join(TURBO_PARSER_HOME, 'deps/local/lib')
+        if turbo_lib_path not in ld_library_path:
+            os.environ['LD_LIBRARY_PATH'] = ld_library_path + ':' + turbo_lib_path
         self._lock = Lock()
         self._pos_tagger = pos_tagger
         # start up TurboParser
