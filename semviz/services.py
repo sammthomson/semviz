@@ -13,7 +13,7 @@ from threading import Lock
 from semviz.conll_to_json import encode_conll
 from semviz.pos_to_conll import pos_to_conll
 from semviz.settings import SEMAFOR_HOST, SEMAFOR_PORT, MST_HOST, MST_PORT, SEMAFOR_HOME, TURBO_PARSER_HOME
-from semviz.utils import reshape, deleting
+from semviz.utils import reshape, deleting, timer
 
 NUM_CONLL_FIELDS = 10
 DEFAULT_BUFFER_SIZE = 8192
@@ -79,21 +79,25 @@ class SemaforClient(object):
         """ Convenience static constructor """
         return SemaforClient(dependency_parser, UnicodeSocketClient(host, port))
 
-    def get_parse(self, sentence):
-        """ Gets a frame-semantic parse as json from a sentence string. """
-        return self.get_parses([sentence])[0]
-
     def get_parses(self, sentences):
         """
         Gets frame-semantic parses as a list of dicts from a list of sentence
         strings.
         """
-        dependency_parses = self._dependency_parser.get_parses(sentences)
+        with timer() as dep_timer:
+            dependency_parses = self._dependency_parser.get_parses(sentences)
         brat_ready_parses = [encode_conll(parse) for parse in dependency_parses.split('\n\n')]
-        sentences = self._get_parses_from_conll(dependency_parses)
+        with timer() as frame_timer:
+            sentences = self._get_parses_from_conll(dependency_parses)
         for sentence, parse in zip(sentences, brat_ready_parses):
             sentence.update(parse)
-        return sentences
+        return {
+            "sentences": sentences,
+            "debug_info": {
+                "dependency_parser_elapsed_seconds": dep_timer['seconds'],
+                "frame_parser_elapsed_seconds": frame_timer['seconds'],
+            },
+        }
 
     def _get_parses_from_conll(self, dependency_parses):
         """

@@ -28,7 +28,7 @@ class SentenceInputForm(Form):
 def parse():
     text = request.args.get('sentence', '')
     response = SEMAFOR_CLIENT.get_parses(text.split(u'\n'))
-    return jsonify({"sentences": response})
+    return jsonify(response)
 
 
 @app.route("/")
