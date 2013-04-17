@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     {% block head %}
+      <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
       <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
       <link rel="stylesheet" href="{{ url_for('static', filename='brat/css/style-vis.css') }}">
 
@@ -11,7 +12,7 @@
     <script src="{{ url_for('static', filename='js/lib/jquery-Mustache.js') }}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='js/compiled/semviz.js') }}" type="text/javascript"></script>
 
-    <title>semviz {% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
 <body>
@@ -19,10 +20,10 @@
   	{% block content %}
   	{% endblock %}
   </div>
-  <div id="footer">
+  <footer>
     {% block footer %}
     {% endblock %}
-  </div>
+  </footer>
   {% block extra_scripts %}
   {% endblock %}
 </body>

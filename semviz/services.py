@@ -86,11 +86,13 @@ class SemaforClient(object):
         """
         with timer() as dep_timer:
             dependency_parses = self._dependency_parser.get_parses(sentences)
+        conll_parses = dependency_parses.split('\n\n')
         brat_ready_parses = [encode_conll(parse) for parse in dependency_parses.split('\n\n')]
         with timer() as frame_timer:
             sentences = self._get_parses_from_conll(dependency_parses)
-        for sentence, parse in zip(sentences, brat_ready_parses):
+        for sentence, conll, parse in zip(sentences, conll_parses, brat_ready_parses):
             sentence.update(parse)
+            sentence['conll'] = conll
         return {
             "sentences": sentences,
             "debug_info": {
@@ -202,8 +204,9 @@ class TurboClient(object):
         self._turbo_parser = Popen(['%s/TurboParser' % TURBO_PARSER_HOME,
                                     '--test',
                                     '--server',
-                                    '--file_model=%s/models/basic.model' % TURBO_PARSER_HOME,
+                                    '--file_model=%s/models/standard.model' % TURBO_PARSER_HOME,
                                     '--logtostderr'],
+                                   #bufsize=-1,
                                    stdin=PIPE,
                                    stdout=PIPE)
 
@@ -214,7 +217,8 @@ class TurboClient(object):
         sys.stderr.write("running turbo...\n")
         results = []
         for sentence in pos_tagged_conll:
-            results.append(self._request_one_sentence(sentence))
+            if sentence.strip():
+                results.append(self._request_one_sentence(sentence))
         sys.stderr.write("turbo parsing done.\n")
         return u'\n\n'.join(results)
 
@@ -224,7 +228,7 @@ class TurboClient(object):
         """
         # one thread at a time, so stdin/out don't get mangled
         with self._lock:
-            self._turbo_parser.stdin.write((conll + u'\n').encode('utf8'))
+            self._turbo_parser.stdin.write(conll.strip().encode('utf8') + '\n\n')
             results = []
             line = self._turbo_parser.stdout.readline()
             # sentences are delineated by blank lines
@@ -232,4 +236,4 @@ class TurboClient(object):
                 results.append(line)
                 line = self._turbo_parser.stdout.readline()
             # Turbo only returns the first 8 columns, so add back cols 9-10
-            return u'\n'.join((line.strip()).decode('utf8') + u"\t_\t_" for line in results)
+            return u'\n'.join(line.strip().decode('utf8') + u"\t_\t_" for line in results)

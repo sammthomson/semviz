@@ -1,36 +1,190 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}ARK Syntactic and Semantic Parsing Demo :: TurboParser + SEMAFOR{% endblock %}
 {% block content %}
-  <h1>Semafor/TurboParser Demo</h1>
 
-  <form method="GET" onSubmit="semViz.submitSentence(); return false;">
-    Type an English sentence and press "Submit."
-    </br>
-    {{ form.sentence(rows=6, columns=200) }}
-    </br>
-    <input type="submit" value="Submit">
+<script type="text/javascript" src="{{ url_for('static', filename='js/frameviz.js') }}"></script>
+<script type="text/javascript">
+function receivedDepJSON(sentence,debug_info) {
+	$('#turboparser').find('.runtime').html(' ['+Math.round(10*debug_info.dependency_parser_elapsed_seconds)/10+'s]');
+}
+function receivedFrameJSON(sentence,debug_info) {
+	$('#parse_horiz').html(buildSentence(sentence,'sent'));
+	/* Frameviz */
+	$('#parse_horiz .sentence .frameann:not(.targets) td:not(.filler)').hover(function() {
+		var thisClass = " "+$(this).attr("class")+" ";
+		var aId = thisClass.match(/ a(\d+) /)[1];
+		$(this).parent().parent().find('td:not(.a'+aId+')').fadeTo(0, 0.25);
+	  }, function() {
+		$(this).parent().parent().find('td').fadeTo(0, 1.0);
+	  });
+	$('#parse_horiz .sentence .frameann.targets td.framename').css({"cursor": 'pointer'}).click(function () {
+		// navigate to frame page on FrameNet website
+		window.open('https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame='+escape($(this).text()));
+	});
+	$('#parse_horiz .sentence .frameann.targets td.framename').hover(function() {
+		var thisId = $(this).attr("id");
+		var aId = thisId.substring(thisId.lastIndexOf("a")+1);
+		$(this).parent().parent().find("tr.frameann > td:not(.a"+aId+")").fadeTo(0, 0.25);
+	  }, function() {
+		$(this).parent().parent().find("tr.frameann > td").fadeTo(0, 1.0);
+	  });
+	$('#semafor').find('.runtime').html(' ['+Math.round(10*debug_info.frame_parser_elapsed_seconds)/10+'s]');
+}
+function updateFramevizView() {
+	var horiz = $('#framevizH').prop("checked");
+	$('#parse_horiz').toggle(horiz);
+	$('#parse_table').toggle(!horiz);
+}
+$(function () {
+	$('input[name=framevizdir]').change(updateFramevizView);
+	updateFramevizView();
+	$('h4').css({'cursor': "pointer"}).each(function (i) {
+		$(this).append('<span class="extender" style="' + (($(this).next('div,pre').css("display")=="none") ? 'display: inline' : 'display: none') + '">&nbsp;&raquo;</span>');
+	}).click(function () {
+		var h = this;
+		$(this).find('.extender').toggle(0, function () {
+			$(h).next('div,pre').toggle($(this).css("display")=="none");
+		});
+	});
+	if ($("#sentence").text())
+		$("form").submit();
+	
+});
+</script>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
+<style type="text/css">
+body,tbody { font-family: 'Open Sans', tahoma,helvetica,sans-serif; }
+body { margin: 0px; }
+#intro { max-width: 600px; margin-left: auto; margin-right: auto; }
+#output { margin-left: 50px; margin-right: 50px; }
+#coverimg,#spinner { text-align: center; }
+#coverimg { margin-top: 50px; margin-bottom: 50px; }
+h1 { text-align: center; }
+.runtime { font-weight: normal; }
+form { background-color: #555; width: 100%; padding: 0.5em; margin: 0px; }
+form > div { width: 50%; margin-left: auto; margin-right: auto; position: relative; }
+form > div > p { text-align: center; display: inline-block; }
+form #examples { color: #eee; padding-left: 10px; list-style-type: none; font-size: 10pt; display: inline-block; position: absolute; width: inherit; }
+form #examples a { color: #eee; text-decoration: none; }
+form #examples a:hover { color: #eee; text-decoration: underline; }
+input[type=submit] { width: 100%; height: 2em; font-weight: bold; font-size: 14pt; background-color: #0ae; color: #fff; }
+input[type=submit]:hover { background-color: #ea0; color: #fff; }
+input,textarea { border: solid 1px #000; }
+textarea { font-size: 12pt; }
+#details { font-size: 10pt; }
+footer { width: 100%; background-color: #ddd; padding: 0.5em; color: #777; margin-top: 2em; text-align: center; font-size: 9pt; }
+a { color: #0ae; }
+#credits { max-width: 800px; margin-left: auto; margin-right: auto; }
+#credits a { color: #777; }
+svg { border-color: #ea0; }
+svg g.span rect { stroke: none; }
+svg g.span text { fill: #08c; }
+svg g.span path.curly { stroke: none; height: 0px; }
+svg g.arcs text { fill: #e0a; }
+svg g.arcs path,#arrow_triangle_5_000000 { stroke: #777 !important; }
+
+/* Frameviz (horizontal frame view) */
+.frameviz table td,.frameviz table th { border: none; }
+.frameviz table.sentence { margin-left: auto; margin-right: auto; }
+.frameviz .sentence,.frameviz .sentence tbody { font-family: Helvetica,arial,sans-serif; }
+.frameviz .sentence tbody tr:first-child { font-family: verdana,Helvetica,arial,sans-serif; }
+.frameviz .sentence { border-collapse: separate; border-spacing: 0px 3px; }
+.frameviz .sentence th { font-weight: normal; }
+
+.frameviz .sentence .target { font-weight: bold; background-color: transparent; color: #000; }
+.frameviz .sentence .frameann .framename { font-size: 9pt; color: #fff; font-variant: small-caps; text-align: right; }
+.frameviz .sentence .frameann.targets .framename { color: #555; text-align: center; }
+.frameviz .sentence .frameann .arg { font-size: 9pt; text-align: center; border-top: solid 2.5px #a00; }
+.frameviz .sentence .frameann .arg + .arg { border-left: solid 1px #a00; }
+.frameviz .sentence .frameann .target { font-size: 9pt; font-weight: normal; background-color: #bbb !important; }
+.frameviz .sentence th,.sentence td { padding: 5px; }
+.frameviz .sentence .frameann .arg,.sentence .frameann .internalFiller { background-color: #ddd; }
+.frameviz .sentence .leftmost { /*border-top-left-radius: 8px;*/ border-bottom-left-radius: 8px; border-left: solid 1px #fff !important; }
+.frameviz .sentence .rightmost { /*border-top-right-radius: 8px;*/ border-bottom-right-radius: 8px; border-right: solid 1px #fff !important; }
+</style>
+
+<div id="intro">
+<h1>ARK Syntactic &amp; Semantic Parsing Demo</h1>
+<p>Here you can test two open-source linguistic structure analysis tools from the <a href="http://www.ark.cs.cmu.edu/">Noah’s&nbsp;ARK</a> research group at <a href="http://www.cmu.edu/">Carnegie&nbsp;Mellon&nbsp;University</a>:</p>
+<ul>
+	<li><b><a href="http://www.ark.cs.cmu.edu/TurboParser/">TurboParser</a></b> performs tokenization, part-of-speech tagging, and syntactic dependency parsing.</li>
+	<li>Using the syntactic parse as input, <b><a href="http://www.ark.cs.cmu.edu/SEMAFOR/">SEMAFOR</a></b> produces a <a href="http://framenet.icsi.berkeley.edu/">FrameNet</a>-style analysis of semantic predicate-argument structures.</li>
+</ul>
+<h4>details</h4>
+<div id="details" style="display: none">
+	<ul>
+		<li>For this demo, TurboParser was trained with the basic (arc-factored) model and configured to produce <a href="http://nlp.stanford.edu/software/stanford-dependencies.shtml">Basic Stanford Dependencies</a> (v. 1.6.2).</li>
+		<li><a href="http://www.maltparser.org/">MaltParser</a>’s <a href="http://www.maltparser.org/mco/english_parser/engmalt.html">engmalt model</a> (trained with Stanford Dependencies) was used to parse SEMAFOR’s training data for the version of SEMAFOR used in this demo.</li>
+		<li>This demo will not spend more than 20 seconds per query, so it may fail on very long input.</li>
+		<li>Though these parsers approach or attain state-of-the-art performance on standard benchmarks, 
+		they rarely predict completely accurate analyses—as can be seen for many of the provided example sentences.</li>
+	</ul>
+</div>
+</div>
+  <form method="GET" onSubmit="$('#coverimg').hide(); semViz.submitSentence(); return false;">
+  	<div>
+		<p>{{ form.sentence(rows=3, cols=60, placeholder='Type an English sentence.') }}
+			<br/>
+			<input type="submit" value="Parse!"/>
+		</p>
+		<ul id="examples">
+			<li><b>Examples:</b></li>
+			<li><a href="?sentence=Robots in popular culture are there to remind us of the awesomeness of unbounded human agency.">robots</a></li>
+			<li><a href="?sentence=The border-radius CSS property allows Web authors to define how rounded border corners are.">CSS <tt>border-radius</tt></a></li>
+			<li><a href="?sentence=Dumbledore slipped the Put-Outer back inside his cloak and set off down the street toward number four, where he sat down on the wall next to the cat.">Dumbledore</a></li>
+			<li>Lincoln: <a href="?sentence=After a series of debates in 1858 that gave national visibility to his opposition to the expansion of slavery, Lincoln lost a Senate race to his arch-rival, Stephen A. Douglas.">(1)</a>;
+				<a href="?sentence=Upon hearing the gunshot, Rathbone quickly jumped from his seat and tried to prevent Booth from escaping.">(2)</a>,
+				<a href="?sentence=Booth dropped the pistol and drew a knife, stabbing the major violently in the left forearm reaching the bone.">(3)</a>,
+				<a href="?sentence=Rathbone quickly recovered and again tried to grab Booth as he was preparing to jump from the sill of the box.">(4)</a></li>
+			<li><a href="?sentence=Professor Charles Fillmore, director of the FrameNet Project, was presented with the Lifetime Achievement Award by the Association for Computational Linguistics at its annual meeting yesterday in Jeju, South Korea.">Fillmore</a></li>
+		</ul>
+    </div>
   </form>
-  </br>
-  <div id="spinner" style="display:none">
-      <img src="{{ url_for('static', filename='img/spinner.gif') }}">
-  </div>
-  </br>
+<div id="output">
+  <p id="coverimg">
+  	  <a href="http://www.ark.cs.cmu.edu/"><img src="http://www.ark.cs.cmu.edu/ARK-logo.gif" style="width: 200px;" /></a>
+  </p>
+  <p id="spinner" style="display: none">
+      <img src="{{ url_for('static', filename='img/spinner.gif') }}"/>
+  </p>
   <div id="dependency_parse" style="display: none">
-      <h3>Dependency Parse</h3>
+      <h3 id="turboparser">Syntactic Dependency Parse from <a href="http://www.ark.cs.cmu.edu/TurboParser/">TurboParser</a><span class="runtime"></span></h3>
+      <h4>Tree View</h4>
       <div id="brat_parse"></div>
+      <h4>CoNLL Format</h4>
+      <div id="conll_parse" style="display: none;"></div>
   </div>
-  </br>
   <div id="frame_semantic_parse" style="display: none">
-      <h3>Frame-semantic Parse</h3>
-      <div id="parse_table"></div>
+      <h3 id="semafor">Frame-Semantic Parse from <a href="http://www.ark.cs.cmu.edu/SEMAFOR/">SEMAFOR</a><span class="runtime"></span></h3>
+      <h4>Grid View</h4>
+      <div id="parse_grid">
+      	<p>
+      	  <input id="framevizH" type="radio" name="framevizdir" checked="checked" /><label for="framevizH">Horizontal</label>
+      	  <input id="framevizV" type="radio" name="framevizdir" /><label for="framevizV">Vertical</label>
+        </p>
+	    <div id="parse_horiz" class="frameviz"></div>
+    	<div id="parse_table"></div>
+      </div>
+      <h4>JSON Format</h4>
+      <div id="parse_json" style="display: none;"></div>
+      <div id="pj" style="display: none;"></div>
   </div>
+</div>
+
 {% endblock %}
 
 {% block footer %}
-</br>
-<a href="http://www.ark.cs.cmu.edu/TurboParser/">TurboParser</a>
-</br>
-<a href="http://www.ark.cs.cmu.edu/SEMAFOR/">SEMAFOR</a>
+
+<p id="credits">
+<span style="font-variant: small-caps">This demo page</a></span> is thanks to: <a href="http://samthomson.com/">Sam Thomson</a> (front-end and SEMAFOR integration), 
+<a href="https://sites.google.com/site/lingpenk/">Lingpeng&nbsp;Kong</a> and <a href="http://www.cs.cmu.edu/~afm/">André&nbsp;Martins</a> (TurboParser integration), 
+<a href="http://victor.chahuneau.fr/">Victor Chahuneau</a> (server admin), and
+<a href="http://nathan.cl/">Nathan&nbsp;Schneider</a> (front-end). 
+<br/><span style="font-variant: small-caps"><a href="http://www.ark.cs.cmu.edu/TurboParser/">TurboParser</a></span> was built by <a href="http://www.cs.cmu.edu/~afm/">André Martins</a>.
+▪ <a href="http://www.ark.cs.cmu.edu/SEMAFOR/">SEMAFOR</a> was built by <a href="http://dipanjandas.com/">Dipanjan Das</a>, <a href="http://nathan.cl/">Nathan Schneider</a>, <a href="http://people.csail.mit.edu/desaic/">Desai Chen</a>, and <a href="http://samthomson.com/">Sam&nbsp;Thomson</a>.
+<br/><span style="font-variant: small-caps">Dependency parse trees</span> are visualized with <a href="http://brat.nlplab.org/">brat</a>. 
+</p>
+
 {% endblock %}
 
 

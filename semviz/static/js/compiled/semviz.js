@@ -11,7 +11,7 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
 
 
 (function() {
-  var AnnotationCell, BLANK, Cell, DEPENDENCY_CONTAINER_SELECTOR, DEPENDENCY_DISPLAY_ID, FRAMENET_FRAME_URL_TEMPLATE, FRAME_CONTAINER_SELECTOR, FRAME_DISPLAY_SELECTOR, FRAME_TABLE_TEMPLATE, FrameElementCell, Header, INPUT_BOX_SELECTOR, PARSE_URL, SPINNER_SELECTOR, SemViz, TargetCell, globalObject,
+    var AnnotationCell, BLANK, Cell, DEPENDENCY_CONTAINER_SELECTOR, DEPENDENCY_DISPLAY_ID, DEPENDENCY_CONLL_DISPLAY_ID, FRAME_JSON_DISPLAY_ID, FRAMENET_FRAME_URL_TEMPLATE, FRAME_CONTAINER_SELECTOR, FRAME_DISPLAY_SELECTOR, FRAME_TABLE_TEMPLATE, FrameElementCell, Header, INPUT_BOX_SELECTOR, PARSE_URL, SPINNER_SELECTOR, SemViz, TargetCell, globalObject,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -26,6 +26,10 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
   DEPENDENCY_CONTAINER_SELECTOR = '#dependency_parse';
 
   DEPENDENCY_DISPLAY_ID = 'brat_parse';
+
+  DEPENDENCY_CONLL_DISPLAY_ID = 'conll_parse';
+  
+  FRAME_JSON_DISPLAY_ID = 'parse_json';
 
   FRAME_CONTAINER_SELECTOR = '#frame_semantic_parse';
 
@@ -244,10 +248,27 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
     */
 
 
-    SemViz.prototype.renderDependencyParse = function(sentence) {
-      $("#" + DEPENDENCY_DISPLAY_ID).remove();
-      $(DEPENDENCY_CONTAINER_SELECTOR).append('<div id="' + DEPENDENCY_DISPLAY_ID + '">');
+    SemViz.prototype.renderDependencyParse = function(sentence,debug_info) {
+      $("#" + DEPENDENCY_DISPLAY_ID).replaceWith('<div id="' + DEPENDENCY_DISPLAY_ID + '">');
       return Util.embed(DEPENDENCY_DISPLAY_ID, {}, sentence, []);
+    };
+
+    SemViz.prototype.renderConllDependencyParse = function(sentence,debug_info) {
+      var $placeholder = $("#" + DEPENDENCY_CONLL_DISPLAY_ID);
+      var display = $placeholder.css("display");
+      $placeholder.replaceWith('<pre id="' + DEPENDENCY_CONLL_DISPLAY_ID + '" style="display: '+display+'">' + sentence['conll'] + '</pre>');
+      receivedDepJSON(sentence,debug_info);
+	return true;
+    };
+    
+    SemViz.prototype.renderFrameJSON = function(sentence,debug_info) {
+      var frameJ = {"tokens": sentence["tokens"], "frames": sentence["frames"]}
+      var frameJS = JSON.stringify(frameJ, undefined, 2);
+      var $placeholder = $("#" + FRAME_JSON_DISPLAY_ID);
+      var display = $placeholder.css("display");
+      $placeholder.replaceWith('<pre id="' + FRAME_JSON_DISPLAY_ID + '" style="display: '+display+'">' + frameJS + '</pre>').css({"display": display});
+      receivedFrameJSON(sentence,debug_info);
+	return true;
     };
 
     /*
@@ -273,7 +294,9 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
           spinner.hide();
           sentence = data.sentences[0];
           $(FRAME_DISPLAY_SELECTOR).html(_this.render(sentence));
-          _this.renderDependencyParse(sentence);
+          _this.renderDependencyParse(sentence,data.debug_info);
+          _this.renderConllDependencyParse(sentence,data.debug_info);
+          _this.renderFrameJSON(sentence,data.debug_info);
           $(FRAME_CONTAINER_SELECTOR).show();
           return $(DEPENDENCY_CONTAINER_SELECTOR).show();
         },
@@ -298,7 +321,6 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
   }
 
   globalObject.SemViz = SemViz;
-
   globalObject.semViz = new SemViz();
 
 }).call(this);

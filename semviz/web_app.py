@@ -33,9 +33,9 @@ def parse():
 
 @app.route("/")
 def home():
-    form = SentenceInputForm(csrf_enabled=False)
+    form = SentenceInputForm(request.args, csrf_enabled=False)
     return render_template('index.html', form=form)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
