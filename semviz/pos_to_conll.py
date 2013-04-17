@@ -64,10 +64,14 @@ def pos_to_conll(pos_tokens):
     output = []
     for i, token in enumerate(pos_tokens.split()):
         form, postag = token.split('_')
-        conll_token = default_conll_token(
+        if postag == "PRP" or postag == "PRP$" or len(postag) <= 2:
+            cpostag = postag
+        else:
+            cpostag = postag[0:2]
+	conll_token = default_conll_token(
             id=unicode(i + 1),
             form=form,
-            cpostag=postag,
+            cpostag=cpostag,
             postag=postag)
         output.append(u'\t'.join(field for field in conll_token))
     output.append(u'')
