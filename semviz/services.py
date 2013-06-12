@@ -1,5 +1,6 @@
 """
 Author: Sam Thomson (sthomson@cs.cmu.edu)
+        Lingpeng Kong (lingpenk@cs.cmu.edu)
 """
 import codecs
 import json
@@ -12,7 +13,7 @@ from threading import Lock
 
 from semviz.conll_to_json import encode_conll
 from semviz.pos_to_conll import pos_to_conll
-from semviz.settings import SEMAFOR_HOST, SEMAFOR_PORT, MST_HOST, MST_PORT, SEMAFOR_HOME, TURBO_PARSER_HOME
+from semviz.settings import SEMAFOR_HOST, SEMAFOR_PORT, MST_HOST, MST_PORT, SEMAFOR_HOME, TURBO_PARSER_HOME, TAGGING_SCRIPT_HOME
 from semviz.utils import reshape, deleting, timer
 
 NUM_CONLL_FIELDS = 10
@@ -120,8 +121,8 @@ class PosTagger(object):
             output_filename = os.path.join(temp_dir, "pos.tagged")
             with codecs.open(input_filename, 'w', encoding="utf8") as input_file:
                 input_file.write(u'\n'.join(sentences))
-            os.system("cd %s && ./bin/tokenizeAndPosTag.sh %s %s" %
-                      (SEMAFOR_HOME, input_filename, temp_dir))
+            os.system("cd %s && ./tokenize_and_postag.sh %s %s" %
+                      (TAGGING_SCRIPT_HOME, input_filename, output_filename))
             with codecs.open(output_filename, encoding="utf8") as output_file:
                 output = output_file.read()
             return output
