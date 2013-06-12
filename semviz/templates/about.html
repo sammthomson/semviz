@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% block title %}About Syntactic and Semantic Parsing{% endblock %}
+{% block content %}
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/frameviz.js') }}"></script>
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
+<style type="text/css">
+body,tbody { font-family: 'Open Sans', tahoma,helvetica,sans-serif; }
+body { margin: 0px; }
+#intro { max-width: 650px; margin-left: auto; margin-right: auto; }
+#output { margin-left: 50px; margin-right: 50px; }
+#coverimg,#spinner { text-align: center; }
+#coverimg { margin-top: 50px; margin-bottom: 50px; }
+h1 { text-align: center; }
+.runtime { font-weight: normal; }
+form { background-color: #555; width: 100%; padding: 0.5em 0 0.5em 0; margin: 0px; }
+form > div { width: 50%; margin-left: auto; margin-right: auto; position: relative; }
+form > div > p { text-align: center; display: inline-block; }
+form #examples { color: #eee; padding-left: 10px; list-style-type: none; font-size: 10pt; display: inline-block; position: absolute; width: inherit; }
+form #examples a { color: #eee; text-decoration: none; }
+form #examples a:hover { color: #eee; text-decoration: underline; }
+input[type=submit] { width: 100%; height: 2em; font-weight: bold; font-size: 14pt; background-color: #0ae; color: #fff; }
+input[type=submit]:hover { background-color: #ea0; color: #fff; }
+input,textarea { border: solid 1px #000; }
+textarea { font-size: 12pt; }
+#details { font-size: 10pt; }
+footer { width: 100%; background-color: #ddd; padding: 0.5em 0 0.5em 0; color: #777; margin-top: 2em; text-align: center; font-size: 9pt; }
+a { color: #0ae; }
+#credits { max-width: 800px; margin-left: auto; margin-right: auto; }
+#credits a { color: #777; }
+svg { border: none; }
+svg g.span rect { stroke: none; }
+svg g.span text { fill: #08c; }
+svg g.span path.curly { stroke: none; height: 0px; }
+svg g.arcs text { fill: #e0a; }
+svg g.arcs path,#arrow_triangle_5_000000 { stroke: #777 !important; }
+svg g.sentnum { display: none; }
+
+/* Frameviz (horizontal frame view) */
+.frameviz table td,.frameviz table th { border: none; }
+.frameviz table.sentence { margin-left: auto; margin-right: auto; }
+.frameviz .sentence,.frameviz .sentence tbody { font-family: Helvetica,arial,sans-serif; }
+.frameviz .sentence tbody tr:first-child { font-family: verdana,Helvetica,arial,sans-serif; }
+.frameviz .sentence { border-collapse: separate; border-spacing: 0px 3px; }
+.frameviz .sentence .word { font-weight: normal; border-bottom: solid 2.5px transparent; }
+
+.frameviz .sentence .target { font-weight: bold; background-color: transparent; color: #000; }
+.frameviz .sentence .frameann .framename { font-size: 11pt; color: #fff; font-variant: small-caps; text-align: right; }
+.frameviz .sentence .frameann.targets .framename { color: #555; text-align: center; }
+.frameviz .sentence .frameann .arg { font-size: 10pt; text-align: center; border-top: solid 2.5px #a00; }
+.frameviz .sentence .word.hoveredarg { border-bottom: solid 2.5px #a00; }
+.frameviz .sentence .frameann .arg + .arg { border-left: solid 1px #a00; }
+.frameviz .sentence .frameann .target { font-size: 10pt; font-weight: normal; background-color: #bbb !important; }
+.frameviz .sentence th,.sentence td { padding: 5px; }
+.frameviz .sentence .frameann .arg,.sentence .frameann .internalFiller { background-color: #ddd; }
+.frameviz .sentence .leftmost { /*border-top-left-radius: 8px;*/ border-bottom-left-radius: 8px; border-left: solid 1px #fff !important; }
+.frameviz .sentence .rightmost { /*border-top-right-radius: 8px;*/ border-bottom-right-radius: 8px; border-right: solid 1px #fff !important; }
+.frameviz a { color: #000; text-decoration: none; }
+
+.tagset td { border: none; }
+.tagset dl { margin-top: 0; margin-bottom: 0; }
+.tagset dl,.plainfont { font-family: 'Open Sans', tahoma,helvetica,sans-serif; white-space: pre-line; }
+.tagset td > dl > dt { font-size: 10pt; }
+.tagset dt { font-weight: bold; display: inline-block; }
+.tagset dt:after { content: ":"; }
+.tagset dd dt { font-weight: normal; font-style: italic; }
+.tagset dd dt i { font-style: normal; }
+.tagset dd { font-family: monospace; display: inline-block; margin-left: 1em; }
+
+#frame ~ div { text-align: center; }
+#frame ~ div > div { display: inline-block; margin: .5em; vertical-align: middle; }
+#frame ~ div ul { border: solid 1px #000; text-align: left; padding-left: 1em; padding-right: 1em; font-size: 10pt; }
+#frame ~ div ul li:first-child { margin-left: -.5em; }
+#frame ~ div ul li { font-weight: bold; list-style-type: none; }
+#frame ~ div ul li i { font-weight: normal; }
+</style>
+
+<div id="intro">
+<h1>About Syntactic &amp; Semantic Parsing</h1>
+<p>This page explains the representations used by <a href="http://www.ark.cs.cmu.edu/TurboParser/">TurboParser</a> 
+and <a href="http://www.ark.cs.cmu.edu/SEMAFOR/">SEMAFOR</a> in the <a href="../">ARK&nbsp;Syntactic&nbsp;&amp;&nbsp;Semantic Parsing Demo</a>.</p>
+
+<h2 id="pos">Part-of-speech tags</h2>
+
+<p>A <b>part-of-speech</b> (POS) category such “noun,” “verb,” or “preposition” designates a group of words with certain morphosyntactic properties.
+Several POS categorization schemes, or <b>tagsets</b>, exist for English and other languages.</p>
+
+<p>TurboTagger assigns a <a href="http://www.computing.dcu.ie/~acahill/tagset.html">Penn Treebank POS tag</a> to each word in the input sentence.
+The most important members of this tagset are:</p>
+
+<table id="tagset" class="tagset">
+<tr><td>
+<dl><dt>noun</dt>
+  <dd><dl><dt>singular/mass</dt><dd>NN<span class="plainfont">  (common), </span>NNP<span class="plainfont">  (proper)</span></dd>
+  <dt>plural</dt><dd>NNS<span class="plainfont">  (common), </span>NNPS<span class="plainfont">  (proper)</span></dd></dl></dd>
+<dt>pronoun</dt>
+  <dd><dl><dt>personal</dt><dd>PRP</dd>
+  	<dt>possessive</dt><dd>PRP$</dd>
+	<dt><span style="font-variant: small-caps">wh</span></dt><dd>WP</dd></dl></dd>
+<dt>adjective</dt><dd>JJ</dd>
+<dt>determiner</dt><dd>DT</dd>
+<dt>possessive ending</dt><dd>POS</dd>
+<dt>cardinal number</dt><dd>CD</dd></dl>
+</td><td>
+<dl><dt>verb</dt>
+  <dd><dl><dt>bare form</dt><dd>VB</dd>
+  <dt>present tense</dt><dd>VBP<span class="plainfont"> (general), </span>VBZ<span class="plainfont"> (3rd person singular)</span></dd>
+  <dt>past tense</dt><dd>VBD</dd>
+  <dt><i>-ing</i> form</dt><dd>VBG</dd>
+  <dt>past participle/passive form</dt><dd>VBN</dd>
+  <dt>modal</dt><dd>MD</dd></dl></dd>
+<dt>adverb</dt><dd>RB</dd>
+<dt>coordinating conjunction</dt><dd>CC</dd>
+<dt><i>to</i></dt><dd>TO</dd>
+<dt>preposition or subordinating conjunction</dt><dd>IN</dd></dl>
+</td></tr>
+</table>
+
+<p>Included in the training data for the version of TurboTagger used in this demo 
+are corpora which supplement the Penn Treebank list with additional tags:</p>
+
+<table id="tagset2" class="tagset"><tr>
+<td style="width: 40%;"><dl><dt>hyphen in split compounds</dt><dd>HYPH</dd>
+<dt>affix</dt><dd>AFX</dd></dl><td>
+<dt>electronic address (URL or email)</dt><dd>ADD</dd>
+<dt>(superfluous) non-final punctuation</dt><dd>NFP</dd></dl></td>
+</tr></table>
+
+<p>See <a href="http://projects.ldc.upenn.edu/gale/task_specifications/ettb_guidelines.pdf">[1]</a>, 
+<a href="http://www.ldc.upenn.edu/Catalog/docs/LDC2012T13/WebtextTBAnnotationGuidelines.pdf">[2]</a> 
+for further details.</p>
+
+<h2 id="dep">Dependency parses</h2>
+
+<p>A dependency parse represents the syntactic structure of a sentence in terms of 
+binary relations between tokens. For example, a verb is linked to its dependents (arguments/modifiers). 
+Collectively, these relations form a tree or tree-like graph.</p>
+<p><a href="http://nlp.stanford.edu/software/stanford-dependencies.shtml">Stanford dependencies</a> 
+are a representation that categorizes/labels the head-dependent relation types; these include 
+<tt>nsubj</tt> (nominal subject), <tt>dobj</tt> (direct object), <tt>iobj</tt> (indirect object), <tt>aux</tt> (auxiliary verb), <tt>prep</tt> (prepositional phrase), <tt>pobj</tt> (object of preposition), <tt>det</tt> (determiner), <tt>nn</tt> (noun compound modifier), <tt>amod</tt> (adjectival modifier), <tt>advmod</tt> (adverbial modifier), and <tt>punct</tt> (punctuation).
+Here is an example parse:</p>
+<svg version="1.1" style="width: 500px; height: 80.5px;" class=""><!-- document: undefined/undefined --><defs><filter id="Gaussian_Blur"><fegaussianblur stddeviation="2" in="SourceGraphic"/></filter><marker id="drag_arrow" refX="5" refY="2.5" markerWidth="5" markerHeight="5" orient="auto" markerUnits="strokeWidth" class="drag_fill"><polyline points="0,0 5,2.5 0,5 0.2,2.5"/></marker><marker id="arrow_triangle_5_000000" refX="5" refY="2.5" markerWidth="5" markerHeight="5" orient="auto" markerUnits="strokeWidth" fill="#000000"><polyline points="0,0 5,2.5 0,5 0.4166666666666667,2.5"/></marker></defs><g class="background"><rect x="0" y="4.30078125" width="1308" height="78.5" class="background0"/></g><g class="glow"/><g class="highlight"><rect x="24" y="64.30078125" width="32.77734375" height="15.5" fill="#ffffff" rx="3" ry="3"/><rect x="60.77734375" y="64.30078125" width="23.703125" height="15.5" fill="#ffffff" rx="3" ry="3"/><rect x="88.48046875" y="64.30078125" width="28.6171875" height="15.5" fill="#ffffff" rx="3" ry="3"/><rect x="161.9835958480835" y="64.30078125" width="22.99609375" height="15.5" fill="#ffffff" rx="3" ry="3"/><rect x="211.9617223739624" y="64.30078125" width="37.140625" height="15.5" fill="#ffffff" rx="3" ry="3"/><rect x="253.1039113998413" y="64.30078125" width="21.10546875" height="15.5" fill="#ffffff" rx="3" ry="3"/><rect x="285.5523490905762" y="64.30078125" width="60.6875" height="15.5" fill="#ffffff" rx="3" ry="3"/><rect x="402.61328887939453" y="64.30078125" width="10.26171875" height="15.5" fill="#ffffff" rx="3" ry="3"/><rect x="424.36328887939453" y="64.30078125" width="40.71875" height="15.5" fill="#ffffff" rx="3" ry="3"/><rect x="469.08203887939453" y="64.30078125" width="7.09765625" height="15.5" fill="#ffffff" rx="3" ry="3"/></g><g class="text"><text x="0" y="0"><tspan x="24" y="76.5" data-chunk-id="0" class="">Have </tspan><tspan x="60.77734375" y="76.5" data-chunk-id="1">you </tspan><tspan x="88.48046875" y="76.5" data-chunk-id="2">ever </tspan><tspan x="161.9835958480835" y="76.5" data-chunk-id="3">lied </tspan><tspan x="211.9617223739624" y="76.5" data-chunk-id="4">about </tspan><tspan x="253.1039113998413" y="76.5" data-chunk-id="5" class="">the </tspan><tspan x="285.5523490905762" y="76.5" data-chunk-id="6" class="">President </tspan><tspan x="402.61328887939453" y="76.5" data-chunk-id="7">'s </tspan><tspan x="424.36328887939453" y="76.5" data-chunk-id="8">health </tspan><tspan x="469.08203887939453" y="76.5" data-chunk-id="9">?</tspan></text></g><g transform="translate(0, 76)"><g/><g transform="translate(24, 0)"><g/><g class="span"><rect x="3.5" y="-29.8984375" width="24.848438262939453" height="12.19921875" class="span_NNP span_default" fill="#ffffff" stroke="#000000" rx="2" ry="1" data-span-id="T1" data-fragment-id="0"/><text x="16.5" y="-20.5" fill="#000000">NNP</text><path d="M0,-12.69921875C0,-16.69921875 16.5,-12.69921875 16.5,-16.69921875C16.5,-12.69921875 32.77734375,-16.69921875 32.77734375,-12.69921875" class="curly" stroke="#000000"/></g></g><g transform="translate(60.77734375, 0)"><g/><g class="span"><rect x="0.5" y="-29.8984375" width="22.803125381469727" height="12.19921875" class="span_PRP span_default" fill="#ffffff" stroke="#000000" rx="2" ry="1" data-span-id="T2" data-fragment-id="0"/><text x="11.5" y="-20.5" fill="#000000">PRP</text><path d="M0,-12.69921875C0,-16.69921875 11.5,-12.69921875 11.5,-16.69921875C11.5,-12.69921875 23.703125,-16.69921875 23.703125,-12.69921875" class="curly" stroke="#000000"/></g></g><g transform="translate(88.48046875, 0)"><g/><g class="span"><rect x="5.5" y="-29.8984375" width="16.942187309265137" height="12.19921875" class="span_RB span_default" fill="#ffffff" stroke="#000000" rx="2" ry="1" data-span-id="T3" data-fragment-id="0"/><text x="14.5" y="-20.5" fill="#000000">RB</text><path d="M0,-12.69921875C0,-16.69921875 14.5,-12.69921875 14.5,-16.69921875C14.5,-12.69921875 28.6171875,-16.69921875 28.6171875,-12.69921875" class="curly" stroke="#000000"/></g></g><g transform="translate(161.9835958480835, 0)"><g/><g class="span"><rect x="0.5" y="-29.8984375" width="23.834375381469727" height="12.19921875" class="span_VBD span_default" fill="#ffffff" stroke="#000000" rx="2" ry="1" data-span-id="T4" data-fragment-id="0"/><text x="11.5" y="-20.5" fill="#000000">VBD</text><path d="M0,-12.69921875C0,-16.69921875 11.5,-12.69921875 11.5,-16.69921875C11.5,-12.69921875 22.99609375,-16.69921875 22.99609375,-12.69921875" class="curly" stroke="#000000"/></g></g><g transform="translate(211.9617223739624, 0)"><g/><g class="span"><rect x="10.5" y="-29.8984375" width="15.34375" height="12.19921875" class="span_IN span_default" fill="#ffffff" stroke="#000000" rx="2" ry="1" data-span-id="T5" data-fragment-id="0"/><text x="18.5" y="-20.5" fill="#000000">IN</text><path d="M0,-12.69921875C0,-16.69921875 18.5,-12.69921875 18.5,-16.69921875C18.5,-12.69921875 37.140625,-16.69921875 37.140625,-12.69921875" class="curly" stroke="#000000"/></g></g><g transform="translate(253.1039113998413, 0)"><g/><g class="span"><rect x="2.5" y="-29.8984375" width="16.770312309265137" height="12.19921875" class="span_DT span_default" fill="#ffffff" stroke="#000000" rx="2" ry="1" data-span-id="T6" data-fragment-id="0"/><text x="10.5" y="-20.5" fill="#000000">DT</text><path d="M0,-12.69921875C0,-16.69921875 10.5,-12.69921875 10.5,-16.69921875C10.5,-12.69921875 21.10546875,-16.69921875 21.10546875,-12.69921875" class="curly" stroke="#000000"/></g></g><g transform="translate(285.5523490905762, 0)"><g/><g class="span"><rect x="17.5" y="-29.8984375" width="24.848438262939453" height="12.19921875" class="span_NNP span_default" fill="#ffffff" stroke="#000000" rx="2" ry="1" data-span-id="T7" data-fragment-id="0"/><text x="30.5" y="-20.5" fill="#000000">NNP</text><path d="M0,-12.69921875C0,-16.69921875 30.5,-12.69921875 30.5,-16.69921875C30.5,-12.69921875 60.6875,-16.69921875 60.6875,-12.69921875" class="curly" stroke="#000000"/></g></g><g transform="translate(402.61328887939453, 0)"><g/><g class="span"><rect x="-5.5" y="-29.8984375" width="23.25" height="12.19921875" class="span_POS span_default" fill="#ffffff" stroke="#000000" rx="2" ry="1" data-span-id="T8" data-fragment-id="0"/><text x="5.5" y="-20.5" fill="#000000">POS</text><path d="M0,-12.69921875C0,-16.69921875 5.5,-12.69921875 5.5,-16.69921875C5.5,-12.69921875 10.26171875,-16.69921875 10.26171875,-12.69921875" class="curly" stroke="#000000"/></g></g><g transform="translate(424.36328887939453, 0)"><g/><g class="span"><rect x="11.5" y="-29.8984375" width="18.71250057220459" height="12.19921875" class="span_NN span_default" fill="#ffffff" stroke="#000000" rx="2" ry="1" data-span-id="T9" data-fragment-id="0"/><text x="20.5" y="-20.5" fill="#000000">NN</text><path d="M0,-12.69921875C0,-16.69921875 20.5,-12.69921875 20.5,-16.69921875C20.5,-12.69921875 40.71875,-16.69921875 40.71875,-12.69921875" class="curly" stroke="#000000"/></g></g><g transform="translate(469.08203887939453, 0)"><g/><g class="span"><rect x="0.5" y="-29.8984375" width="6.371875047683716" height="12.19921875" class="span_. span_default" fill="#ffffff" stroke="#000000" rx="2" ry="1" data-span-id="T10" data-fragment-id="0"/><text x="3.5" y="-20.5" fill="#000000">.</text><path d="M0,-12.69921875C0,-16.69921875 3.5,-12.69921875 3.5,-16.69921875C3.5,-12.69921875 7.09765625,-16.69921875 7.09765625,-12.69921875" class="curly" stroke="#000000"/></g></g><g class="arcs"><g data-from="T4" data-to="T3"><text x="136.70312595367432" y="-25.474609375" fill="#000000" data-arc-role="advmod" data-arc-origin="T4" data-arc-target="T3" data-arc-ed="R3">advmod</text><path d="M117.92265605926514,-28.5L116.92265605926514,-28.5Q113.92265605926514,-28.5 110.92265605926514,-28.8984375" marker-end="url(#arrow_triangle_5_000000)" style="stroke: #000000"/><path d="M155.4835958480835,-28.5L156.4835958480835,-28.5Q159.4835958480835,-28.5 162.4835958480835,-23.798828125" style="stroke: #000000"/></g><g data-from="T4" data-to="T5"><text x="204.3898468017578" y="-25.474609375" fill="#000000" data-arc-role="prep" data-arc-origin="T4" data-arc-target="T5" data-arc-ed="R4">prep</text><path d="M193.31797122955322,-28.5L192.31797122955322,-28.5Q189.31797122955322,-28.5 186.31797122955322,-23.798828125" style="stroke: #000000"/><path d="M215.4617223739624,-28.5L216.4617223739624,-28.5Q219.4617223739624,-28.5 222.4617223739624,-28.8984375" marker-end="url(#arrow_triangle_5_000000)" style="stroke: #000000"/></g><g data-from="T7" data-to="T8" class=""><text x="362.5070381164551" y="-25.474609375" fill="#000000" data-arc-role="possessive" data-arc-origin="T7" data-arc-target="T8" data-arc-ed="R7">possessive</text><path d="M337.6507873535156,-28.5L336.6507873535156,-28.5Q332.2757873535156,-28.5 327.9007873535156,-23.798828125" style="stroke: #000000"/><path d="M387.36328887939453,-28.5L388.36328887939453,-28.5Q392.73828887939453,-28.5 397.11328887939453,-28.8984375" marker-end="url(#arrow_triangle_5_000000)" style="stroke: #000000"/></g><g data-from="T7" data-to="T6" class=""><text x="287.7132863998413" y="-25.474609375" fill="#000000" data-arc-role="det" data-arc-origin="T7" data-arc-target="T6" data-arc-ed="R5" class="">det</text><path d="M279.37422370910645,-28.5L278.37422370910645,-28.5Q275.37422370910645,-28.5 272.37422370910645,-28.8984375" marker-end="url(#arrow_triangle_5_000000)" style="stroke: #000000"/><path d="M296.0523490905762,-28.5L297.0523490905762,-28.5Q300.0523490905762,-28.5 303.0523490905762,-23.798828125" style="stroke: #000000"/></g><g data-from="T4" data-to="T2"><text x="123.28203248977661" y="-36.673828125" fill="#000000" data-arc-role="nsubj" data-arc-origin="T4" data-arc-target="T2" data-arc-ed="R2">nsubj</text><path d="M110.02734518051147,-39.5L99.08046913146973,-39.5Q91.58046913146973,-39.5 84.08046913146973,-28.8984375" marker-end="url(#arrow_triangle_5_000000)" style="stroke: #000000"/><path d="M136.53671979904175,-39.5L147.4835958480835,-39.5Q154.9835958480835,-39.5 162.4835958480835,-23.798828125" style="stroke: #000000"/></g><g data-from="T9" data-to="T7" class=""><text x="381.8820381164551" y="-36.673828125" fill="#000000" data-arc-role="poss" data-arc-origin="T9" data-arc-target="T7" data-arc-ed="R6">poss</text><path d="M370.7242250442505,-39.5L342.9007873535156,-39.5Q335.4007873535156,-39.5 327.9007873535156,-28.8984375" marker-end="url(#arrow_triangle_5_000000)" style="stroke: #000000"/><path d="M393.03985118865967,-39.5L420.86328887939453,-39.5Q428.36328887939453,-39.5 435.86328887939453,-23.798828125" style="stroke: #000000"/></g><g data-from="T4" data-to="T1" class=""><text x="107.41601705551147" y="-45.673828125" fill="#000000" data-arc-role="nsubj" data-arc-origin="T4" data-arc-target="T1" data-arc-ed="R1">nsubj</text><path d="M94.16132974624634,-48.5L67.34843826293945,-48.5Q59.84843826293945,-48.5 52.34843826293945,-28.8984375" marker-end="url(#arrow_triangle_5_000000)" style="stroke: #000000"/><path d="M120.67070436477661,-48.5L147.4835958480835,-48.5Q154.9835958480835,-48.5 162.4835958480835,-23.798828125" style="stroke: #000000"/></g><g data-from="T5" data-to="T9"><text x="336.83438062667847" y="-45.673828125" fill="#000000" data-arc-role="pobj" data-arc-origin="T5" data-arc-target="T9" data-arc-ed="R8">pobj</text><path d="M325.9343800544739,-48.5L252.8054723739624,-48.5Q245.3054723739624,-48.5 237.8054723739624,-23.798828125" style="stroke: #000000"/><path d="M347.73438119888306,-48.5L420.86328887939453,-48.5Q428.36328887939453,-48.5 435.86328887939453,-28.8984375" marker-end="url(#arrow_triangle_5_000000)" style="stroke: #000000"/></g><g data-from="T4" data-to="T10" class=""><text x="327.9500050544739" y="-54.673828125" fill="#000000" data-arc-role="punct" data-arc-origin="T4" data-arc-target="T10" data-arc-ed="R9">punct</text><path d="M314.1281294822693,-57.5L201.31797122955322,-57.5Q193.81797122955322,-57.5 186.31797122955322,-23.798828125" style="stroke: #000000"/><path d="M341.77188062667847,-57.5L454.58203887939453,-57.5Q462.08203887939453,-57.5 469.58203887939453,-28.8984375" marker-end="url(#arrow_triangle_5_000000)" style="stroke: #000000"/></g></g></g><path marker-end="url(#drag_arrow)" class="drag_stroke" fill="none" visibility="hidden"/><g class="sentnum"><a href="#undefined?focus=sent~1"><text x="18" y="76.5" data-sent="1">1</text></a><path d="M20,0L20,80.5"/></g></svg>
+<p>Note that this contains some errors: <i>Have</i> is incorrectly tagged as a proper noun and given the <tt>nsubj</tt> relation, 
+whereas it should have been tagged as <tt>VBP</tt> with the <tt>aux</tt> relation.
+
+<h2 id="frame">Frame-semantic parses</h2>
+
+<p><a href="http://framenet.icsi.berkeley.edu/">FrameNet</a> is a semantic resource for English that consists of 
+relational concepts/scenarios known as <b>frames</b>. There are two parts to FrameNet:</p>
+<ul>
+<li>An inventory of over 1000 <a href="https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml">frames</a>, each mapped to linguistic expressions (<b>lexical units</b>) 
+and structured in terms of participants/props (<b>frame elements</b>). 
+For example, <i>lie</i>, <i>deceive</i>, <i>deception</i>, and <i>hoodwink</i> are all known to evoke 
+the <a href="https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame=Prevarication" style="font-variant: small-caps;">Prevarication</a> frame, 
+whose frame elements include the Speaker (prevaricator), Addressee, and Topic.</li>
+<li>Corpus sentences that have been analyzed in terms of these frames, either in full or on a targeted basis.</li>
+</ul>
+
+<p><a href="http://www.ark.cs.cmu.edu/SEMAFOR/">SEMAFOR</a> analyzes the frames and frame elements 
+expressed by a sentence. For example, <a href="http://communicationsoffice.tripod.com/2-20.txt">the&nbsp;sentence</a></p>
+
+<p style="text-align: center; font-size: 10pt;">Have you ever lied about the President’s health?</p>
+
+<p>would ideally be analyzed as evoking the following three frames:</p>
+
+<div>
+<div><ul>
+	<li><a href="https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame=Prevarication" style="font-variant: small-caps;">Prevarication</a>: <i>lied</i></li>
+	<li>Speaker: <i>you</i></li>
+	<li>Topic: <i>about the President ’s health</i></li>
+	<li>Addressee: ?</li>
+	<li>Time: <i>ever</i></li>
+</ul></div><div><ul>
+	<li><a href="https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame=People_by_vocation" style="font-variant: small-caps;">People_by_vocation</a>: <i>President</i></li>
+	<li>Person: <i>President</i></li>
+</ul><ul>
+	<li><a href="https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame=Medical_conditions" style="font-variant: small-caps;">Medical_conditions</a>: <i>health</i></li>
+	<li>Patient: <i>the President ’s</i></li>
+	<li>Ailment: ?</li>
+</ul></div>
+</div>
+
+<p>In fact, SEMAFOR currently produces the following parse:</p>
+
+
+
+<div id="parse_horiz" class="frameviz"><table class="sentence"><tbody><tr><th class="w0"></th><th class="word w0">Have</th><th class="word w1">you</th><th class="word w2">ever</th><th title="Prevarication" class="word w3 target fPrevarication">lied</th><th class="word w4">about</th><th class="word w5">the</th><th title="Leadership" class="word w6 target fLeadership">President</th><th class="word w7">'s</th><th title="Medical_conditions" class="word w8 target fMedical_conditions">health</th><th class="word w9">?</th></tr><tr class="frameann below targets"><td style="opacity: 1;" colspan="4" class="filler"></td><td style="cursor: pointer; opacity: 1;" colspan="1" id="target-a0" class="framename a0"><a href="https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame=Prevarication">Prevarication</a></td><td style="opacity: 1;" colspan="2" class="filler"></td><td style="cursor: pointer; opacity: 1;" colspan="1" id="target-a1" class="framename a1"><a href="https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame=Leadership">Leadership</a></td><td style="opacity: 1;" colspan="1" class="filler"></td><td style="cursor: pointer; opacity: 1;" colspan="1" id="target-a2" class="framename a2"><a href="https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame=Medical_conditions">Medical_conditions</a></td></tr><tr id="senta0" class="frameann below w1:4"><td style="opacity: 1;" colspan="2" class="filler framename a0 fPrevarication"></td><td style="opacity: 1;" title="Prevarication.Speaker:
+you" colspan="1" class="arg w2:3 leftmost a0 fPrevarication">Speaker</td><td style="opacity: 1;" colspan="1" class="filler internalFiller a0 fPrevarication"></td><td style="opacity: 1;" title="Prevarication:
+lied" colspan="1" class="target rightmost a0 fPrevarication">&nbsp;</td><td style="opacity: 1;" class="filler" colspan="2"></td><td style="opacity: 1;" title="Leadership.Leader:
+President
+Leadership:
+President" colspan="1" class="arg w7:8 leftmost target rightmost a1 fLeadership">Leader</td></tr><tr id="senta2" class="frameann below w5:9"><td style="opacity: 1;" colspan="6" class="filler framename a2 fMedical_conditions"></td><td style="opacity: 1;" title="Medical_conditions.Patient:
+the President 's" colspan="3" class="arg w6:9 leftmost a2 fMedical_conditions">Patient</td><td style="opacity: 1;" title="Medical_conditions:
+health" colspan="1" class="target rightmost a2 fMedical_conditions">&nbsp;</td></tr></tbody></table></div>
+
+
+
+
+<p>The row below the sentence gives frame names, and the subsequent rows indicate <b>arguments</b> (frame element fillers) for each frame. 
+Argument spans are indicated with red bars.</p>
+
+<p>Note that this parse does not quite match the desired analysis: 
+the wrong frame is chosen for <i>President</i>, and the Topic and Time arguments of the 
+<span style="font-variant: small-caps;">Prevarication</span> frame are missing entirely.
+Frame-semantic parsing is such a difficult task that automatic parses are rarely perfect.</p>
+
+{% endblock %}
+
+{% block footer %}
+
+<p id="credits">
+<span style="font-variant: small-caps">This about page</a></span> by
+<a href="http://nathan.cl/">Nathan&nbsp;Schneider</a>. 
+</p>
+
+{% endblock %}
+
+
+{% block extra_scripts %}
+<script type="text/javascript">
+    // Initialize brat
+    var bratLocation = "{{ url_for('static', filename='brat') }}";
+
+    head.js(
+            // External libraries
+            bratLocation + '/lib/jquery.svg.min.js',
+            bratLocation + '/lib/jquery.svgdom.min.js',
+
+            // brat helper modules
+            bratLocation + '/js/configuration.js',
+            bratLocation + '/js/util.js',
+            bratLocation + '/lib/webfont.js',
+
+            // brat modules
+            bratLocation + '/js/dispatcher.js',
+            bratLocation + '/js/url_monitor.js',
+            bratLocation + '/js/visualizer.js'
+    );
+</script>
+{% endblock %}

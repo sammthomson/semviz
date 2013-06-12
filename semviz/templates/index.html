@@ -8,14 +8,22 @@ function receivedDepJSON(sentence,debug_info) {
 	$('#turboparser').find('.runtime').html(' ['+Math.round(10*debug_info.dependency_parser_elapsed_seconds)/10+'s]');
 }
 function receivedFrameJSON(sentence,debug_info) {
+	var pageurl = location.protocol+'//'+location.host+location.pathname+'?sentence='+escape($('#sentence').val());
+	history.pushState(sentence, document.title, pageurl);
 	$('#parse_horiz').html(buildSentence(sentence,'sent'));
 	/* Frameviz */
 	$('#parse_horiz .sentence .frameann:not(.targets) td:not(.filler)').hover(function() {
 		var thisClass = " "+$(this).attr("class")+" ";
 		var aId = thisClass.match(/ a(\d+) /)[1];
 		$(this).parent().parent().find('td:not(.a'+aId+')').fadeTo(0, 0.25);
+		if ($(this).filter('.arg').length) {
+			var ww = thisClass.match(/ w(\d+)[:](\d+) /);
+			for (var i=Number(ww[1])-1; i<Number(ww[2])-1; i++)
+				$(this).parent().parent().find('.word.w'+i).addClass("hoveredarg");
+		}
 	  }, function() {
 		$(this).parent().parent().find('td').fadeTo(0, 1.0);
+		$(this).parent().parent().find('.word').removeClass("hoveredarg");
 	  });
 	$('#parse_horiz .sentence .frameann.targets td.framename').css({"cursor": 'pointer'}).click(function () {
 		// navigate to frame page on FrameNet website
@@ -61,10 +69,12 @@ body { margin: 0px; }
 #coverimg { margin-top: 50px; margin-bottom: 50px; }
 h1 { text-align: center; }
 .runtime { font-weight: normal; }
-form { background-color: #555; width: 100%; padding: 0.5em; margin: 0px; }
-form > div { width: 50%; margin-left: auto; margin-right: auto; position: relative; }
-form > div > p { text-align: center; display: inline-block; }
-form #examples { color: #eee; padding-left: 10px; list-style-type: none; font-size: 10pt; display: inline-block; position: absolute; width: inherit; }
+form { background-color: #555; width: 100%; padding: 0.5em 0 0.5em 0; margin: 0px; }
+form > div { /*width: 50%;*/ margin-left: auto; margin-right: auto; /*position: relative;*/ }
+/*form > div > p { text-align: center; display: inline-block; }*/
+form table { margin-left: auto; margin-right: auto; }
+form table td { border: none; padding: 0; }
+form #examples { color: #eee; padding-left: 10px; list-style-type: none; font-size: 10pt; /*display: inline-block; position: absolute; width: inherit;*/ }
 form #examples a { color: #eee; text-decoration: none; }
 form #examples a:hover { color: #eee; text-decoration: underline; }
 input[type=submit] { width: 100%; height: 2em; font-weight: bold; font-size: 14pt; background-color: #0ae; color: #fff; }
@@ -72,7 +82,7 @@ input[type=submit]:hover { background-color: #ea0; color: #fff; }
 input,textarea { border: solid 1px #000; }
 textarea { font-size: 12pt; }
 #details { font-size: 10pt; }
-footer { width: 100%; background-color: #ddd; padding: 0.5em; color: #777; margin-top: 2em; text-align: center; font-size: 9pt; }
+footer { width: 100%; background-color: #ddd; padding: 0.5em 0 0.5em 0; color: #777; margin-top: 2em; text-align: center; font-size: 9pt; }
 a { color: #0ae; }
 #credits { max-width: 800px; margin-left: auto; margin-right: auto; }
 #credits a { color: #777; }
@@ -82,6 +92,7 @@ svg g.span text { fill: #08c; }
 svg g.span path.curly { stroke: none; height: 0px; }
 svg g.arcs text { fill: #e0a; }
 svg g.arcs path,#arrow_triangle_5_000000 { stroke: #777 !important; }
+svg g.sentnum { display: none; }
 
 /* Frameviz (horizontal frame view) */
 .frameviz table td,.frameviz table th { border: none; }
@@ -89,14 +100,15 @@ svg g.arcs path,#arrow_triangle_5_000000 { stroke: #777 !important; }
 .frameviz .sentence,.frameviz .sentence tbody { font-family: Helvetica,arial,sans-serif; }
 .frameviz .sentence tbody tr:first-child { font-family: verdana,Helvetica,arial,sans-serif; }
 .frameviz .sentence { border-collapse: separate; border-spacing: 0px 3px; }
-.frameviz .sentence th { font-weight: normal; }
+.frameviz .sentence .word { font-weight: normal; border-bottom: solid 2.5px transparent; }
 
 .frameviz .sentence .target { font-weight: bold; background-color: transparent; color: #000; }
-.frameviz .sentence .frameann .framename { font-size: 9pt; color: #fff; font-variant: small-caps; text-align: right; }
+.frameviz .sentence .frameann .framename { font-size: 11pt; color: #fff; font-variant: small-caps; text-align: right; }
 .frameviz .sentence .frameann.targets .framename { color: #555; text-align: center; }
-.frameviz .sentence .frameann .arg { font-size: 9pt; text-align: center; border-top: solid 2.5px #a00; }
+.frameviz .sentence .frameann .arg { font-size: 10pt; text-align: center; border-top: solid 2.5px #a00; }
+.frameviz .sentence .word.hoveredarg { border-bottom: solid 2.5px #a00; }
 .frameviz .sentence .frameann .arg + .arg { border-left: solid 1px #a00; }
-.frameviz .sentence .frameann .target { font-size: 9pt; font-weight: normal; background-color: #bbb !important; }
+.frameviz .sentence .frameann .target { font-size: 10pt; font-weight: normal; background-color: #bbb !important; }
 .frameviz .sentence th,.sentence td { padding: 5px; }
 .frameviz .sentence .frameann .arg,.sentence .frameann .internalFiller { background-color: #ddd; }
 .frameviz .sentence .leftmost { /*border-top-left-radius: 8px;*/ border-bottom-left-radius: 8px; border-left: solid 1px #fff !important; }
@@ -107,13 +119,13 @@ svg g.arcs path,#arrow_triangle_5_000000 { stroke: #777 !important; }
 <h1>ARK Syntactic &amp; Semantic Parsing Demo</h1>
 <p>Here you can test two open-source linguistic structure analysis tools from the <a href="http://www.ark.cs.cmu.edu/">Noah’s&nbsp;ARK</a> research group at <a href="http://www.cmu.edu/">Carnegie&nbsp;Mellon&nbsp;University</a>:</p>
 <ul>
-	<li><b><a href="http://www.ark.cs.cmu.edu/TurboParser/">TurboParser</a></b> performs tokenization, part-of-speech tagging, and syntactic dependency parsing.</li>
-	<li>Using the syntactic parse as input, <b><a href="http://www.ark.cs.cmu.edu/SEMAFOR/">SEMAFOR</a></b> produces a <a href="http://framenet.icsi.berkeley.edu/">FrameNet</a>-style analysis of semantic predicate-argument structures.</li>
+	<li><b><a href="http://www.ark.cs.cmu.edu/TurboParser/">TurboParser</a></b> performs tokenization, part-of-speech tagging, and syntactic dependency parsing. <a href="{{ url_for('about') }}#pos" target="_blank">(more&hellip;)</a></li>
+	<li>Using the syntactic parse as input, <b><a href="http://www.ark.cs.cmu.edu/SEMAFOR/">SEMAFOR</a></b> produces a <a href="http://framenet.icsi.berkeley.edu/">FrameNet</a>-style analysis of semantic predicate-argument structures. <a href="{{ url_for('about') }}#frame" target="_blank">(more&hellip;)</a></li>
 </ul>
 <h4>details</h4>
 <div id="details" style="display: none">
 	<ul>
-		<li>For this demo, TurboParser was trained with the basic (arc-factored) model and configured to produce <a href="http://nlp.stanford.edu/software/stanford-dependencies.shtml">Basic Stanford Dependencies</a> (v. 1.6.2).</li>
+		<li>For this demo, TurboParser was trained on WSJ with the standard (arc-factored + consecutive sibling + grandparent parts) model and configured to produce <a href="http://nlp.stanford.edu/software/stanford-dependencies.shtml">Basic Stanford Dependencies</a> (v. 1.6.2). TurboTagger was trained on the Penn Treebank (WSJ and Brown), the <a href="http://www.ldc.upenn.edu/Catalog/catalogEntry.jsp?catalogId=LDC2012T13">English Web Treebank</a>, and Alan Ritter et al.’s <a href="https://github.com/aritter/twitter_nlp/blob/master/data/annotated/pos.txt">annotated corpus of tweets</a>.</li>
 		<li><a href="http://www.maltparser.org/">MaltParser</a>’s <a href="http://www.maltparser.org/mco/english_parser/engmalt.html">engmalt model</a> (trained with Stanford Dependencies) was used to parse SEMAFOR’s training data for the version of SEMAFOR used in this demo.</li>
 		<li>This demo will not spend more than 20 seconds per query, so it may fail on very long input.</li>
 		<li>Though these parsers approach or attain state-of-the-art performance on standard benchmarks, 
@@ -123,11 +135,11 @@ svg g.arcs path,#arrow_triangle_5_000000 { stroke: #777 !important; }
 </div>
   <form method="GET" onSubmit="$('#coverimg').hide(); semViz.submitSentence(); return false;">
   	<div>
-		<p>{{ form.sentence(rows=3, cols=60, placeholder='Type an English sentence.') }}
+		<table><tr><td><p>{{ form.sentence(rows=3, cols=60, placeholder='Type an English sentence.') }}
 			<br/>
 			<input type="submit" value="Parse!"/>
-		</p>
-		<ul id="examples">
+		</p></td>
+		<td><ul id="examples">
 			<li><b>Examples:</b></li>
 			<li><a href="?sentence=Robots in popular culture are there to remind us of the awesomeness of unbounded human agency.">robots</a></li>
 			<li><a href="?sentence=The border-radius CSS property allows Web authors to define how rounded border corners are.">CSS <tt>border-radius</tt></a></li>
@@ -137,7 +149,7 @@ svg g.arcs path,#arrow_triangle_5_000000 { stroke: #777 !important; }
 				<a href="?sentence=Booth dropped the pistol and drew a knife, stabbing the major violently in the left forearm reaching the bone.">(3)</a>,
 				<a href="?sentence=Rathbone quickly recovered and again tried to grab Booth as he was preparing to jump from the sill of the box.">(4)</a></li>
 			<li><a href="?sentence=Professor Charles Fillmore, director of the FrameNet Project, was presented with the Lifetime Achievement Award by the Association for Computational Linguistics at its annual meeting yesterday in Jeju, South Korea.">Fillmore</a></li>
-		</ul>
+		</ul></td></tr></table>
     </div>
   </form>
 <div id="output">
@@ -149,14 +161,14 @@ svg g.arcs path,#arrow_triangle_5_000000 { stroke: #777 !important; }
   </p>
   <div id="dependency_parse" style="display: none">
       <h3 id="turboparser">Syntactic Dependency Parse from <a href="http://www.ark.cs.cmu.edu/TurboParser/">TurboParser</a><span class="runtime"></span></h3>
-      <h4>Tree View</h4>
+      <h4>Tree View <a href="{{ url_for('about') }}#pos" target="_blank">(explanation)</a></h4>
       <div id="brat_parse"></div>
       <h4>CoNLL Format</h4>
       <div id="conll_parse" style="display: none;"></div>
   </div>
   <div id="frame_semantic_parse" style="display: none">
       <h3 id="semafor">Frame-Semantic Parse from <a href="http://www.ark.cs.cmu.edu/SEMAFOR/">SEMAFOR</a><span class="runtime"></span></h3>
-      <h4>Grid View</h4>
+      <h4>Grid View <a href="{{ url_for('about') }}#frame" target="_blank">(explanation)</a></h4>
       <div id="parse_grid">
       	<p>
       	  <input id="framevizH" type="radio" name="framevizdir" checked="checked" /><label for="framevizH">Horizontal</label>

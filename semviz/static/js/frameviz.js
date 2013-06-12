@@ -250,7 +250,7 @@ function buildSentence(sJ,sTag) {
 				if (k>0 && labels[k-1]["start"]==labels[k]["start"])
 					$trN.children().last().replaceWith('<td colspan="'+(wen-wst)+'" class="'+$trN.last().attr("class")+' arg">'+labels[k]["name"]+'</td>');
 				else
-					$trN.append('<td colspan="'+(wen-wst)+'" class="arg">'+labels[k]["name"]+'</td>');
+					$trN.append('<td colspan="'+(wen-wst)+'" class="arg w'+wst+':'+wen+'">'+labels[k]["name"]+'</td>');
 				
 				// title text
 				var $lastcell = $trN.children().last()

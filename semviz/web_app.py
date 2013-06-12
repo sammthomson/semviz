@@ -30,6 +30,9 @@ def parse():
     response = SEMAFOR_CLIENT.get_parses(text.split(u'\n'))
     return jsonify(response)
 
+@app.route('/about.html')
+def about():
+    return render_template('about.html')
 
 @app.route("/")
 def home():
