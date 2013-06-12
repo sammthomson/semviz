@@ -63,7 +63,7 @@ def pos_to_conll(pos_tokens):
     """ Converts one line of pos tagger's output to CoNLL format """
     output = []
     for i, token in enumerate(pos_tokens.split()):
-        form, postag = token.split('_')
+        form, postag = token.rsplit("_", 1)
         if postag == "PRP" or postag == "PRP$" or len(postag) <= 2:
             cpostag = postag
         else:
