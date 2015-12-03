@@ -158,15 +158,15 @@ function getRangeFromClassAttr(attValue, rangePrefix) {
 function buildSentence(sJ,sTag) {
 	var ww = sJ["tokens"];
 	$sN = $('<table class="sentence"><tr><th class="w0"/></tr></table>');
-	
+
 	// Row for frame names under targets
 	var $trtN = $('<tr class="frameann below targets"></tr>');	// TODO: distinguish above/below
-	
+
 	for (var iw=0; iw<ww.length; iw++) {
 		$sN.find('tr').eq(0).append('<th class="word w'+iw+'">'+ww[iw]+'</th>');
 	}
-	
-	
+
+
 	var rows = [];
 	var targets = [];	// word offset => annotation ID
 	var frames = [];	// annotation ID => frame name
@@ -177,7 +177,7 @@ function buildSentence(sJ,sTag) {
 	});
 	for (var i=0; i<framesJ.length; i++) {
 		var ann = framesJ[i];
-		
+
 		var aTag = sTag + 'a'+aId;
 		ann["target"]["type"] = "target";
 		var fname = ann["target"]["name"];
@@ -191,31 +191,31 @@ function buildSentence(sJ,sTag) {
 			var iw = Number(classinfo.match(/ w(\d+) /)[1]);
 			return (iw>=st && iw<en);
 		});
-		
+
 		//console.log($wwN);
-		
+
 		$wwN.each(function (k) {
 			$(this).addClass('target '+fTag);
 			var curTitle = $(this).attr("title");
 			curTitle = (curTitle) ? curTitle+' ' : '';
 			$(this).attr("title", curTitle + fname);
-			
+
 			var wNc = " "+$(this).attr("class")+" ";
 			var iw = Number(wNc.match(/ w(\d+) /)[1]);
 			targets[iw] = aId;
 		});
-		
+
 		// Row for the annotation
 		var $trN = $('<tr id="' + aTag+'" class="frameann below"></tr>');
-		
+
 		// target label + FEs
 		var labels = ann["annotationSets"][0]["frameElements"];	// TODO: can a frame have multiple annotationSets?
 		labels.push(ann["target"]);
 		labels.sort(function (a,b) {	// sort this frame's FE and target labels by start index
 			return a["start"]-b["start"];
 		});
-		
-		
+
+
 		// construct a row for this frame's spans
 		var wi = 0;
 		var maxwen = -1;
@@ -251,7 +251,7 @@ function buildSentence(sJ,sTag) {
 					$trN.children().last().replaceWith('<td colspan="'+(wen-wst)+'" class="'+$trN.last().attr("class")+' arg">'+labels[k]["name"]+'</td>');
 				else
 					$trN.append('<td colspan="'+(wen-wst)+'" class="arg w'+wst+':'+wen+'">'+labels[k]["name"]+'</td>');
-				
+
 				// title text
 				var $lastcell = $trN.children().last()
 				var oldtitle = $lastcell.attr("title");
@@ -267,22 +267,22 @@ function buildSentence(sJ,sTag) {
 		}
 		$trN.addClass("w"+labels[0]["start"]+":"+(maxwen-1));
 		$trN.children().addClass('a'+aId).addClass(fTag);
-		
+
 		rows.push($trN);
-		
+
 		aId++;
 	};
-	
-	 
-	
+
+
+
 	if (targets.length>0 && targets.indexOf(0)>-1) {	// Populate the targets row with frame names
 		var r=0;
 		var $curcell = $('<td></td>');
 		var curcolspan = 0;
-		
-		
+
+
 		$('<td class="filler"></td>').attr("colspan", 1+targets.indexOf(0)).appendTo($trtN);
-		
+
 		// all targets assumed to be contiguous and their IDs to be monotonic
 		var curannid = 0;
 		while (targets.indexOf(curannid)>-1) {
@@ -296,13 +296,13 @@ function buildSentence(sJ,sTag) {
 			$curcell.appendTo($trtN);
 			curannid++;
 		}
-		
+
 		$sN.append($trtN);
 	}
-	
-	// Sort rows by number of tokens in between the outermost words covered by the annotation 
+
+	// Sort rows by number of tokens in between the outermost words covered by the annotation
 	// (i.e. the overall span of the annotation). Break ties by prioritizing rightmost spans.
-	
+
 	rows.sort(function (row1,row2) {
 		var aR = getRangeFromClassAttr(new String(row1.attr("class")), "w");
 		var al = aR[1]-aR[0];
@@ -311,10 +311,10 @@ function buildSentence(sJ,sTag) {
 		if (al==bl) return ((aR[0]>bR[0]) ? 1 : -1);
 		return 2*(al-bl);
 		});
-	
-	
+
+
 	var grid = [];
-	
+
 	// determine a position for this frame block in the grid
 	for (var iR=0; iR<rows.length; iR++) {
 		var annspan = getRangeFromClassAttr(new String(rows[iR].attr("class")), "w")
@@ -348,7 +348,7 @@ function buildSentence(sJ,sTag) {
 		}
 		$sN.append($tr);
 	}
-	
+
 	return $sN;
 }
 
@@ -356,7 +356,7 @@ docTags = {};
 
 function displayDoc(data) {
 	var $data = $($.parseXML(data));
-	
+
 	var showDocs = function (et) { $('#docs').show(); $('#docs').siblings().filter(':not(#sidebar,#tabs,#docs)').hide(); $(et).siblings().removeClass("open").addClass("closed"); $(et).removeClass("closed").addClass("open"); }
 	if ($('#tabs').length==0) {
 		$('#maincontent').before('<div id="tabs"><ul><li class="buttonlink">Documents</li><li class="buttonlink">Stats</li></ul></div>');
@@ -364,17 +364,17 @@ function displayDoc(data) {
 		$('#tabs ul li:last-child').click(function (evt) { $('#stats').show(); $('#stats').siblings().filter(':not(#sidebar,#tabs,#stats)').hide(); $(evt.target).siblings().removeClass("open").addClass("closed"); $(evt.target).removeClass("closed").addClass("open"); });
 	}
 	showDocs($('#tabs ul li:first-child').get(0));
-	
+
 	var nSents = 0;
 	var nWords = 0;
 	var nAnns = 0;
-	
+
 	var contentN = $('#docs');
 	var tocN = $('#toc');
-	
+
 	$data.find('documents > document').each(function (i) {
 		var $d = $(this);
-		
+
 		var $dN = $('<li title="'+$d.attr('ID')+'"><h1 title="'+$d.attr('ID')+'">'+$d.attr('description')+'</h1><ol/></li>').appendTo($("#docs > ol,#toc > ol"));
 		var dTag = "d"+$d.attr('ID');
 		if (dTag in docTags)
@@ -388,7 +388,7 @@ function displayDoc(data) {
 		$("#docs ."+dTag).attr("id", dTag);
 		$d.find('paragraphs > paragraph').each(function (j) {
 			var $p = $(this);
-			
+
 			var $pN = $('<li title="'+$p.attr('ID')+'"><ol/></li>').appendTo($dN.find("ol"));
 			var pTag = dTag + "p"+$p.attr('ID');
 			$pN.addClass(pTag);
@@ -398,7 +398,7 @@ function displayDoc(data) {
 			$docsPN.attr("id", pTag);
 			$p.find('sentences > sentence').each(function (k) {
 				var $s = $(this);
-				
+
 				var sTag = dTag + "s" + $s.attr('ID');
 				var $docsSN = $('<li id="'+sTag+'" class="'+sTag+'"></li>').append(buildSentence($s,sTag)).appendTo($docsPN.find("ol"));
 				var $tocSN = $('<li class="'+sTag+'"><a href="#'+sTag+'" title="'+$s.find('text').text()+'">'+$s.find('text').text()+'</a></li>').appendTo($tocPN.find("ol"));
@@ -408,8 +408,8 @@ function displayDoc(data) {
 			});
 		});
 	});
-	
-	
+
+
 	$('#docs .sentence .frameann:not(.targets)').hover(function() {
 		var thisId = $(this).attr("id");
 		var aId = thisId.substring(thisId.lastIndexOf("a")+1);
@@ -417,7 +417,7 @@ function displayDoc(data) {
 	  }, function() {
 		$(this).siblings().find('td').fadeTo(0, 1.0);
 	  });
-	
+
 	$('#docs .sentence .frameann.targets td.framename').hover(function() {
 		var thisId = $(this).attr("id");
 		var aId = thisId.substring(thisId.lastIndexOf("a")+1);
@@ -429,7 +429,7 @@ function displayDoc(data) {
 	  });
 
 	$('#stats ol').append('<li>' + nSents + ' sentences, ' + nWords + ' words, ' + nAnns + ' frame instances</li>');
-	
+
   /*for each (var a in data..heading.@foo)    // access an attribute of all typed descendants
       console.log(a.toXMLString());
   data.body.comment = "I like this note!";  // add a new node
@@ -459,7 +459,7 @@ function clearFiles(which) {
 function handleFiles(ff, which) {
 	clearFiles(which);
 	console.log("loading...");
-	
+
 	//for each (var f in ff) {
 	for (var iF=0; iF<ff.length; iF++) {
 		var f = ff[iF];
@@ -486,7 +486,7 @@ function togArgs(l, val) {
 
 function init() {
 	$("#togSidebar").toggle(
-			function (evt) { $("#controls").hide(); $(this).html("&raquo;"); $("#maincontent").css("left", "0px"); }, 
+			function (evt) { $("#controls").hide(); $(this).html("&raquo;"); $("#maincontent").css("left", "0px"); },
 			function (evt) { $(this).html("&laquo;"); $("#maincontent").css("left", "200px"); $("#controls").show(); });
 	$("#togFile0").click(function (evt) { $("#filediffcontrols,#file0controls").show(); $(this).hide(); });
 	$("#togFrames0").toggle(
