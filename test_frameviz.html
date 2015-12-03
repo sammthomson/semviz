@@ -1,0 +1,146 @@
+<html><head><title>FrameViz Test</title>
+<script type="text/javascript" src="semviz/static/js/lib/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="semviz/static/js/frameviz.js"></script>
+<script type="text/javascript">
+IN_JSON_PATH = "o5152-w0010-wds_sema.json";
+IN_JSON_SENT = 4;
+
+function receivedFrameJSON(sentence,debug_info) {
+	//var pageurl = location.protocol+'//'+location.host+location.pathname+'?sentence='+escape($('#sentence').val());
+	//history.pushState(sentence, document.title, pageurl);
+	$('#parse_horiz').html(buildSentence(sentence,'sent'));
+	/* Frameviz */
+	$('#parse_horiz .sentence .frameann:not(.targets) td:not(.filler)').hover(function() {
+		var thisClass = " "+$(this).attr("class")+" ";
+		var aId = thisClass.match(/ a(\d+) /)[1];
+		$(this).parent().parent().find('td:not(.a'+aId+')').fadeTo(0, 0.25);
+		if ($(this).filter('.arg').length) {
+			var ww = thisClass.match(/ w(\d+)[:](\d+) /);
+			for (var i=Number(ww[1])-1; i<Number(ww[2])-1; i++)
+				$(this).parent().parent().find('.word.w'+i).addClass("hoveredarg");
+		}
+	  }, function() {
+		$(this).parent().parent().find('td').fadeTo(0, 1.0);
+		$(this).parent().parent().find('.word').removeClass("hoveredarg");
+	  });
+	$('#parse_horiz .sentence .frameann.targets td.framename').css({"cursor": 'pointer'}).click(function () {
+		// navigate to frame page on FrameNet website
+		window.open('https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame='+escape($(this).text()));
+	});
+	$('#parse_horiz .sentence .frameann.targets td.framename').hover(function() {
+		var thisId = $(this).attr("id");
+		var aId = thisId.substring(thisId.lastIndexOf("a")+1);
+		$(this).parent().parent().find("tr.frameann > td:not(.a"+aId+")").fadeTo(0, 0.25);
+	  }, function() {
+		$(this).parent().parent().find("tr.frameann > td").fadeTo(0, 1.0);
+	  });
+	$('#semafor').find('.runtime').html(' ['+Math.round(10*debug_info.frame_parser_elapsed_seconds)/10+'s]');
+}
+
+$(function () {
+	$.getJSON(IN_JSON_PATH, function (sema) {
+		/*	// does SEMAFOR ever predict discontinuous FEs or targets? apparently not
+		sema.forEach(function (sem, i) {
+			sem["frames"].forEach(function (frame, j) {
+				frame["annotationSets"][0]["frameElements"].forEach(function (fe, k) {
+					if (fe["spans"].length>1)
+						console.log(i+' '+j+' '+k);
+				});
+			});
+		});
+		console.log(sema[0]);
+		*/
+		$('#parse_horiz').html(receivedFrameJSON(sema[IN_JSON_SENT],'sent'));
+	});
+});
+</script>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
+<style type="text/css">
+body,tbody { font-family: 'Open Sans', tahoma,helvetica,sans-serif; }
+body { margin: 0px; }
+#intro { max-width: 600px; margin-left: auto; margin-right: auto; }
+#output { margin-left: 50px; margin-right: 50px; }
+#coverimg,#spinner { text-align: center; }
+#coverimg { margin-top: 50px; margin-bottom: 50px; }
+h1 { text-align: center; }
+.runtime { font-weight: normal; }
+form { background-color: #555; width: 100%; padding: 0.5em 0 0.5em 0; margin: 0px; }
+form > div { /*width: 50%;*/ margin-left: auto; margin-right: auto; /*position: relative;*/ }
+/*form > div > p { text-align: center; display: inline-block; }*/
+form table { margin-left: auto; margin-right: auto; }
+form table td { border: none; padding: 0; }
+form #examples { color: #eee; padding-left: 10px; list-style-type: none; font-size: 10pt; /*display: inline-block; position: absolute; width: inherit;*/ }
+form #examples a { color: #eee; text-decoration: none; }
+form #examples a:hover { color: #eee; text-decoration: underline; }
+input[type=submit] { width: 100%; height: 2em; font-weight: bold; font-size: 14pt; background-color: #0ae; color: #fff; }
+input[type=submit]:hover { background-color: #ea0; color: #fff; }
+input,textarea { border: solid 1px #000; }
+textarea { font-size: 12pt; }
+#details { font-size: 10pt; }
+footer { width: 100%; background-color: #ddd; padding: 0.5em 0 0.5em 0; color: #777; margin-top: 2em; text-align: center; font-size: 9pt; }
+a { color: #0ae; }
+#credits { max-width: 800px; margin-left: auto; margin-right: auto; }
+#credits a { color: #777; }
+svg { border-color: #ea0; }
+svg g.span rect { stroke: none; }
+svg g.span text { fill: #08c; }
+svg g.span path.curly { stroke: none; height: 0px; }
+svg g.arcs text { fill: #e0a; }
+svg g.arcs path,#arrow_triangle_5_000000 { stroke: #777 !important; }
+svg g.sentnum { display: none; }
+
+/* Frameviz (horizontal frame view) */
+.frameviz table td,.frameviz table th { border: none; }
+.frameviz table.sentence { margin-left: auto; margin-right: auto; }
+.frameviz .sentence,.frameviz .sentence tbody { font-family: Helvetica,arial,sans-serif; }
+.frameviz .sentence tbody tr:first-child { font-family: verdana,Helvetica,arial,sans-serif; }
+.frameviz .sentence { border-collapse: separate; border-spacing: 0px 3px; }
+.frameviz .sentence .word { font-weight: normal; border-bottom: solid 2.5px transparent; }
+
+.frameviz .sentence .target { font-weight: bold; background-color: transparent; color: #000; }
+.frameviz .sentence .frameann .framename { font-size: 11pt; color: #fff; font-variant: small-caps; text-align: right; }
+.frameviz .sentence .frameann.targets .framename { color: #555; text-align: center; }
+.frameviz .sentence .frameann .arg { font-size: 10pt; text-align: center; border-top: solid 2.5px #a00; }
+.frameviz .sentence .word.hoveredarg { border-bottom: solid 2.5px #a00; }
+.frameviz .sentence .frameann .arg + .arg { border-left: solid 1px #a00; }
+.frameviz .sentence .frameann .target { font-size: 10pt; font-weight: normal; background-color: #bbb !important; }
+.frameviz .sentence th,.sentence td { padding: 5px; }
+.frameviz .sentence .frameann .arg,.sentence .frameann .internalFiller { background-color: #ddd; }
+.frameviz .sentence .leftmost { /*border-top-left-radius: 8px;*/ border-bottom-left-radius: 8px; border-left: solid 1px #fff !important; }
+.frameviz .sentence .rightmost { /*border-top-right-radius: 8px;*/ border-bottom-right-radius: 8px; border-right: solid 1px #fff !important; }
+</style>
+
+
+<div id="output">
+	<p>Parse for <script type="text/javascript">document.write('sentence '+IN_JSON_SENT+' in file <tt>'+IN_JSON_PATH+'</tt>');</script></p>
+  <div id="frame_semantic_parse">
+	    <div id="parse_horiz" class="frameviz"></div>
+  </div>
+</div>
+
+
+
+<!--
+<script type="text/javascript">
+    // Initialize brat
+    var bratLocation = "{{ url_for('static', filename='brat') }}";
+
+    head.js(
+            // External libraries
+            bratLocation + '/lib/jquery.svg.min.js',
+            bratLocation + '/lib/jquery.svgdom.min.js',
+
+            // brat helper modules
+            bratLocation + '/js/configuration.js',
+            bratLocation + '/js/util.js',
+            bratLocation + '/lib/webfont.js',
+
+            // brat modules
+            bratLocation + '/js/dispatcher.js',
+            bratLocation + '/js/url_monitor.js',
+            bratLocation + '/js/visualizer.js'
+    );
+</script>
+-->
+</body>
+</html>

@@ -4,6 +4,9 @@
 // 2010-09-09: v.0.1
 // 2011-12-01: v.0.2: removed the use of E4X, fixed the file API to be compatible with Firefox 8
 // 2013-04-13: v.0.3: use JSON input instead of XML
+// 2015-12-03: v.0.4: use (or convert to) SEMAFOR 3-style "spans" array in JSON
+// 	(backward-compatible; untested for multiple spans, i.e. discontinuous target
+//  or frame element)
 /*
 var txt = "Don't forget me this weekend!";
 var insituDoc = <note>
@@ -67,7 +70,11 @@ function getRangeFromClassAttr(attValue, rangePrefix) {
 	return r;
 }
 
-/*
+/*	// The following JSON is in the style produced by SEMAFOR 2.
+	  // SEMAFOR 3 indicates spans of each target or frame element
+		// with a "spans" list, each element of which is an object
+		// containing "start", "end", and "text" attributes.
+		// buildSentence() converts input to the new style if necessary.
 {
   "tokens": [
     "Little",
@@ -175,35 +182,36 @@ function buildSentence(sJ,sTag) {
 	framesJ.sort(function (a,b) {	// sort by target word index
 		return (a["target"]["start"]>b["target"]["start"]) ? 1 : ((a["target"]["start"]===b["target"]["start"]) ? 0 : -1);
 	});
-	for (var i=0; i<framesJ.length; i++) {
+	for (var i=0; i<framesJ.length; i++) {	// for each frame instance
 		var ann = framesJ[i];
+
+
 
 		var aTag = sTag + 'a'+aId;
 		ann["target"]["type"] = "target";
 		var fname = ann["target"]["name"];
 		frames[aId] = fname;
 		var fTag = 'f'+fname;
-		var st = ann["target"]["start"];
-		var en = ann["target"]["end"];
-		var r = st + ':' + en;
-		var $wwN = $sN.find('tr').eq(0).find('th').filter(function (j) {	// words in range for the frame target
-			var classinfo = " "+$(this).attr("class")+" ";
-			var iw = Number(classinfo.match(/ w(\d+) /)[1]);
-			return (iw>=st && iw<en);
-		});
 
-		//console.log($wwN);
+		// mark each word in the target span and store it in 'targets'
+		for (var isp=0; isp<ann["target"]["spans"].length; isp++) {
+			var span = ann["target"]["spans"][isp];
+			var st = span["start"];
+			var en = span["end"];
+			var r = st + ':' + en;
+			for (var iw=st; iw<en; iw++) {
+				var $wN = $sN.find('tr').eq(0).find('th.w'+iw);	// word in the target span
+				//console.log($wN);
+				$wN.addClass('target '+fTag);
+				var curTitle = $wN.attr("title");
+				curTitle = (curTitle) ? curTitle+' ' : '';
+				$wN.attr("title", curTitle + fname);
+				targets[iw] = aId;
+			}
+		}
 
-		$wwN.each(function (k) {
-			$(this).addClass('target '+fTag);
-			var curTitle = $(this).attr("title");
-			curTitle = (curTitle) ? curTitle+' ' : '';
-			$(this).attr("title", curTitle + fname);
 
-			var wNc = " "+$(this).attr("class")+" ";
-			var iw = Number(wNc.match(/ w(\d+) /)[1]);
-			targets[iw] = aId;
-		});
+
 
 		// Row for the annotation
 		var $trN = $('<tr id="' + aTag+'" class="frameann below"></tr>');
@@ -211,60 +219,82 @@ function buildSentence(sJ,sTag) {
 		// target label + FEs
 		var labels = ann["annotationSets"][0]["frameElements"];	// TODO: can a frame have multiple annotationSets?
 		labels.push(ann["target"]);
+
+		// Convert to SEMAFOR 3-style target and FE spans
+		labels.forEach(function (label) {
+			if (!label["spans"]) {
+				label["spans"] = [{"start": label["start"],
+													"end": label["end"],
+													"text": label["text"]}];
+				delete label["text"];
+			}
+			else {
+				// start and end of label as a whole, assuming spans are sorted
+				label["start"] = label["spans"][0]["start"];
+				label["end"] = label["spans"][label["spans"].length-1]["end"];
+			}
+		});
+
 		labels.sort(function (a,b) {	// sort this frame's FE and target labels by start index
-			return a["start"]-b["start"];
+			return a["spans"][0]["start"]-b["spans"][0]["start"];
 		});
 
 
 		// construct a row for this frame's spans
+		// TODO: not tested for discontinuous targets or FEs (where the "spans" array has multiple elements)
 		var wi = 0;
 		var maxwen = -1;
 		for (var k=0; k<labels.length; k++) {
+			// start and end of the label as a whole
 			var wst = labels[k]["start"]+1;
 			var wen = labels[k]["end"]+1;
-			if (wen>maxwen)
-				maxwen = wen;
-			if (wi<wst) {	// insert filler cell
-				var c = (k>0) ? "internalFiller" : "framename";
-				$trN.append('<td colspan="'+(wst-wi)+'" class="filler ' + c+'">'+((c=="framename") ? fname : '' )+'</td>');
-			}
-			if (labels[k]["type"]=="target") {	// target span next to arguments
-				if (k>0 && labels[k-1]["start"]==labels[k]["start"] && labels[k-1]["end"]==labels[k]["end"])
-					$trN.children().last().addClass("target");
-				else if (k>0 && labels[k-1]["start"]<=labels[k]["start"] && labels[k-1]["end"]>=labels[k]["end"]) {
-					// partial overlap; don't add a separate cell
-				}
-				else if (k<labels.length-1 && labels[k+1]["start"]<=labels[k]["start"] && labels[k+1]["end"]>=labels[k]["end"]) {
-					// partial overlap; don't add a separate cell
-				}
-				else
-					$trN.append('<td colspan="'+(wen-wst)+'" class="target">\xA0</td>');
+			//for (var ispan=0; ispan<labels["spans"].length; ispan++) {
 
-				// title text
-				var $lastcell = $trN.children().last()
-				var oldtitle = $lastcell.attr("title");
-				if (oldtitle===undefined) oldtitle = "";
-				$lastcell.attr("title", (oldtitle+'\n'+labels[k]["name"]+':\n'+labels[k]["text"]).trim());
-			}
-			else {	// argument span
-				if (k>0 && labels[k-1]["start"]==labels[k]["start"])
-					$trN.children().last().replaceWith('<td colspan="'+(wen-wst)+'" class="'+$trN.last().attr("class")+' arg">'+labels[k]["name"]+'</td>');
-				else
-					$trN.append('<td colspan="'+(wen-wst)+'" class="arg w'+wst+':'+wen+'">'+labels[k]["name"]+'</td>');
+				if (wen>maxwen)
+					maxwen = wen;
+				if (wi<wst) {	// insert filler cell
+					var c = (k>0) ? "internalFiller" : "framename";
+					$trN.append('<td colspan="'+(wst-wi)+'" class="filler ' + c+'">'+((c=="framename") ? fname : '' )+'</td>');
+				}
+				if (labels[k]["type"]=="target") {	// target span next to arguments
+					if (k>0 && labels[k-1]["start"]==labels[k]["start"] && labels[k-1]["end"]==labels[k]["end"])
+						$trN.children().last().addClass("target");
+					else if (k>0 && labels[k-1]["start"]<=labels[k]["start"] && labels[k-1]["end"]>=labels[k]["end"]) {
+						// partial overlap; don't add a separate cell
+					}
+					else if (k<labels.length-1 && labels[k+1]["start"]<=labels[k]["start"] && labels[k+1]["end"]>=labels[k]["end"]) {
+						// partial overlap; don't add a separate cell
+					}
+					else
+						$trN.append('<td colspan="'+(wen-wst)+'" class="target">\xA0</td>');
 
-				// title text
-				var $lastcell = $trN.children().last()
-				var oldtitle = $lastcell.attr("title");
-				if (oldtitle===undefined) oldtitle = "";
-				$lastcell.attr("title", (oldtitle+'\n'+fname+'.'+labels[k]["name"]+':\n'+labels[k]["text"]).trim());
-			}
-			if (k==0 || k==labels.length-1) {
-				if (k==0) $trN.children().last().addClass("leftmost");
-				if (k==labels.length-1) $trN.children().last().addClass("rightmost");
-				// outermost arg or target
-			}
-			wi = wen;
+					// title text
+					var $lastcell = $trN.children().last()
+					var oldtitle = $lastcell.attr("title");
+					if (oldtitle===undefined) oldtitle = "";
+					$lastcell.attr("title", (oldtitle+'\n'+labels[k]["name"]+':\n'+labels[k]["text"]).trim());
+				}
+				else {	// argument span
+					if (k>0 && labels[k-1]["start"]==labels[k]["start"])
+						$trN.children().last().replaceWith('<td colspan="'+(wen-wst)+'" class="'+$trN.last().attr("class")+' arg">'+labels[k]["name"]+'</td>');
+					else
+						$trN.append('<td colspan="'+(wen-wst)+'" class="arg w'+wst+':'+wen+'">'+labels[k]["name"]+'</td>');
+
+					// title text
+					var $lastcell = $trN.children().last()
+					var oldtitle = $lastcell.attr("title");
+					if (oldtitle===undefined) oldtitle = "";
+					$lastcell.attr("title", (oldtitle+'\n'+fname+'.'+labels[k]["name"]+':\n'+labels[k]["text"]).trim());
+				}
+				if (k==0 || k==labels.length-1) {
+					if (k==0) $trN.children().last().addClass("leftmost");
+					if (k==labels.length-1) $trN.children().last().addClass("rightmost");
+					// outermost arg or target
+				}
+				wi = wen;
+			//}
 		}
+
 		$trN.addClass("w"+labels[0]["start"]+":"+(maxwen-1));
 		$trN.children().addClass('a'+aId).addClass(fTag);
 
@@ -292,7 +322,7 @@ function buildSentence(sJ,sTag) {
 					$('<td class="filler"></td>').attr("colspan", colspan).appendTo($trtN);
 			}
 			$curcell = $('<td id="target-a'+curannid+'" class="framename a'+curannid+'">'+frames[curannid]+'</td>');
-			$curcell.attr("colspan", targets.lastIndexOf(curannid)-targets.indexOf(curannid)+1);
+			$curcell.attr("colspan", targets.lastIndexOf(curannid)-targets.indexOf(curannid)+1);
 			$curcell.appendTo($trtN);
 			curannid++;
 		}
