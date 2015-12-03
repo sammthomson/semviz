@@ -25,7 +25,7 @@ function receivedFrameJSON(sentence,debug_info) {
 	  });
 	$('#parse_horiz .sentence .frameann.targets td.framename').css({"cursor": 'pointer'}).click(function () {
 		// navigate to frame page on FrameNet website
-		window.open('https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame='+escape($(this).text()));
+		window.open('https://framenet2.icsi.berkeley.edu/fnReports/data/frame/'+escape($(this).text())+'.xml');
 	});
 	$('#parse_horiz .sentence .frameann.targets td.framename').hover(function() {
 		var thisId = $(this).attr("id");
