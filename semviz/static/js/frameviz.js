@@ -226,12 +226,16 @@ function buildSentence(sJ,sTag) {
 				label["spans"] = [{"start": label["start"],
 													"end": label["end"],
 													"text": label["text"]}];
-				delete label["text"];
 			}
 			else {
-				// start and end of label as a whole, assuming spans are sorted
+				// attributes of label as a whole, assuming spans are sorted
 				label["start"] = label["spans"][0]["start"];
 				label["end"] = label["spans"][label["spans"].length-1]["end"];
+				var tokens = [];
+				label["spans"].forEach(function (span) {
+					tokens.push(span["text"]);
+				});
+				label["text"] = tokens.join(" ");
 			}
 		});
 
