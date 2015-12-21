@@ -8,51 +8,19 @@
 // 	(backward-compatible; untested for multiple spans, i.e. discontinuous target
 //  or frame element)
 // 2015-12-21: v.0.5: actually ensure backward-compatibility of JSON format;
-//  correctly display an argument span covering a subrange of the target span
-/*
-var txt = "Don't forget me this weekend!";
-var insituDoc = <note>
-	<to>Tove</to>
-	<from>Jani</from>
-	<heading foo="bar">Reminder</heading>
-   <body>
-  <heading foo="baz">Subhead</heading>
-  {txt}
-  </body>
-</note>;*/
+//  correctly display an argument span covering a subrange of the target span;
+//  remove old code from XML days
+
 
 
 try {
 	console.log("console activated");
 }
 catch (ex) {
-	console = {log: function (msg) { }, err: function (msg) { }, warn: function (msg) { }};
+	console = {log: function (msg) { }, error: function (msg) { }, warn: function (msg) { }};
 }
 
 
-function loadXML(url, callback) { // depends on jQuery
-  console.log("loading " + url);
-  $.get(url, function (response) { callback(unpackData(response)); });
-}
-
-function unpackData(response) {
-  // replace <?xml version=...?> and <!DOCTYPE> tags due to a shortcoming of Firefox
-  // see https://developer.mozilla.org/en/E4X
-  console.log("unpacking...");
-  response = response.replace(/^<\?xml\s+version\s*=\s*([\"\'])[^\1]+\1[^?]*\?>/, ""); // bug 336551
-  response = response.replace(/<[!]DOCTYPE[^>]+>/, "");
-  //var e4x = new XML(response);
-  return response;
-}
-
-function xs(node) {
-	//return node.toXMLString();
-	return node;
-}
-
-function last(nodelist) {
-	return nodelist[nodelist.length()-1];
-}
 
 // Given a sorted list l, return the index of the smallest value that is not greater than v
 function argNearestLowerBound(l, v) {
@@ -451,155 +419,4 @@ function buildSentence(sJ,sTag) {
 	}
 
 	return $sN;
-}
-
-docTags = {};
-
-function displayDoc(data) {
-	var $data = $($.parseXML(data));
-
-	var showDocs = function (et) { $('#docs').show(); $('#docs').siblings().filter(':not(#sidebar,#tabs,#docs)').hide(); $(et).siblings().removeClass("open").addClass("closed"); $(et).removeClass("closed").addClass("open"); }
-	if ($('#tabs').length==0) {
-		$('#maincontent').before('<div id="tabs"><ul><li class="buttonlink">Documents</li><li class="buttonlink">Stats</li></ul></div>');
-		$('#tabs ul li:first-child').click(function (evt) { showDocs(evt.target); });
-		$('#tabs ul li:last-child').click(function (evt) { $('#stats').show(); $('#stats').siblings().filter(':not(#sidebar,#tabs,#stats)').hide(); $(evt.target).siblings().removeClass("open").addClass("closed"); $(evt.target).removeClass("closed").addClass("open"); });
-	}
-	showDocs($('#tabs ul li:first-child').get(0));
-
-	var nSents = 0;
-	var nWords = 0;
-	var nAnns = 0;
-
-	var contentN = $('#docs');
-	var tocN = $('#toc');
-
-	$data.find('documents > document').each(function (i) {
-		var $d = $(this);
-
-		var $dN = $('<li title="'+$d.attr('ID')+'"><h1 title="'+$d.attr('ID')+'">'+$d.attr('description')+'</h1><ol/></li>').appendTo($("#docs > ol,#toc > ol"));
-		var dTag = "d"+$d.attr('ID');
-		if (dTag in docTags)
-			docTags[dTag]++;
-		else
-			docTags[dTag] = 1;
-		dTag += "-" + new String(docTags[dTag]);
-		$dN.addClass(dTag);
-		var $tocDN = $("#toc ."+dTag);
-		$tocDN.find("h1").wrapInner('<a href="#' + dTag + '"></a>');
-		$("#docs ."+dTag).attr("id", dTag);
-		$d.find('paragraphs > paragraph').each(function (j) {
-			var $p = $(this);
-
-			var $pN = $('<li title="'+$p.attr('ID')+'"><ol/></li>').appendTo($dN.find("ol"));
-			var pTag = dTag + "p"+$p.attr('ID');
-			$pN.addClass(pTag);
-			var $tocPN = $("#toc ."+pTag);
-			//tocPN.wrapInner('<a href="#' + pTag + '></a>');
-			var $docsPN = $("#docs ."+pTag);
-			$docsPN.attr("id", pTag);
-			$p.find('sentences > sentence').each(function (k) {
-				var $s = $(this);
-
-				var sTag = dTag + "s" + $s.attr('ID');
-				var $docsSN = $('<li id="'+sTag+'" class="'+sTag+'"></li>').append(buildSentence($s,sTag)).appendTo($docsPN.find("ol"));
-				var $tocSN = $('<li class="'+sTag+'"><a href="#'+sTag+'" title="'+$s.find('text').text()+'">'+$s.find('text').text()+'</a></li>').appendTo($tocPN.find("ol"));
-				nWords += $docsSN.find('table tr th').length;
-				nAnns += $docsSN.find('table tr.frameann:not(.targets)').length;
-				nSents++;
-			});
-		});
-	});
-
-
-	$('#docs .sentence .frameann:not(.targets)').hover(function() {
-		var thisId = $(this).attr("id");
-		var aId = thisId.substring(thisId.lastIndexOf("a")+1);
-		$(this).siblings().find('td:not(.a'+aId+')').fadeTo(0, 0.25);
-	  }, function() {
-		$(this).siblings().find('td').fadeTo(0, 1.0);
-	  });
-
-	$('#docs .sentence .frameann.targets td.framename').hover(function() {
-		var thisId = $(this).attr("id");
-		var aId = thisId.substring(thisId.lastIndexOf("a")+1);
-		$(this).siblings().fadeTo(0, 0.25);
-		$(this).parent().parent().find("tr.frameann > td:not(.a"+aId+")").fadeTo(0, 0.25);
-	  }, function() {
-		$(this).siblings().fadeTo(0, 1.0);
-		$(this).parent().siblings().fadeTo(0, 1.0);
-	  });
-
-	$('#stats ol').append('<li>' + nSents + ' sentences, ' + nWords + ' words, ' + nAnns + ' frame instances</li>');
-
-  /*for each (var a in data..heading.@foo)    // access an attribute of all typed descendants
-      console.log(a.toXMLString());
-  data.body.comment = "I like this note!";  // add a new node
-  console.log(data.body.comment.toXMLString());
-  data.body.comment.@author = "me";         // add a new attribute
-  data.body.comment.@author += ", myself, and i"   // modify an existing attribute
-  data.body.* += <comment foo="barbaz">Hiya<moo>moo</moo></comment>   // add new nodes + attribute
-  console.log(data.body.comment.toXMLString());
-  console.log(data..*.(function::child("moo")!=undefined)[0].localName()); // name of the first element having a 'moo' child
-  delete data..*.(function::attribute("foo")!=undefined)[2];   // delete the 3rd element having a 'foo' attribute
-  console.log(data.body.comment.toXMLString());
-  */
-}
-
-function testLoad() {
-	$("#golink").remove();
-	var n = loadXML("prediction146short.xml", displayDoc);
-}
-
-function clearFiles(which) {
-	if (which==1) {
-		$('#docs > ol').empty();
-		$('#toc > ol').empty();
-	}
-}
-
-function handleFiles(ff, which) {
-	clearFiles(which);
-	console.log("loading...");
-
-	//for each (var f in ff) {
-	for (var iF=0; iF<ff.length; iF++) {
-		var f = ff[iF];
-		if (f.name==undefined)
-			continue;
-		console.log("reading " + f.name + "...");
-		var reader = new FileReader();
-		reader.onload = function (evt) { displayDoc(unpackData(evt.target.result)); };
-		reader.onerror = console.error;
-		reader.readAsText(f);
-	}
-}
-
-function reloadFiles(which) {
-	console.log("reloading...");
-	handleFiles($('#file'+which).get(0).files, which);
-}
-
-function togArgs(l, val) {
-	console.log(l);
-	$(l).hide();
-	//$(l).after("<p>off</p>");
-}
-
-function init() {
-	$("#togSidebar").toggle(
-			function (evt) { $("#controls").hide(); $(this).html("&raquo;"); $("#maincontent").css("left", "0px"); },
-			function (evt) { $(this).html("&laquo;"); $("#maincontent").css("left", "200px"); $("#controls").show(); });
-	$("#togFile0").click(function (evt) { $("#filediffcontrols,#file0controls").show(); $(this).hide(); });
-	$("#togFrames0").toggle(
-			function (evt) { $(this).text("on"); $(".frameann.above.targets").hide(); },
-			function (evt) { $(this).text("off"); $(".frameann.above.targets").show(); });
-	$("#togFrames1").toggle(
-			function (evt) { $(this).text("on"); $(".frameann.below.targets").hide(); },
-			function (evt) { $(this).text("off"); $(".frameann.below.targets").show(); });
-	$("#togArgs0").toggle(
-			function (evt) { $(this).text("on"); $(".frameann.above:not(.targets)").hide(); },
-			function (evt) { $(this).text("off"); $(".frameann.above:not(.targets)").show(); });
-	$("#togArgs1").toggle(
-			function (evt) { $(this).text("on"); $(".frameann.below:not(.targets)").hide(); },
-			function (evt) { $(this).text("off"); $(".frameann.below:not(.targets)").show(); });
 }
