@@ -7,6 +7,8 @@
 // 2015-12-03: v.0.4: use (or convert to) SEMAFOR 3-style "spans" array in JSON
 // 	(backward-compatible; untested for multiple spans, i.e. discontinuous target
 //  or frame element)
+// 2015-12-21: v.0.5: actually ensure backward-compatibility of JSON format;
+//  correctly display an argument span covering a subrange of the target span
 /*
 var txt = "Don't forget me this weekend!";
 var insituDoc = <note>
