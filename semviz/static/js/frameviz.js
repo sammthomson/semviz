@@ -194,6 +194,11 @@ function buildSentence(sJ,sTag) {
 		var fTag = 'f'+fname;
 
 		// mark each word in the target span and store it in 'targets'
+		if (!ann["target"]["spans"]) {
+			ann["target"]["spans"] = [{"start": ann["target"]["start"],
+																 "end": ann["target"]["end"],
+																 "text": ann["target"]["text"]}];
+		}
 		for (var isp=0; isp<ann["target"]["spans"].length; isp++) {
 			var span = ann["target"]["spans"][isp];
 			var st = span["start"];
