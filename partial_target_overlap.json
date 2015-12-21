@@ -1,0 +1,83 @@
+[{
+  "tokens": [
+    "What",
+    "he",
+    "needs",
+    "is",
+    "a",
+    "good",
+    "kick",
+    "in",
+    "the",
+    "pants",
+    "."
+  ],
+  "frames": [
+    {
+      "target": {
+        "start": 4,
+        "end": 6,
+        "name": "Relational_quantity",
+        "text": "a good"
+      },
+      "annotationSets": [
+        {
+          "frameElements": [
+            {
+              "start": 5,
+              "end": 6,
+              "name": "Denoted_quantity",
+              "text": "good"
+            }
+          ],
+          "score": 15.724282286973175,
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "target": {
+        "start": 2,
+        "end": 3,
+        "name": "Needing",
+        "text": "needs"
+      },
+      "annotationSets": [
+        {
+          "frameElements": [
+            {
+              "start": 0,
+              "end": 1,
+              "name": "Requirement",
+              "text": "What"
+            },
+            {
+              "start": 1,
+              "end": 2,
+              "name": "Cognizer",
+              "text": "he"
+            }
+          ],
+          "score": 45.70810228710732,
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "target": {
+        "start": 9,
+        "end": 10,
+        "name": "Clothing",
+        "text": "pants"
+      },
+      "annotationSets": [
+        {
+          "frameElements": [],
+          "score": 40.562112927699445,
+          "rank": 0
+        }
+      ]
+    }
+  ]
+}
+]
