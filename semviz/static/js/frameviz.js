@@ -244,15 +244,52 @@ function buildSentence(sJ,sTag) {
 			}
 		});
 
-		labels.sort(function (a,b) {	// sort this frame's FE and target labels by start index
+		labels.sort(function (a,b) {	// sort this frame's FE and target labels by start index,
+		// secondarily by end index, and tertiarily putting targets before arguments
+			if (a["spans"][0]["start"]==b["spans"][0]["start"]) {
+				if (a["spans"][0]["end"]==b["spans"][0]["end"]) {
+					return (a["type"]=="target") ? ((b["type"]=="target") ? 0 : -1) : 1;
+				}
+				return a["spans"][0]["end"]-b["spans"][0]["end"];
+			}
 			return a["spans"][0]["start"]-b["spans"][0]["start"];
 		});
+
+		// Attempt to deal with span containment: if span 1 starts before span 2,
+		// and continues after the start of span 2, split off the part of span 1
+		// that overlaps with span 2 as well as the part that continues past span 2 (if applicable)
+		for (var j=labels.length-1; j>0; j--) {
+			if (labels[j-1]["start"]<labels[j]["start"] && labels[j]["start"]<labels[j-1]["end"]) {
+				if (!labels[j-1]["type"]) {
+					console.error('Unexpected: overlap but previous label has no type');
+					console.log(labels[j-1]);
+					console.log(labels[j]);
+				}
+				if (labels[j]["end"]<labels[j-1]["end"]) {
+					// insert at position j+1: continuation after span 2
+					labels.splice(j+1, 0, {"type": labels[j-1]["type"], "start": labels[j]["end"],
+																 "end": labels[j-1]["end"],
+																 "text": labels[j-1]["text"], "name": labels[j-1]["name"],
+																 "continuation": true});
+				}
+				// insert at position j: part of span 1 overlapping with span 2
+				labels.splice(j, 0, {"type": labels[j-1]["type"], "start": labels[j]["start"],
+														 "end": Math.min(labels[j-1]["end"],labels[j]["end"]),
+														 "text": labels[j-1]["text"], "name": labels[j-1]["name"],
+														 "continuation": true,
+													 	 "continues": (labels[j]["end"]<labels[j-1]["end"])});
+				// narrow the original span 1
+				labels[j-1]["end"] = labels[j]["start"];
+				labels[j-1]["continues"] = true;
+			}
+		}
 
 
 		// construct a row for this frame's spans
 		// TODO: not tested for discontinuous targets or FEs (where the "spans" array has multiple elements)
 		var wi = 0;
 		var maxwen = -1;
+
 		for (var k=0; k<labels.length; k++) {
 			// start and end of the label as a whole
 			var wst = labels[k]["start"]+1;
@@ -271,11 +308,24 @@ function buildSentence(sJ,sTag) {
 					else if (k>0 && labels[k-1]["start"]<=labels[k]["start"] && labels[k-1]["end"]>=labels[k]["end"]) {
 						// partial overlap; don't add a separate cell
 					}
-					else if (k<labels.length-1 && labels[k+1]["start"]<=labels[k]["start"] && labels[k+1]["end"]>=labels[k]["end"]) {
+/*					else if (k<labels.length-1 && labels[k+1]["start"]<=labels[k]["start"] && labels[k+1]["end"]>=labels[k]["end"]) {
+						console.log('partial overlap 2 k='+k+' text='+labels[k]["text"]);
 						// partial overlap; don't add a separate cell
-					}
-					else
+					}*/
+/*					else if (k<labels.length-1 && labels[k+1]["start"]<labels[k]["end"]) {
+						// next span starts after the current one starts but partially overlaps
+						// effectively truncate the current span
+						wen = labels[k+1]["start"]+1;
 						$trN.append('<td colspan="'+(wen-wst)+'" class="target">\xA0</td>');
+					}*/
+					else {
+						$trN.append('<td colspan="'+(wen-wst)+'" class="target w'+wst+':'+wen+'">\xA0</td>');
+						if (wst==wen) {
+							console.error(wst+' '+wen);
+							console.log(labels[k]);
+						}
+						//console.log('new target span wi='+wi+' wst='+wst+' wen='+wen+' k='+k+' text='+labels[k]["text"]);
+					}
 
 					// title text
 					var $lastcell = $trN.children().last()
@@ -284,11 +334,21 @@ function buildSentence(sJ,sTag) {
 					$lastcell.attr("title", (oldtitle+'\n'+labels[k]["name"]+':\n'+labels[k]["text"]).trim());
 				}
 				else {	// argument span
-					if (k>0 && labels[k-1]["start"]==labels[k]["start"])
-						$trN.children().last().replaceWith('<td colspan="'+(wen-wst)+'" class="'+$trN.last().attr("class")+' arg">'+labels[k]["name"]+'</td>');
+					if (k>0 && labels[k-1]["start"]==labels[k]["start"]) {
+						if (labels[k-1]["end"]!=labels[k]["end"]) {
+							console.error("Unexpected condition: start positions match but end positions do not. k="+k);
+							console.log(labels[k-1]);
+							console.log(labels[k]);
+						}
+						$trN.children().last().replaceWith('<td colspan="'+(wen-wst)+'" class="'+$trN.children().last().attr("class")+' arg">'+labels[k]["name"]+'</td>');
+						//console.log('replaced k='+k);
+					}
 					else
 						$trN.append('<td colspan="'+(wen-wst)+'" class="arg w'+wst+':'+wen+'">'+labels[k]["name"]+'</td>');
 
+/*					if (k>0 && labels[k-1]["type"]=="target" && labels[k-1]["end"]==labels[k]["start"] && labels[k-1]["continues"])
+						$trN.children().last().addClass("target");	// arg span is continuing a target span
+*/
 					// title text
 					var $lastcell = $trN.children().last()
 					var oldtitle = $lastcell.attr("title");
