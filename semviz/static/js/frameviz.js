@@ -10,6 +10,7 @@
 // 2015-12-21: v.0.5: actually ensure backward-compatibility of JSON format;
 //  correctly display an argument span covering a subrange of the target span;
 //  remove old code from XML days
+// 2015-12-22: v.0.6: annotations weren't being sorted with new-style JSON format
 
 
 
@@ -150,7 +151,9 @@ function buildSentence(sJ,sTag) {
 	var aId = 0;	// annotation ID
 	var framesJ = sJ["frames"];
 	framesJ.sort(function (a,b) {	// sort by target word index
-		return (a["target"]["start"]>b["target"]["start"]) ? 1 : ((a["target"]["start"]===b["target"]["start"]) ? 0 : -1);
+		if (a["target"]["start"]!==undefined)	// old-style JSON
+			return a["target"]["start"]-b["target"]["start"];
+		return a["target"]["spans"][0]["start"]-b["target"]["spans"][0]["start"];
 	});
 	for (var i=0; i<framesJ.length; i++) {	// for each frame instance
 		var ann = framesJ[i];
