@@ -3,7 +3,7 @@
 <script type="text/javascript" src="semviz/static/js/frameviz.js"></script>
 <script type="text/javascript">
 IN_JSON_PATH = "o5152-w0010-wds_sema.json";
-IN_JSON_SENT = 4;
+IN_JSON_SENT = 73;
 
 function receivedFrameJSON(sentence,debug_info) {
 	//var pageurl = location.protocol+'//'+location.host+location.pathname+'?sentence='+escape($('#sentence').val());
@@ -15,7 +15,9 @@ function receivedFrameJSON(sentence,debug_info) {
 		var aId = thisClass.match(/ a(\d+) /)[1];
 		$(this).parent().parent().find('td:not(.a'+aId+')').fadeTo(0, 0.25);
 		if ($(this).filter('.arg').length) {
-			var ww = thisClass.match(/ w(\d+)[:](\d+) /);
+			var ww = thisClass.match(/ fullspan(\d+)[:](\d+) /);	// in case an arg is split in pieces
+			if (ww===null)
+				ww = thisClass.match(/ w(\d+)[:](\d+) /);
 			for (var i=Number(ww[1])-1; i<Number(ww[2])-1; i++)
 				$(this).parent().parent().find('.word.w'+i).addClass("hoveredarg");
 		}
@@ -102,7 +104,8 @@ svg g.sentnum { display: none; }
 .frameviz .sentence .frameann.targets .framename { color: #555; text-align: center; }
 .frameviz .sentence .frameann .arg { font-size: 10pt; text-align: center; border-top: solid 2.5px #a00; }
 .frameviz .sentence .word.hoveredarg { border-bottom: solid 2.5px #a00; }
-.frameviz .sentence .frameann .arg + .arg { border-left: solid 1px #a00; }
+.frameviz .sentence .frameann .arg + .arg { border-left: solid 1px #a00; } /* border between different args */
+.frameviz .sentence .frameann .arg.continues + .arg.continuation { border-left: none; } /* border of continued arg */
 .frameviz .sentence .frameann .target { font-size: 10pt; font-weight: normal; background-color: #bbb !important; }
 .frameviz .sentence th,.sentence td { padding: 5px; }
 .frameviz .sentence .frameann .arg,.sentence .frameann .internalFiller { background-color: #ddd; }

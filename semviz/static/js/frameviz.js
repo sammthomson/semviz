@@ -10,7 +10,8 @@
 // 2015-12-21: v.0.5: actually ensure backward-compatibility of JSON format;
 //  correctly display an argument span covering a subrange of the target span;
 //  remove old code from XML days
-// 2015-12-22: v.0.6: annotations weren't being sorted with new-style JSON format
+// 2015-12-22: v.0.6: annotations weren't being sorted with new-style JSON format;
+//  display of argument span whose target span is a subrange
 
 
 
@@ -233,25 +234,29 @@ function buildSentence(sJ,sTag) {
 		// that overlaps with span 2 as well as the part that continues past span 2 (if applicable)
 		for (var j=labels.length-1; j>0; j--) {
 			if (labels[j-1]["start"]<labels[j]["start"] && labels[j]["start"]<labels[j-1]["end"]) {
-				if (!labels[j-1]["type"]) {
+				/*if (!labels[j-1]["type"]) {	// happens if an arg span encompasses a shorter target span
 					console.error('Unexpected: overlap but previous label has no type');
 					console.log(labels[j-1]);
+					console.log(labels[j-1]["end"]);
 					console.log(labels[j]);
-				}
+					console.log(labels[j]["start"]);
+				}*/
 				if (labels[j]["end"]<labels[j-1]["end"]) {
 					// insert at position j+1: continuation after span 2
 					labels.splice(j+1, 0, {"type": labels[j-1]["type"], "start": labels[j]["end"],
 																 "end": labels[j-1]["end"],
 																 "text": labels[j-1]["text"], "name": labels[j-1]["name"],
-																 "continuation": true});
+																 "continuation": true, "fullspan": (labels[j-1]["start"]+1)+':'+(labels[j-1]["end"]+1)});
 				}
 				// insert at position j: part of span 1 overlapping with span 2
 				labels.splice(j, 0, {"type": labels[j-1]["type"], "start": labels[j]["start"],
 														 "end": Math.min(labels[j-1]["end"],labels[j]["end"]),
 														 "text": labels[j-1]["text"], "name": labels[j-1]["name"],
 														 "continuation": true,
-													 	 "continues": (labels[j]["end"]<labels[j-1]["end"])});
+													 	 "continues": (labels[j]["end"]<labels[j-1]["end"]),
+														 "fullspan": (labels[j-1]["start"]+1)+':'+(labels[j-1]["end"]+1)});
 				// narrow the original span 1
+				labels[j-1]["fullspan"] = (labels[j-1]["start"]+1)+':'+(labels[j-1]["end"]+1);
 				labels[j-1]["end"] = labels[j]["start"];
 				labels[j-1]["continues"] = true;
 			}
@@ -323,7 +328,17 @@ function buildSentence(sJ,sTag) {
 						$trN.children().last().addClass("target");	// arg span is continuing a target span
 */
 					// title text
-					var $lastcell = $trN.children().last()
+					var $lastcell = $trN.children().last();
+					if (labels[k]["continues"]) {
+						$lastcell.addClass("continues");
+						$lastcell.addClass("fullspan"+labels[k]["fullspan"]);
+						$lastcell.text($lastcell.text()+"\u2026");
+					}
+					if (labels[k]["continuation"]) {
+						$lastcell.addClass("continuation");
+						$lastcell.addClass("fullspan"+labels[k]["fullspan"]);
+						$lastcell.text("\u2026"+$lastcell.text());
+					}
 					var oldtitle = $lastcell.attr("title");
 					if (oldtitle===undefined) oldtitle = "";
 					$lastcell.attr("title", (oldtitle+'\n'+fname+'.'+labels[k]["name"]+':\n'+labels[k]["text"]).trim());
