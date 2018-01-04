@@ -129,7 +129,7 @@ svg g.sentnum { display: none; }
 <div id="details" style="display: none">
 	<ul>
 		<li>For this demo, TurboParser was trained on WSJ with the standard (arc-factored + consecutive sibling + grandparent parts) model and configured to produce <a href="http://nlp.stanford.edu/software/stanford-dependencies.shtml">Basic Stanford Dependencies</a> (v. 1.6.2). TurboTagger was trained on the Penn Treebank (WSJ and Brown), the <a href="http://www.ldc.upenn.edu/Catalog/catalogEntry.jsp?catalogId=LDC2012T13">English Web Treebank</a>, and Alan Ritter et al.’s <a href="https://github.com/aritter/twitter_nlp/blob/master/data/annotated/pos.txt">annotated corpus of tweets</a>.</li>
-		<li><a href="http://www.maltparser.org/">MaltParser</a>’s <a href="http://www.maltparser.org/mco/english_parser/engmalt.html">engmalt model</a> (trained with Stanford Dependencies) was used to parse SEMAFOR’s training data for the version of SEMAFOR used in this demo.</li>
+		<li><a href="http://www.maltparser.org/">MaltParser</a>’s <a href="http://www.maltparser.org/mco/english_parser/engmalt.html">engmalt model</a> (trained with Stanford Dependencies) was used to parse SEMAFOR’s training data for the argument identification model used in this demo. The frame identification model was trained with parses from the TurboParser configuration described above.</li>
 		<li>This demo will not spend more than 20 seconds per query, so it may fail on very long input.</li>
 		<li>Though these parsers approach or attain state-of-the-art performance on standard benchmarks, 
 		they rarely predict completely accurate analyses—as can be seen for many of the provided example sentences.</li>
@@ -192,7 +192,7 @@ svg g.sentnum { display: none; }
 
 <p id="credits">
 <span style="font-variant: small-caps">This demo page</a></span> is thanks to: <a href="http://samthomson.com/">Sam Thomson</a> (front-end and SEMAFOR integration), 
-<a href="https://sites.google.com/site/lingpenk/">Lingpeng&nbsp;Kong</a> and <a href="http://www.cs.cmu.edu/~afm/">André&nbsp;Martins</a> (TurboParser integration), 
+<a href="http://www.cs.cmu.edu/~lingpenk/">Lingpeng&nbsp;Kong</a> and <a href="http://www.cs.cmu.edu/~afm/">André&nbsp;Martins</a> (TurboParser integration), 
 <a href="http://victor.chahuneau.fr/">Victor Chahuneau</a> (server admin), and
 <a href="http://nathan.cl/">Nathan&nbsp;Schneider</a> (front-end). 
 <br/><span style="font-variant: small-caps"><a href="http://www.ark.cs.cmu.edu/TurboParser/">TurboParser</a></span> was built by <a href="http://www.cs.cmu.edu/~afm/">André Martins</a>.
