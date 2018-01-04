@@ -41,3 +41,5 @@ nosetests.xml
 
 # sass
 .sass-cache
+
+.htacces
