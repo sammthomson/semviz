@@ -5,8 +5,8 @@ Author: Sam Thomson (sthomson@cs.cmu.edu)
 
 # SEMAFOR server settings
 SEMAFOR_HOST = "localhost"
-#SEMAFOR_PORT = 4444
-SEMAFOR_PORT = 5555
+SEMAFOR_PORT = 4444
+#SEMAFOR_PORT = 5555
 
 # Location of MaltParser and POS tagger executables
 SEMAFOR_HOME = "/home/sthomson/code/semafor"
