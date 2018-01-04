@@ -185,15 +185,15 @@ expressed by a sentence. For example, <a href="http://communicationsoffice.tripo
 
 
 
-<div id="parse_horiz" class="frameviz"><table class="sentence"><tbody><tr><th class="w0"></th><th class="word w0">Have</th><th class="word w1">you</th><th class="word w2">ever</th><th title="Prevarication" class="word w3 target fPrevarication">lied</th><th class="word w4">about</th><th class="word w5">the</th><th title="Leadership" class="word w6 target fLeadership">President</th><th class="word w7">'s</th><th title="Medical_conditions" class="word w8 target fMedical_conditions">health</th><th class="word w9">?</th></tr><tr class="frameann below targets"><td style="opacity: 1;" colspan="4" class="filler"></td><td style="cursor: pointer; opacity: 1;" colspan="1" id="target-a0" class="framename a0"><a href="https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame=Prevarication">Prevarication</a></td><td style="opacity: 1;" colspan="2" class="filler"></td><td style="cursor: pointer; opacity: 1;" colspan="1" id="target-a1" class="framename a1"><a href="https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame=Leadership">Leadership</a></td><td style="opacity: 1;" colspan="1" class="filler"></td><td style="cursor: pointer; opacity: 1;" colspan="1" id="target-a2" class="framename a2"><a href="https://framenet2.icsi.berkeley.edu/fnReports/data/frameIndex.xml?frame=Medical_conditions">Medical_conditions</a></td></tr><tr id="senta0" class="frameann below w1:4"><td style="opacity: 1;" colspan="2" class="filler framename a0 fPrevarication"></td><td style="opacity: 1;" title="Prevarication.Speaker:
-you" colspan="1" class="arg w2:3 leftmost a0 fPrevarication">Speaker</td><td style="opacity: 1;" colspan="1" class="filler internalFiller a0 fPrevarication"></td><td style="opacity: 1;" title="Prevarication:
-lied" colspan="1" class="target rightmost a0 fPrevarication">&nbsp;</td><td style="opacity: 1;" class="filler" colspan="2"></td><td style="opacity: 1;" title="Leadership.Leader:
+<div id="parse_horiz" class="frameviz"><table class="sentence"><tbody><tr><th class="w0"></th><th class="word w0">Have</th><th class="word w1">you</th><th class="word w2">ever</th><th title="Prevarication" class="word w3 target fPrevarication">lied</th><th class="word w4">about</th><th class="word w5">the</th><th title="Leadership" class="word w6 target fLeadership">President</th><th class="word w7">'s</th><th title="Medical_conditions" class="word w8 target fMedical_conditions">health</th><th class="word w9">?</th></tr><tr class="frameann below targets"><td style="opacity: 1;" colspan="4" class="filler"></td><td style="cursor: pointer; opacity: 1;" colspan="1" id="target-a0" class="framename a0">Prevarication</td><td style="opacity: 1;" colspan="2" class="filler"></td><td style="cursor: pointer; opacity: 1;" colspan="1" id="target-a1" class="framename a1">Leadership</td><td style="opacity: 1;" colspan="1" class="filler"></td><td style="cursor: pointer; opacity: 1;" colspan="1" id="target-a2" class="framename a2">Medical_conditions</td></tr><tr id="senta1" class="frameann below w6:7"><td style="opacity: 1;" colspan="7" class="filler framename a1 fLeadership">Leadership</td><td style="opacity: 1;" title="Leadership.Leader:
 President
 Leadership:
-President" colspan="1" class="arg w7:8 leftmost target rightmost a1 fLeadership">Leader</td></tr><tr id="senta2" class="frameann below w5:9"><td style="opacity: 1;" colspan="6" class="filler framename a2 fMedical_conditions"></td><td style="opacity: 1;" title="Medical_conditions.Patient:
+President" colspan="1" class="arg w7:8 leftmost target rightmost a1 fLeadership">Leader</td></tr><tr id="senta2" class="frameann below w5:9"><td style="opacity: 1;" colspan="6" class="filler framename a2 fMedical_conditions">Medical_conditions</td><td style="opacity: 1;" title="Medical_conditions.Patient:
 the President 's" colspan="3" class="arg w6:9 leftmost a2 fMedical_conditions">Patient</td><td style="opacity: 1;" title="Medical_conditions:
-health" colspan="1" class="target rightmost a2 fMedical_conditions">&nbsp;</td></tr></tbody></table></div>
-
+health" colspan="1" class="target rightmost a2 fMedical_conditions">&nbsp;</td></tr><tr id="senta0" class="frameann below w1:9"><td style="opacity: 1;" colspan="2" class="filler framename a0 fPrevarication">Prevarication</td><td style="opacity: 1;" title="Prevarication.Speaker:
+you" colspan="1" class="arg w2:3 leftmost a0 fPrevarication">Speaker</td><td style="opacity: 1;" colspan="1" class="filler internalFiller a0 fPrevarication"></td><td style="opacity: 1;" title="Prevarication:
+lied" colspan="1" class="target a0 fPrevarication">&nbsp;</td><td style="opacity: 1;" title="Prevarication.Topic:
+about the President 's health" colspan="5" class="arg w5:10 rightmost a0 fPrevarication">Topic</td></tr></tbody></table></div>
 
 
 
@@ -201,8 +201,8 @@ health" colspan="1" class="target rightmost a2 fMedical_conditions">&nbsp;</td><
 Argument spans are indicated with red bars.</p>
 
 <p>Note that this parse does not quite match the desired analysis: 
-the wrong frame is chosen for <i>President</i>, and the Topic and Time arguments of the 
-<span style="font-variant: small-caps;">Prevarication</span> frame are missing entirely.
+the wrong frame is chosen for <i>President</i>, and the Time argument of the 
+<span style="font-variant: small-caps;">Prevarication</span> frame is missing entirely.
 Frame-semantic parsing is such a difficult task that automatic parses are rarely perfect.</p>
 
 {% endblock %}
